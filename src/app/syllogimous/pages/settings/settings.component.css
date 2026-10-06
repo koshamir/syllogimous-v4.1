@@ -1,5 +1,10 @@
 @media (max-width: 768px) {
     :host ::ng-deep input[type="range"] {
-        max-width: 80%;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    :host ::ng-deep .card-body {
+        padding: 0.85rem;
     }
 }
