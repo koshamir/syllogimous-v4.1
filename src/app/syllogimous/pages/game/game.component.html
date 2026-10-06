@@ -71,7 +71,7 @@
                 </ng-template>
             </ngb-carousel>
     
-            <div class="flex-between p-3" style="position: absolute; left: 0; bottom: 0; width: 100%;">
+            <div class="flex-between p-3 carousel-mobile-nav" style="position: absolute; left: 0; bottom: 0; width: 100%;">
                 <button
                     class="btn border-0" style="box-shadow: none;"
                     (click)="carousel.prev()"
@@ -110,9 +110,9 @@
         </div>
     </div>
 
-    <div footer class="d-flex gap-3 justify-content-center">
-        <button *ngIf="!trueButtonToTheRight" class="btn btn-lg btn-success col-md-3 col-4" (click)="game.checkQuestion(true)">Верно</button>
-        <button class="btn btn-lg btn-danger col-md-3 col-4" (click)="game.checkQuestion(false)">Неверно</button>
-        <button *ngIf="trueButtonToTheRight" class="btn btn-lg btn-success col-md-3 col-4" (click)="game.checkQuestion(true)">Верно</button>
+    <div footer class="game-actions d-flex gap-3 justify-content-center">
+        <button *ngIf="!trueButtonToTheRight" class="game-answer-button btn btn-lg btn-success" (click)="game.checkQuestion(true)">Верно</button>
+        <button class="game-answer-button btn btn-lg btn-danger" (click)="game.checkQuestion(false)">Неверно</button>
+        <button *ngIf="trueButtonToTheRight" class="game-answer-button btn btn-lg btn-success" (click)="game.checkQuestion(true)">Верно</button>
     </div>
 </app-card>

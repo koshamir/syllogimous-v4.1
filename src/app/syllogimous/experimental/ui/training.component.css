@@ -21,4 +21,17 @@
 .loading-mark { width: 2.2rem; height: 2.2rem; margin: 0 auto; border: .3rem solid #d6deeb; border-top-color: #3157d5; border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .loading-mark { animation: none; border-top-color: #d6deeb; } }
-@media (max-width: 650px) { .session-header { align-items: flex-start; flex-direction: column; } .model-pair { grid-template-columns: 1fr; } }
+@media (max-width: 650px) {
+    .session-header { align-items: flex-start; flex-direction: column; }
+    .model-pair { grid-template-columns: 1fr; }
+    .premise-list { padding-left: 1.25rem; }
+    .item-meta span { font-size: .82rem; }
+    .confidence { display: grid; gap: .5rem; }
+    .confidence label { margin-right: 0; }
+    .action-row > button,
+    .action-row > .action-link {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+}

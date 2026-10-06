@@ -5,6 +5,16 @@
     --negated-color: rgb(128, 0, 0);
 }
 
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
 html[darkmode] {
     filter: invert(1) hue-rotate(180deg);
 }
@@ -86,4 +96,32 @@ div:has(> input[type="range"]) ~ .form-text.input-helper {
 .modal-level-type {
     font-size: 1.25rem;
     line-height: 1.15;
+}
+
+@media (max-width: 768px) {
+    .btn,
+    button,
+    select,
+    input:not([type="checkbox"]):not([type="radio"]) {
+        min-height: 44px;
+    }
+
+    .dropdown-menu {
+        max-width: calc(100vw - 1rem);
+    }
+
+    .tooltip-inner {
+        max-width: calc(100vw - 2rem);
+    }
+
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-tabs .nav-link {
+        white-space: nowrap;
+    }
 }
