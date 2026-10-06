@@ -1,5 +1,5 @@
 <app-card>
-    <div body style="min-width: 320px; padding-top: 3rem;">
+    <div body class="start-body">
         <app-progress-and-performance></app-progress-and-performance>
         
         <ul class="list-group mb-4">
@@ -51,20 +51,17 @@
         </div>
     </div>
 
-    <div footer class="text-center d-flex flex-wrap justify-content-center gap-3">
+    <div footer class="start-actions text-center d-flex flex-wrap justify-content-center gap-3">
         <button
-            style="width: 150px;"
-            class="btn btn-primary"
+            class="start-action btn btn-primary"
             (click)="game.playArcadeMode()"
         >Обычная игра</button>
         <button
-            style="width: 150px;"
-            class="btn btn-outline-primary"
+            class="start-action btn btn-outline-primary"
             (click)="router.navigate([EnumScreens.PlaygroundMode])"
         >Свободная игра</button>
         <a
-            style="width: 190px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center;"
-            class="btn btn-outline-primary"
+            class="start-action start-action-wide btn btn-outline-primary"
             routerLink="/experimental"
             aria-label="Открыть экспериментальную тренировку отношений"
         >Экспериментальная тренировка</a>
