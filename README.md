@@ -4,7 +4,13 @@ This repository contains the modified Syllogimous v4.1 build maintained by [kosh
 
 > **Modification notice (September 2026):** this local review build adds a separately versioned experimental relational-reasoning and assessment mode. See [MODIFICATIONS.md](MODIFICATIONS.md) and [the architecture notes](docs/EXPERIMENTAL_REASONING_ARCHITECTURE.md). These changes remain subject to CC BY-NC 3.0 and do not claim to increase intelligence or neural capacity.
 
-Syllogimous v4 is now available! Try it now at: [Syllogimous v4](https://4skinskywalker.github.io/Syllogimous-v4/)
+Play [Syllogimous v4.1](https://koshamir.github.io/syllogimous-v4.1/) in a desktop or Android browser.
+
+## GitHub Pages
+
+GitHub Pages publishes the `docs` folder from the `main` branch. To update the site, run `npm ci` and `npm run prep-deploy:prod`, then commit and push the updated files. The build keeps the architecture and study documentation in `docs` and provides `404.html` for direct links to Angular routes.
+
+Original version: [Syllogimous v4 by 4skinSkywalker](https://4skinskywalker.github.io/Syllogimous-v4/).
 
 ## TODO
 - Allow customization of the start of the week.

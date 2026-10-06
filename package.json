@@ -14,8 +14,8 @@
     "audit:cues": "npm run build:audit-core && node tools/run-cue-audit.cjs",
     "benchmark:generation": "npm run build:audit-core && node tools/benchmark-generation.cjs",
     "build:prod": "npm run prep-deploy:prod",
-    "prep-deploy:dev": "ng build --configuration=development --output-path docs --base-href /Syllogimous-v4/ && node -e \"require('fs').copyFileSync('docs/index.html', 'docs/404.html')\"",
-    "prep-deploy:prod": "ng build --configuration=production --output-path docs --base-href /Syllogimous-v4/ && node -e \"require('fs').copyFileSync('docs/index.html', 'docs/404.html')\""
+    "prep-deploy:dev": "ng build --configuration=development --output-path docs --delete-output-path=false --base-href /syllogimous-v4.1/ && node tools/finalize-pages.cjs",
+    "prep-deploy:prod": "ng build --configuration=production --output-path docs --delete-output-path=false --base-href /syllogimous-v4.1/ && node tools/finalize-pages.cjs"
   },
   "private": true,
   "dependencies": {
