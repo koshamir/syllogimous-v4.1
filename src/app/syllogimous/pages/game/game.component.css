@@ -6,6 +6,7 @@
     font-size: 1.5rem;
     line-height: 1.3;
     margin-block: 1rem;
+    max-width: 100%;
 }
 
 .timerbar-wrap {
@@ -33,9 +34,61 @@
     line-height: 1.1;
     margin-block: 0.5rem;
 }
+
 .notes {
     display: grid;
     gap: 0.25rem;
     font-size: 1.2rem;
     line-height: 1.2;
+}
+
+.game-answer-button {
+    flex: 0 1 11rem;
+    min-height: 52px;
+}
+
+@media (max-width: 768px) {
+    .battlefield {
+        width: 100% !important;
+        font-size: clamp(1.05rem, 4.6vw, 1.3rem);
+        line-height: 1.35;
+        margin-block: 0.5rem;
+        overflow-wrap: anywhere;
+    }
+
+    .instructions {
+        font-size: clamp(1rem, 4.3vw, 1.15rem);
+        line-height: 1.25;
+    }
+
+    .notes {
+        font-size: clamp(0.95rem, 4vw, 1.05rem);
+        line-height: 1.3;
+    }
+
+    .premises,
+    .conclusions {
+        gap: 0.6rem;
+    }
+
+    .carousel-mobile-nav {
+        padding: 0.5rem !important;
+    }
+
+    .carousel-mobile-nav .btn {
+        min-width: 44%;
+    }
+
+    .game-actions {
+        width: 100%;
+        gap: 0.5rem !important;
+    }
+
+    .game-answer-button {
+        flex: 1 1 0;
+        min-width: 0;
+        min-height: 54px;
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
 }
