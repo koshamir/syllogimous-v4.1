@@ -14,8 +14,8 @@
     "audit:cues": "npm run build:audit-core && node tools/run-cue-audit.cjs",
     "benchmark:generation": "npm run build:audit-core && node tools/benchmark-generation.cjs",
     "build:prod": "npm run prep-deploy:prod",
-    "prep-deploy:dev": "ng build --configuration=development --output-path docs --base-href /Syllogimous-v4/ && node -e \"require('fs').copyFileSync('docs/index.html', 'docs/404.html')\"",
-    "prep-deploy:prod": "ng build --configuration=production --output-path docs --base-href /Syllogimous-v4/ && node -e \"require('fs').copyFileSync('docs/index.html', 'docs/404.html')\""
+    "prep-deploy:dev": "ng build --configuration=development --output-path docs --base-href /syllogimous-v4.1/ && node -e \"require('fs').copyFileSync('docs/index.html', 'docs/404.html')\"",
+    "prep-deploy:prod": "ng build --configuration=production --output-path docs --base-href /syllogimous-v4.1/ && node -e \"require('fs').copyFileSync('docs/index.html', 'docs/404.html')\""
   },
   "private": true,
   "dependencies": {
@@ -50,11 +50,10 @@
     "@angular/localize": "^15.2.0",
     "@types/chartist": "^1.0.0",
     "@types/jasmine": "~4.3.0",
-    "@types/lodash": "^4.14.197",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.2.0",
+    "karma-coverage": "~6.4.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "typescript": "~4.9.4"
