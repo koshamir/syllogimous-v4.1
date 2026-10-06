@@ -1,0 +1,24 @@
+<section *ngIf="state === 'intro'" class="experimental-panel" aria-labelledby="assessment-title">
+    <h2 id="assessment-title">{{ assessment.manifest.titleRu }}</h2>
+    <p class="notice">{{ assessment.manifest.instructionsRu }}</p>
+    <p>Это оригинальная ненормированная батарея. Результат описывает выполнение зарезервированных заданий, а не интеллект, процентиль или нейронные изменения.</p>
+    <fieldset><legend>Этап протокола</legend><label><input type="radio" name="phase" value="baseline" [(ngModel)]="phase"> Исходная оценка</label><label><input type="radio" name="phase" value="postTraining" [(ngModel)]="phase"> Оценка после обучения</label><label><input type="radio" name="phase" value="delayed" [(ngModel)]="phase"> Отсроченная оценка</label></fieldset>
+    <h3>Состав блока</h3><ul><li *ngFor="let block of assessment.manifest.blocks">{{ block.titleRu }} — {{ block.itemCount }} задания</li></ul>
+    <p class="muted">Структуры этого раздела не поступают в тренировочный планировщик и проверяются на предыдущее предъявление.</p>
+    <div class="action-row"><button class="primary-action" type="button" (click)="begin()" [disabled]="!settings">Начать защищённый блок</button></div>
+</section>
+
+<section *ngIf="state === 'generating'" class="experimental-panel assessment-status" role="status" aria-live="polite"><h2>Подготовка защищённого задания</h2><p>Проверяем раздел, структуру и отсутствие предыдущего предъявления. Это время не входит во время ответа.</p></section>
+<section *ngIf="state === 'error'" class="experimental-panel" role="alert"><h2>Задание не подготовлено</h2><p>{{ errorMessage }}</p><button type="button" class="primary-action" (click)="retry()">Повторить проверку</button></section>
+
+<ng-container *ngIf="state === 'answering' && item">
+    <section class="experimental-panel assessment-item" aria-labelledby="assessment-item-title">
+        <p class="assessment-progress">{{ phaseLabel(phase) }} · Задание {{ itemIndex + 1 }} из {{ totalItems() }} · {{ blockTitle() }}</p>
+        <div class="notice" role="note"><h3>Правила мира и ролей</h3><p *ngFor="let instruction of instructionsRu()">{{ instruction }}</p></div>
+        <h2 id="assessment-item-title">Посылки</h2><ol><li *ngFor="let premise of item.premises; let index = index">{{ premiseText(index) }}</li></ol>
+        <div class="assessment-query"><h3>Проверяемый вывод</h3><p>{{ queryText() }}</p></div>
+    </section>
+    <section class="experimental-panel"><h2>Ответ</h2><app-experimental-response-controls [item]="item" (responseChange)="setResponse($event)"></app-experimental-response-controls><div class="action-row"><button type="button" class="primary-action" [disabled]="!response" (click)="submit()">Зафиксировать ответ <span class="key-hint">↵</span></button></div><p class="muted">Правильность появится только после завершения всего блока.</p></section>
+</ng-container>
+
+<section *ngIf="state === 'complete'" class="experimental-panel assessment-status" aria-labelledby="assessment-complete-title"><h2 id="assessment-complete-title">Блок завершён</h2><p>Выполнено: {{ completed }}. Верных ответов: {{ correct }}. Активное время: {{ activeDurationMs / 1000 | number:'1.0-0' }} с.</p><p>Это описательный результат зарезервированных задач. Личное различие между этапами не является причинным доказательством эффекта тренировки.</p><div class="action-row"><a class="primary-action action-link" routerLink="/experimental/progress">Сравнить разделы отчёта</a><button type="button" class="secondary-action" (click)="state = 'intro'">Вернуться к этапам</button></div></section>

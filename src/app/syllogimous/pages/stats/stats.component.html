@@ -1,0 +1,28 @@
+<app-card>
+    <div body class="d-grid gap-5 py-4 px-md-3" style="min-width: 320px;">
+        <app-tier-stats></app-tier-stats>
+        <app-accuracy-stats></app-accuracy-stats>
+        <app-time-based-stats></app-time-based-stats>
+        <app-type-based-stats></app-type-based-stats>
+        <app-error-analysis></app-error-analysis>
+    </div>
+
+    <div footer class="playcard-toolbar">
+        <div>
+            <button
+                class="btn btn-outline-primary"
+                (click)="router.navigate([EnumScreens.Start])"
+            >
+                <i class="bi bi-arrow-left"></i> Главная
+            </button>
+        </div>
+        <div>
+            <button 
+                class="btn btn-outline-primary" 
+                (click)="exportStats()"
+            >
+                <i class="bi bi-download"></i> Экспорт CSV
+            </button>
+        </div>
+    </div>
+</app-card>

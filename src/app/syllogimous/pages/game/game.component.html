@@ -1,0 +1,118 @@
+<ng-template #questionInstructionsAndNotes>
+    <ng-container *ngIf="{ instructions: game.question.instructions, notes: game.question.notes } as info">
+        <div *ngIf="info.instructions?.length || info.notes?.length">
+            <div *ngIf="info.instructions?.length">
+                <div class="small text-muted">Условия</div>
+                <div class="instructions">
+                    <div *ngFor="let instruction of info.instructions" [innerHTML]="instruction"></div>
+                </div>
+            </div>
+    
+            <div *ngIf="info.notes?.length">
+                <div class="small text-muted">Примечания</div>
+                <div class="notes">
+                    <div *ngFor="let note of info.notes" [innerHTML]="note"></div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>
+
+<app-card>
+    <div body class="battlefield" [ngStyle]="{ width: (gameMode === '1' || gameMode === '2') ? '100%' : 'auto' }">
+        <div class="timerbar-wrap">
+            <ngb-progressbar *ngIf="timerType !== '0'" class="timerbar" type="success" [value]="100 * gameTimerService.remainingSeconds / timerTimeSeconds">
+                <span class="me-2">{{gameTimerService.remainingSeconds}} с</span>
+            </ngb-progressbar>
+        </div>
+
+        <div [class.d-none]="gameMode === '0'">
+            <ngb-carousel
+                #carousel
+                [interval]="999999999"
+                [showNavigationArrows]="false"
+                [showNavigationIndicators]="false"
+                style="border: 0; box-shadow: none;"
+            >
+                <ng-template ngbSlide *ngIf="game.question.instructions?.length || game.question.notes?.length">
+                    <div style="display: grid; place-items: center;">
+                        <ng-container *ngTemplateOutlet="questionInstructionsAndNotes"></ng-container>
+                    </div>
+                </ng-template>
+
+                <ng-template ngbSlide *ngFor="let p of game.question.premises; let i = index; let last = last;">
+                    <div style="display: grid; place-items: center;">
+                        <div>
+                            <small class="text-muted">{{last ? "Последняя посылка" : "Посылка " + (i + 1)}}</small>
+                            <div [innerHTML]="p"></div>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-container *ngIf="Array.isArray(game.question.conclusion); else conclusionsIsStringCarouselTemplate">
+                    <ng-template ngbSlide *ngFor="let c of game.question.conclusion; let i = index; let last = last;">
+                        <div style="display: grid; place-items: center;">
+                            <div>
+                                <small class="text-muted">{{last ? "Последнее заключение" : "Заключение " + (i + 1)}}</small>
+                                <div [innerHTML]="c"></div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-template #conclusionsIsStringCarouselTemplate>
+                    <ng-template ngbSlide>
+                        <div style="display: grid; place-items: center;">
+                            <div>
+                                <small class="text-muted">Заключение</small>
+                                <div [innerHTML]="game.question.conclusion"></div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-template>
+            </ngb-carousel>
+    
+            <div class="flex-between p-3" style="position: absolute; left: 0; bottom: 0; width: 100%;">
+                <button
+                    class="btn border-0" style="box-shadow: none;"
+                    (click)="carousel.prev()"
+                    [disabled]="gameMode === '2'"
+                >
+                    <i class="bi bi-arrow-left"></i> Назад
+                </button>
+                <button class="btn border-0" style="box-shadow: none;" (click)="carousel.next()">
+                    Далее <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-4" [class.d-none]="gameMode !== '0'">
+            <ng-container *ngTemplateOutlet="questionInstructionsAndNotes"></ng-container>
+
+            <div>
+                <div class="small text-muted">Посылки</div>
+                <div class="premises" *ngIf="game.question.premises as premises">
+                    <div *ngFor="let p of premises" [innerHTML]="p"></div>
+                </div>
+            </div>
+
+            <div *ngIf="Array.isArray(game.question.conclusion); else conclusionIsStringTemplate">
+                <div class="small text-muted">Заключение</div>
+                <div class="conclusions" *ngIf="game.question.conclusion as conclusions">
+                    <div *ngFor="let c of conclusions" [innerHTML]="c"></div>
+                </div>
+            </div>
+            <ng-template #conclusionIsStringTemplate>
+                <div>
+                    <div class="small text-muted">Заключение</div>
+                    <div [innerHTML]="game.question.conclusion"></div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+    <div footer class="d-flex gap-3 justify-content-center">
+        <button *ngIf="!trueButtonToTheRight" class="btn btn-lg btn-success col-md-3 col-4" (click)="game.checkQuestion(true)">Верно</button>
+        <button class="btn btn-lg btn-danger col-md-3 col-4" (click)="game.checkQuestion(false)">Неверно</button>
+        <button *ngIf="trueButtonToTheRight" class="btn btn-lg btn-success col-md-3 col-4" (click)="game.checkQuestion(true)">Верно</button>
+    </div>
+</app-card>

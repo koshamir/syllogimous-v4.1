@@ -1,0 +1,107 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4
+            class="modal-title"
+            id="modal-basic-title"
+        >Сбросить данные?</h4>
+        <button
+            class="btn-close"
+            aria-label="Закрыть"
+            (click)="modal.dismiss()"
+        ></button>
+    </div>
+    <div class="modal-body">
+        Весь прогресс будет удалён. Это действие нельзя отменить.
+    </div>
+    <div class="modal-footer">
+        <button
+            class="btn btn-outline-secondary"
+            (click)="modal.dismiss()"
+        >Отмена</button>
+        <button
+            class="btn btn-danger"
+            (click)="modal.close()"
+        >Сбросить</button>
+    </div>
+</ng-template>
+
+<div>
+    <div
+        ngbDropdown
+        container="body"
+    >
+        <button
+            class="btn"
+            ngbDropdownToggle
+        >Ещё</button>
+        <div ngbDropdownMenu>
+            <small class="text-muted ms-3">Разделы</small>
+            <button
+                ngbDropdownItem
+                (click)="router.navigate([EnumScreens.Start])"
+            >Главная</button>
+            <button
+                ngbDropdownItem
+                (click)="router.navigate([EnumScreens.Intro])"
+            >Введение</button>
+            <button
+                ngbDropdownItem
+                (click)="router.navigate([EnumScreens.Stats])"
+            >Статистика</button>
+            <button
+                ngbDropdownItem
+                (click)="router.navigate([EnumScreens.History])"
+            >История</button>
+            <button
+                ngbDropdownItem
+                (click)="router.navigate([EnumScreens.Settings])"
+            >Настройки</button>
+            <button
+                ngbDropdownItem
+                (click)="router.navigate([EnumScreens.Tutorials])"
+            >Уроки</button>
+            <button
+                ngbDropdownItem
+                (click)="router.navigate([EnumScreens.PlaygroundMode])"
+            >Свободный режим</button>
+            <div class="dropdown-divider"></div>
+            <small class="text-muted ms-3">Данные</small>
+            <button
+                ngbDropdownItem
+                (click)="import()"
+            >
+                <i class="bi bi-upload"></i> Импорт
+            </button>
+            <button
+                ngbDropdownItem
+                (click)="export()"
+            ><i class="bi bi-download"></i> Экспорт</button>
+            <button
+                ngbDropdownItem
+                (click)="toggleDarkmode()"
+            >
+                <ng-container *ngIf="getDarkmode(); else darkmode">
+                    <i class="bi bi-sun"></i> Светлая тема
+                </ng-container>
+                <ng-template #darkmode>
+                    <i class="bi bi-moon"></i> Тёмная тема
+                </ng-template>
+            </button>
+            <button
+                ngbDropdownItem
+                (click)="resetGame(content)"
+            ><i class="bi bi-trash3"></i> Сбросить игру</button>
+            <div class="dropdown-divider"></div>
+            <small class="text-muted ms-3">Ссылки</small>
+            <button
+                ngbDropdownItem
+                (click)="router.navigate([EnumScreens.OtherGames])"
+            >Другие игры</button>
+            <a
+                ngbDropdownItem
+                href="https://www.linkedin.com/in/f3d3r1c07r0774/"
+                target="_blank"
+            >Об авторе</a>
+        </div>
+    </div>
+</div>

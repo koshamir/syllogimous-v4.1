@@ -1,0 +1,42 @@
+<div class="playcard card">
+    <div class="playcard-header card-header">
+        <div class="playcard-toolbar">
+            <div>
+                <span
+                    class="tier-badge badge clickable fs-6"
+                    [style.backgroundColor]="TIER_COLORS[game.tier].bgColor"
+                    [style.color]="TIER_COLORS[game.tier].textColor"
+                    [ngbTooltip]="tierTooltip"
+                    [autoClose]="'outside'"
+                    triggers="click"
+                >
+                    {{ game.tier | ruLabel }} <i class="bi bi-info-circle"></i>
+                </span>
+                <ng-template #tierTooltip>
+                    <div class="text-start">
+                        <div *ngFor="let tier of tiers">
+                            <span class="badge" style="width: 130px;" [style.backgroundColor]="TIER_COLORS[tier].bgColor" [style.color]="TIER_COLORS[tier].textColor">{{ tier | ruLabel }}</span>
+                            <ng-container *ngIf="TIER_SCORE_RANGES[tier].maxScore === Infinity; else finiteRange">очки от {{ TIER_SCORE_RANGES[tier].minScore }}</ng-container>
+                            <ng-template #finiteRange>
+                                <ng-container *ngIf="TIER_SCORE_RANGES[tier].minScore === -Infinity; else boundedRange">очки до {{ TIER_SCORE_RANGES[tier].maxScore + 1 }}</ng-container>
+                                <ng-template #boundedRange>очки {{ TIER_SCORE_RANGES[tier].minScore }}–{{ TIER_SCORE_RANGES[tier].maxScore }}</ng-template>
+                            </ng-template>
+                        </div>
+                    </div>
+                </ng-template>
+                <span class="text-muted ms-2">очки: {{ game.score }}</span>
+            </div>
+            <app-card-dropdown></app-card-dropdown>
+        </div>
+    </div>
+
+    <div class="card-body p-0 overflow-hidden position-relative">
+        <div class="playcard-body">
+            <ng-content select="[body]"></ng-content>
+        </div>
+    </div>
+
+    <div class="playcard-footer card-footer">
+        <ng-content select="[footer]"></ng-content>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+<app-card>
+    <div body class="d-grid py-3 px-md-3" style="gap: 2rem;">
+        <div class="card shadow-sm">
+            <div class="card-header py-2 small">Настройки игры</div>
+            <div class="card-body">
+                <app-game-mode-choose></app-game-mode-choose>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header py-2 small">Таймер</div>
+            <div class="card-body">
+                <app-timer-choose></app-timer-choose>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header py-2 small">Доступность</div>
+            <div class="card-body">
+                <div class="d-grid" style="gap: 0.75rem;">
+                    <app-input
+                        type="select"
+                        name="colorBlindnessMode"
+                        label="Режим цветового восприятия"
+                        placeholder="Режим цветового восприятия"
+                        [ngControl]="colorBlindnessMode"
+                        [options]="colorBlindnessChoices"
+                    />
+                    <p class="text-muted small">Меняет цвет <span class="is-negated">инверсии</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header py-2 small">Цели по времени</div>
+            <div class="card-body">
+                <div class="d-grid" style="gap: 0.75rem;">
+                    <app-input
+                        type="range"
+                        min="15"
+                        max="60"
+                        step="5"
+                        name="dailyProgressMinutes"
+                        [label]="'Цель на день: ' + dailyProgressMinutes.value + ' мин'"
+                        [ngControl]="dailyProgressMinutes"
+                        [noParenthesisValue]="true"
+                    ></app-input>
+            
+                    <app-input
+                        type="range"
+                        min="60"
+                        max="240"
+                        step="5"
+                        name="weeklyProgressMinutes"
+                        [label]="'Цель на неделю: ' + weeklyProgressMinutes.value + ' мин'"
+                        [ngControl]="weeklyProgressMinutes"
+                        [noParenthesisValue]="true"
+                    ></app-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header py-2 small">Сложность</div>
+            <div class="card-body">
+                <div class="d-grid" style="gap: 1rem;">
+                    <app-input
+                        type="range"
+                        min="10"
+                        max="30"
+                        step="5"
+                        name="trainingUnitLength"
+                        [label]="'Размер серии: ' + trainingUnitLength.value + ' заданий'"
+                        [ngControl]="trainingUnitLength"
+                        [noParenthesisValue]="true"
+                    ></app-input>
+    
+                    <app-input
+                        type="range"
+                        min="0"
+                        max="0.9"
+                        step="0.1"
+                        helper="При такой доле ошибок число посылок уменьшится"
+                        name="premisesDownThreshold"
+                        [label]="'Порог снижения: ' + Math.round((premisesDownThreshold.value || 0)*100) + '%'"
+                        [ngControl]="premisesDownThreshold"
+                        [noParenthesisValue]="true"
+                    ></app-input>
+        
+                    <app-input
+                        type="range"
+                        min="0.1"
+                        max="1"
+                        step="0.1"
+                        helper="При такой доле верных ответов число посылок увеличится"
+                        name="premisesUpThreshold"
+                        [label]="'Порог повышения: ' + Math.round((premisesUpThreshold.value || 0)*100) + '%'"
+                        [ngControl]="premisesUpThreshold"
+                        [noParenthesisValue]="true"
+                    ></app-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div footer class="playcard-toolbar">
+        <button
+            class="btn btn-outline-primary"
+            (click)="router.navigate([EnumScreens.Start])"
+        >
+            <i class="bi bi-arrow-left"></i> Главная
+        </button>
+        <div>
+            <button
+                class="btn btn-primary"
+                (click)="game.playArcadeMode()"
+            >
+                Играть <i class="bi bi-play-fill"></i>
+            </button>
+        </div>
+    </div>
+</app-card>

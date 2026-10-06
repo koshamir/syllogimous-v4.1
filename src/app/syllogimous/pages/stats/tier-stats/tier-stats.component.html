@@ -1,0 +1,23 @@
+<h2 class="text-center">Уровень</h2>
+    
+<ul class="list-group">
+    <li class="list-group-item flex-between">
+        <b>Текущий уровень</b>
+        <div>{{ game.tier | ruLabel }}</div>
+    </li>
+
+    <li class="list-group-item flex-between">
+        <b>Очки</b>
+        <div>{{ game.score }}</div>
+    </li>
+
+    <li class="list-group-item flex-between">
+        <b>Следующий уровень</b>
+        <div>{{ nextTier | ruLabel }}</div>
+    </li>
+
+    <li class="list-group-item flex-between">
+        <b>Осталось очков</b>
+        <div>{{ pointsRemaining }}</div>
+    </li>
+</ul>

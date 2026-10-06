@@ -1,0 +1,5858 @@
+{
+  "reportType": "syllogimous-cue-audit",
+  "reportSchemaVersion": 1,
+  "generatedAt": "2026-09-12T09:09:42.383Z",
+  "config": {
+    "configVersion": "cue-audit-cli/1.1.0",
+    "splitSeeds": {
+      "training": "cue-audit-v1-training",
+      "development": "cue-audit-v1-development",
+      "test": "cue-audit-v1-final-held-out"
+    },
+    "splitSizesPerFamily": {
+      "training": 900,
+      "development": 600,
+      "test": 600
+    },
+    "generatorPartitions": {
+      "training": "training",
+      "development": "development",
+      "test": "assessment"
+    },
+    "minimumHeldOut": 600,
+    "maxAttemptsPerItem": 64,
+    "wallTimeBudgetMs": 2000,
+    "displayedPremises": {
+      "min": 1,
+      "max": 7
+    },
+    "responseFormat": "threeWayInference",
+    "families": [
+      "categorical",
+      "order",
+      "hierarchy",
+      "analogy",
+      "coupledFrames",
+      "proportional",
+      "temporalIntervals",
+      "contextScope",
+      "graphStructure",
+      "transformations"
+    ],
+    "requestedItemsPerFamily": 2100,
+    "totalRequested": 21000,
+    "seedPolicy": "Fixed split seed prefixes plus family and zero-padded item index; no answer alternation is imposed.",
+    "certificatePolicy": "Every accepted item is re-solved from its public AST; claimed exact supports, necessity deletion tests and supplied witness polarities are rechecked. This is not an independent-oracle claim.",
+    "partitionPolicy": "The final held-out split uses the assessment grammar partition, not merely unseen seeds."
+  },
+  "generation": {
+    "requested": 21000,
+    "generated": 21000,
+    "failed": 0,
+    "timeoutCount": 0,
+    "timeoutRate": 0,
+    "byFamily": {
+      "categorical": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 0.1477,
+          "p95": 2.0825,
+          "maximum": 7.7688,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.1121,
+              "p95": 1.0203,
+              "maximum": 3.583,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.0857,
+              "p95": 0.9276,
+              "maximum": 1.4174,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 1.6548,
+              "p95": 2.4038,
+              "maximum": 7.7688,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      },
+      "order": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 0.1307,
+          "p95": 3.511,
+          "maximum": 5.3485,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.0839,
+              "p95": 0.5118,
+              "maximum": 1.5676,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.1047,
+              "p95": 0.5117,
+              "maximum": 1.6098,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 1.5483,
+              "p95": 4.0905,
+              "maximum": 5.3485,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      },
+      "hierarchy": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 0.8524,
+          "p95": 0.9552,
+          "maximum": 2.1985,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.8543,
+              "p95": 0.9899,
+              "maximum": 2.1985,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.8507,
+              "p95": 0.9423,
+              "maximum": 1.1503,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.8527,
+              "p95": 0.9468,
+              "maximum": 2.0294,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      },
+      "analogy": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 5.7469,
+          "p95": 6.1686,
+          "maximum": 11.7475,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 5.7596,
+              "p95": 6.2406,
+              "maximum": 11.7475,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 5.7438,
+              "p95": 6.1578,
+              "maximum": 7.6812,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 5.737,
+              "p95": 6.1075,
+              "maximum": 6.2846,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      },
+      "coupledFrames": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 0.1246,
+          "p95": 2.2752,
+          "maximum": 5.5481,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.137,
+              "p95": 2.3235,
+              "maximum": 5.5481,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.1428,
+              "p95": 2.2511,
+              "maximum": 2.6235,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.0966,
+              "p95": 2.1229,
+              "maximum": 2.42,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      },
+      "proportional": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 0.0293,
+          "p95": 0.0402,
+          "maximum": 1.7628,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.0293,
+              "p95": 0.0444,
+              "maximum": 1.2235,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.0302,
+              "p95": 0.0372,
+              "maximum": 0.1293,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.0285,
+              "p95": 0.0327,
+              "maximum": 1.7628,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      },
+      "temporalIntervals": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 4.7234,
+          "p95": 9.1491,
+          "maximum": 51.178,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 4.7388,
+              "p95": 9.2398,
+              "maximum": 51.178,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 4.8308,
+              "p95": 10.1526,
+              "maximum": 17.5653,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 4.6301,
+              "p95": 8.7905,
+              "maximum": 9.3521,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      },
+      "contextScope": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 3.1954,
+          "p95": 5.2871,
+          "maximum": 8.3245,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 3.2231,
+              "p95": 5.3802,
+              "maximum": 8.3245,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 3.1863,
+              "p95": 5.2421,
+              "maximum": 6.8642,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 3.1887,
+              "p95": 5.2103,
+              "maximum": 5.3821,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      },
+      "graphStructure": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 2.03,
+          "p95": 2.2778,
+          "maximum": 3.4586,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 2.0289,
+              "p95": 2.358,
+              "maximum": 3.4586,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 2.0292,
+              "p95": 2.2467,
+              "maximum": 2.501,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 2.0322,
+              "p95": 2.2375,
+              "maximum": 2.4442,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      },
+      "transformations": {
+        "requested": 2100,
+        "generated": 2100,
+        "failed": 0,
+        "failureCodes": {},
+        "timeoutCount": 0,
+        "timeoutRate": 0,
+        "latencyMs": {
+          "p50": 0.0362,
+          "p95": 0.4683,
+          "maximum": 1.2824,
+          "method": "nearest-rank over all completed generation calls"
+        },
+        "splits": {
+          "training": {
+            "requested": 900,
+            "generated": 900,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.0385,
+              "p95": 0.4717,
+              "maximum": 1.1356,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "development": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.0342,
+              "p95": 0.4665,
+              "maximum": 1.2824,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          },
+          "test": {
+            "requested": 600,
+            "generated": 600,
+            "failed": 0,
+            "failureCodes": {},
+            "timeoutCount": 0,
+            "timeoutRate": 0,
+            "latencyMs": {
+              "p50": 0.0334,
+              "p95": 0.4633,
+              "maximum": 1.2011,
+              "method": "nearest-rank over all completed generation calls"
+            }
+          }
+        }
+      }
+    },
+    "failures": []
+  },
+  "audits": {
+    "byFamily": {
+      "categorical": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed",
+          "refuted",
+          "underdetermined"
+        ],
+        "threshold": {
+          "balancedBaseline": 0.3333333333333333,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 0.3833333333333333,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-categorical-branch-all",
+              "training-categorical-chain-all",
+              "training-categorical-chain-no",
+              "training-categorical-chain-some",
+              "training-categorical-chain-someNot"
+            ],
+            "baseRates": {
+              "entailed": 0.3211111111111111,
+              "refuted": 0.3333333333333333,
+              "underdetermined": 0.34555555555555556
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-categorical-branch-all",
+              "development-categorical-chain-all",
+              "development-categorical-chain-no",
+              "development-categorical-chain-some",
+              "development-categorical-chain-someNot"
+            ],
+            "baseRates": {
+              "entailed": 0.3466666666666667,
+              "refuted": 0.3016666666666667,
+              "underdetermined": 0.3516666666666667
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-categorical-reserved-mixed-witness-v1"
+            ],
+            "baseRates": {
+              "entailed": 0.34,
+              "refuted": 0.45166666666666666,
+              "underdetermined": 0.20833333333333334
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.31166666666666665,
+            "balancedAccuracy": 0.31790380201000507,
+            "confidenceInterval95": [
+              0.25835522642866476,
+              0.3841050361376463
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2371854792056601,
+              0.41134957223113083
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.5833333333333334,
+            "balancedAccuracy": 0.5632614392973508,
+            "confidenceInterval95": [
+              0.5190343046847656,
+              0.6058688470252936
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.49990433539164236,
+              0.6234948238605814
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.43333333333333335,
+            "balancedAccuracy": 0.4555518097632077,
+            "confidenceInterval95": [
+              0.41142529217173185,
+              0.5004919556119752
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.39386840875976636,
+              0.5188213896617112
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.6666666666666666,
+            "balancedAccuracy": 0.6699944073278105,
+            "confidenceInterval95": [
+              0.6028418564503985,
+              0.7305789352513427
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.5752722147104082,
+              0.7521641073659189
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 203
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.3516666666666667,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3273729730803221,
+              0.346305834813371
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3219258620339197,
+              0.35812283384677274
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.445,
+            "balancedAccuracy": 0.45636406483202846,
+            "confidenceInterval95": [
+              0.41111729404238756,
+              0.5028121567017015
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3924372588882468,
+              0.522603716271746
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.56,
+            "balancedAccuracy": 0.5411445356638596,
+            "confidenceInterval95": [
+              0.4889018852756381,
+              0.592558407447459
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4681226452896587,
+              0.6125564943561682
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.33166666666666667,
+            "balancedAccuracy": 0.32806049418274813,
+            "confidenceInterval95": [
+              0.2728393207699446,
+              0.38992681467702733
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2531697055794456,
+              0.41565133599377124
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.38666666666666666,
+            "balancedAccuracy": 0.43714516556930266,
+            "confidenceInterval95": [
+              0.37150243740370453,
+              0.5033859973759661
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3465906305715076,
+              0.5289076386423623
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.20833333333333334,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3233945144011458,
+              0.34415360403557144
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3145204710138283,
+              0.3540680408945052
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 600
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.42,
+            "balancedAccuracy": 0.3370293997057618,
+            "confidenceInterval95": [
+              0.2975637618346591,
+              0.3868459023196444
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2824372667801156,
+              0.41120886315285804
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.20833333333333334,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3233945144011458,
+              0.34415360403557144
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3145204710138283,
+              0.3540680408945052
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 600
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.20833333333333334,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3233945144011458,
+              0.34415360403557144
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3145204710138283,
+              0.3540680408945052
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.30333333333333334,
+            "balancedAccuracy": 0.32836601307189545,
+            "confidenceInterval95": [
+              0.284915064107254,
+              0.3786241682869694
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.26872940143218227,
+              0.40095796310066456
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.2966666666666667,
+            "balancedAccuracy": 0.33112418300653595,
+            "confidenceInterval95": [
+              0.28399749122103984,
+              0.38441212962843396
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.26638231431697973,
+              0.40761435599349055
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 103
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.29333333333333333,
+            "balancedAccuracy": 0.3199613631430432,
+            "confidenceInterval95": [
+              0.25738288869870457,
+              0.3887845211186763
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2351025676375126,
+              0.41676454385438594
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "selectedOnDevelopment": "surfaceLengthAndTokens",
+        "finalSelectedPredictor": {
+          "featureSet": "surfaceLengthAndTokens",
+          "accuracy": 0.20833333333333334,
+          "balancedAccuracy": 0.3333333333333333,
+          "confidenceInterval95": [
+            0.3233945144011458,
+            0.34415360403557144
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.3145204710138283,
+            0.3540680408945052
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 600
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 0.3333333333333333,
+          "confidenceInterval95": [
+            0.3233945144011458,
+            0.34415360403557144
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 1,
+          "detected": true
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-categorical-reserved-mixed-witness-v1",
+            "sampleSize": 600,
+            "rates": {
+              "entailed": 0.34,
+              "refuted": 0.45166666666666666,
+              "underdetermined": 0.20833333333333334
+            }
+          }
+        ],
+        "disposition": "eligible",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      },
+      "order": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed",
+          "refuted",
+          "underdetermined"
+        ],
+        "threshold": {
+          "balancedBaseline": 0.3333333333333333,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 0.3833333333333333,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-order-adjacency-l3",
+              "training-order-adjacency-l4",
+              "training-order-adjacency-l5",
+              "training-order-between-l3",
+              "training-order-between-l4",
+              "training-order-between-l5",
+              "training-order-left-chain-l2",
+              "training-order-non-strict-chain-l2",
+              "training-order-partial-diamond-l3",
+              "training-order-partial-diamond-l4",
+              "training-order-partial-diamond-l5",
+              "training-order-strict-chain-l1",
+              "training-order-strict-chain-l2"
+            ],
+            "baseRates": {
+              "entailed": 0.3488888888888889,
+              "refuted": 0.3322222222222222,
+              "underdetermined": 0.3188888888888889
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-order-adjacency-l1",
+              "development-order-adjacency-l2",
+              "development-order-between-l3",
+              "development-order-between-l4",
+              "development-order-between-l5",
+              "development-order-cyclic-clockwise-l3",
+              "development-order-cyclic-clockwise-l4",
+              "development-order-cyclic-clockwise-l5",
+              "development-order-exact-displacement-l1",
+              "development-order-exact-displacement-l2",
+              "development-order-partial-diamond-l3",
+              "development-order-partial-diamond-l4",
+              "development-order-partial-diamond-l5"
+            ],
+            "baseRates": {
+              "entailed": 0.34,
+              "refuted": 0.33666666666666667,
+              "underdetermined": 0.3233333333333333
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-order-between-l1",
+              "assessment-order-between-l2",
+              "assessment-order-equality-l1",
+              "assessment-order-equality-l2",
+              "assessment-order-reserved-double-fork-v1-l3",
+              "assessment-order-reserved-double-fork-v1-l4",
+              "assessment-order-reserved-double-fork-v1-l5"
+            ],
+            "baseRates": {
+              "entailed": 0.33166666666666667,
+              "refuted": 0.345,
+              "underdetermined": 0.3233333333333333
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.395,
+            "balancedAccuracy": 0.39484659502942404,
+            "confidenceInterval95": [
+              0.32972071816266535,
+              0.463943553888619
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3058031533862026,
+              0.4914831094785988
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 158
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.3933333333333333,
+            "balancedAccuracy": 0.3896070625861858,
+            "confidenceInterval95": [
+              0.32980024824083937,
+              0.45371610434517956
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.30784768563419623,
+              0.4795881883515675
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 117
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.31333333333333335,
+            "balancedAccuracy": 0.3092394897464276,
+            "confidenceInterval95": [
+              0.26090652352020033,
+              0.3649181568308449
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.24383204821706064,
+              0.3886878263109814
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.34,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3271722311606531,
+              0.34602681614400477
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.32154826837950196,
+              0.3576009163699645
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 600
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.34,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3271722311606531,
+              0.34602681614400477
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.32154826837950196,
+              0.3576009163699645
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.4066666666666667,
+            "balancedAccuracy": 0.40069889341875364,
+            "confidenceInterval95": [
+              0.35495524959078234,
+              0.4504111466696436
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3367502161982623,
+              0.4722285015205365
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 117
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.4066666666666667,
+            "balancedAccuracy": 0.40069889341875364,
+            "confidenceInterval95": [
+              0.35495524959078234,
+              0.4504111466696436
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3367502161982623,
+              0.4722285015205365
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 117
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.36833333333333335,
+            "balancedAccuracy": 0.3704111769575988,
+            "confidenceInterval95": [
+              0.3124743395831604,
+              0.43315581043657264
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.29131884902224,
+              0.4586994047356426
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.3983333333333333,
+            "balancedAccuracy": 0.3869346733668342,
+            "confidenceInterval95": [
+              0.3660156458636041,
+              0.4125354506197241
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3557503786442075,
+              0.4270572420929674
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 74
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.33166666666666667,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.32702036137228924,
+              0.3458792891680933
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3212628836595635,
+              0.35732355341510846
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 110
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.3383333333333333,
+            "balancedAccuracy": 0.33770300779258616,
+            "confidenceInterval95": [
+              0.30338624199866127,
+              0.378170559912478
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2898473830682734,
+              0.3973185405735061
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 402
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.33166666666666667,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.32702036137228924,
+              0.3458792891680933
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3212628836595635,
+              0.35732355341510846
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 600
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.33166666666666667,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.32702036137228924,
+              0.3458792891680933
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3212628836595635,
+              0.35732355341510846
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.3383333333333333,
+            "balancedAccuracy": 0.3320062470160788,
+            "confidenceInterval95": [
+              0.28754171054800365,
+              0.3830410126918067
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.27051541309895527,
+              0.406052366861481
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 91
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.3383333333333333,
+            "balancedAccuracy": 0.3320062470160788,
+            "confidenceInterval95": [
+              0.28754171054800365,
+              0.3830410126918067
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.27051541309895527,
+              0.406052366861481
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 110
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.33666666666666667,
+            "balancedAccuracy": 0.3401288945516132,
+            "confidenceInterval95": [
+              0.28438747742565423,
+              0.4017754000490246
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2643146872070012,
+              0.4272384623456233
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          }
+        ],
+        "selectedOnDevelopment": "singlePremise",
+        "finalSelectedPredictor": {
+          "featureSet": "singlePremise",
+          "accuracy": 0.3383333333333333,
+          "balancedAccuracy": 0.3320062470160788,
+          "confidenceInterval95": [
+            0.28754171054800365,
+            0.3830410126918067
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.27051541309895527,
+            0.406052366861481
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 91
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 0.3370287865444059,
+          "confidenceInterval95": [
+            0.3189441561552694,
+            0.3611932666092798
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 1,
+          "detected": true
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-order-between-l1",
+            "sampleSize": 70,
+            "rates": {
+              "entailed": 0.4,
+              "refuted": 0.32857142857142857,
+              "underdetermined": 0.2714285714285714
+            }
+          },
+          {
+            "structureFamily": "assessment-order-between-l2",
+            "sampleSize": 60,
+            "rates": {
+              "entailed": 0.31666666666666665,
+              "refuted": 0.4,
+              "underdetermined": 0.2833333333333333
+            }
+          },
+          {
+            "structureFamily": "assessment-order-equality-l1",
+            "sampleSize": 50,
+            "rates": {
+              "entailed": 0.32,
+              "refuted": 0.34,
+              "underdetermined": 0.34
+            }
+          },
+          {
+            "structureFamily": "assessment-order-equality-l2",
+            "sampleSize": 60,
+            "rates": {
+              "entailed": 0.26666666666666666,
+              "refuted": 0.31666666666666665,
+              "underdetermined": 0.4166666666666667
+            }
+          },
+          {
+            "structureFamily": "assessment-order-reserved-double-fork-v1-l3",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.3333333333333333,
+              "refuted": 0.375,
+              "underdetermined": 0.2916666666666667
+            }
+          },
+          {
+            "structureFamily": "assessment-order-reserved-double-fork-v1-l4",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.325,
+              "refuted": 0.31666666666666665,
+              "underdetermined": 0.35833333333333334
+            }
+          },
+          {
+            "structureFamily": "assessment-order-reserved-double-fork-v1-l5",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.3416666666666667,
+              "refuted": 0.3416666666666667,
+              "underdetermined": 0.31666666666666665
+            }
+          }
+        ],
+        "disposition": "cueLimited",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      },
+      "hierarchy": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed",
+          "refuted",
+          "underdetermined"
+        ],
+        "threshold": {
+          "balancedBaseline": 0.3333333333333333,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 0.3833333333333333,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-hierarchy-membership-inclusion-entailed",
+              "training-hierarchy-membership-inclusion-refuted",
+              "training-hierarchy-membership-inclusion-underdetermined",
+              "training-hierarchy-monotonic-exception-entailed",
+              "training-hierarchy-monotonic-exception-refuted",
+              "training-hierarchy-monotonic-exception-underdetermined"
+            ],
+            "baseRates": {
+              "entailed": 0.3333333333333333,
+              "refuted": 0.32,
+              "underdetermined": 0.3466666666666667
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-hierarchy-membership-inclusion-entailed",
+              "development-hierarchy-membership-inclusion-refuted",
+              "development-hierarchy-membership-inclusion-underdetermined",
+              "development-hierarchy-monotonic-exception-entailed",
+              "development-hierarchy-monotonic-exception-refuted",
+              "development-hierarchy-monotonic-exception-underdetermined"
+            ],
+            "baseRates": {
+              "entailed": 0.38333333333333336,
+              "refuted": 0.31,
+              "underdetermined": 0.30666666666666664
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-hierarchy-membership-inclusion-entailed",
+              "assessment-hierarchy-membership-inclusion-refuted",
+              "assessment-hierarchy-membership-inclusion-underdetermined",
+              "assessment-hierarchy-monotonic-exception-entailed",
+              "assessment-hierarchy-monotonic-exception-refuted",
+              "assessment-hierarchy-monotonic-exception-underdetermined"
+            ],
+            "baseRates": {
+              "entailed": 0.365,
+              "refuted": 0.3233333333333333,
+              "underdetermined": 0.31166666666666665
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.6166666666666667,
+            "balancedAccuracy": 0.6666666666666666,
+            "confidenceInterval95": [
+              0.653104302836894,
+              0.6721427382182354
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.6407691549207309,
+              0.6771614511208676
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.31333333333333335,
+            "balancedAccuracy": 0.3246376811594203,
+            "confidenceInterval95": [
+              0.28775574246160696,
+              0.3677926328157653
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2732938277970931,
+              0.38798551802728304
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.315,
+            "balancedAccuracy": 0.3146641732896992,
+            "confidenceInterval95": [
+              0.25451610218514914,
+              0.38187932595444257
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.23323347588194002,
+              0.40960346112758694
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9809615646186586,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9636077037998634,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.30666666666666664,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.32651624205358837,
+              0.34555467743492985
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3203173030894762,
+              0.35670959928961277
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.3516666666666667,
+            "balancedAccuracy": 0.3293478260869565,
+            "confidenceInterval95": [
+              0.28621845892380965,
+              0.37974697547485076
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.26978788634321443,
+              0.4027801403992985
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.30666666666666664,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.32651624205358837,
+              0.34555467743492985
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3203173030894762,
+              0.35670959928961277
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.365,
+            "balancedAccuracy": 0.3653888109708587,
+            "confidenceInterval95": [
+              0.3028732501465737,
+              0.43301329685525597
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2802014281293995,
+              0.4603426224977643
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.6883333333333334,
+            "balancedAccuracy": 0.6666666666666666,
+            "confidenceInterval95": [
+              0.6544477649054524,
+              0.6733765943414154
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.6432921504905992,
+              0.6794819115725876
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.365,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3275869496539246,
+              0.34651577908988757
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3223288161949847,
+              0.35851857727697317
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.33166666666666667,
+            "balancedAccuracy": 0.3193424395730484,
+            "confidenceInterval95": [
+              0.26462212044965827,
+              0.3813446083069698
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.24527667391587693,
+              0.4073159135642492
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.981071170564037,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9638102389180117,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.365,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3275869496539246,
+              0.34651577908988757
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3223288161949847,
+              0.35851857727697317
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.365,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3275869496539246,
+              0.34651577908988757
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3223288161949847,
+              0.35851857727697317
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.31166666666666665,
+            "balancedAccuracy": 0.3049430648141365,
+            "confidenceInterval95": [
+              0.2603035637064716,
+              0.35719366414991893
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.24350335984656493,
+              0.38092747012021494
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.3516666666666667,
+            "balancedAccuracy": 0.34821868132633477,
+            "confidenceInterval95": [
+              0.2865158969326959,
+              0.41578704212450224
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2643398274031919,
+              0.4433081192865062
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          }
+        ],
+        "selectedOnDevelopment": "surfaceLengthAndTokens",
+        "finalSelectedPredictor": {
+          "featureSet": "surfaceLengthAndTokens",
+          "accuracy": 1,
+          "balancedAccuracy": 1,
+          "confidenceInterval95": [
+            0.981071170564037,
+            1
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.9638102389180117,
+            1
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 0
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 0.3245933251955997,
+          "confidenceInterval95": [
+            0.26496907895110655,
+            0.3907468251559261
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 1,
+          "detected": true
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-hierarchy-membership-inclusion-entailed",
+            "sampleSize": 43,
+            "rates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-hierarchy-membership-inclusion-refuted",
+            "sampleSize": 44,
+            "rates": {
+              "entailed": 0,
+              "refuted": 1,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-hierarchy-membership-inclusion-underdetermined",
+            "sampleSize": 33,
+            "rates": {
+              "entailed": 0,
+              "refuted": 0,
+              "underdetermined": 1
+            }
+          },
+          {
+            "structureFamily": "assessment-hierarchy-monotonic-exception-entailed",
+            "sampleSize": 176,
+            "rates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-hierarchy-monotonic-exception-refuted",
+            "sampleSize": 150,
+            "rates": {
+              "entailed": 0,
+              "refuted": 1,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-hierarchy-monotonic-exception-underdetermined",
+            "sampleSize": 154,
+            "rates": {
+              "entailed": 0,
+              "refuted": 0,
+              "underdetermined": 1
+            }
+          }
+        ],
+        "disposition": "cueLimited",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      },
+      "analogy": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed",
+          "refuted"
+        ],
+        "threshold": {
+          "balancedBaseline": 0.5,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 0.55,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-analogy-directed-roles-match",
+              "training-analogy-directed-roles-role-reversal"
+            ],
+            "baseRates": {
+              "entailed": 0.49777777777777776,
+              "refuted": 0.5022222222222222,
+              "underdetermined": 0
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-analogy-directed-roles-match",
+              "development-analogy-directed-roles-role-reversal"
+            ],
+            "baseRates": {
+              "entailed": 0.5166666666666667,
+              "refuted": 0.48333333333333334,
+              "underdetermined": 0
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-analogy-directed-roles-match",
+              "assessment-analogy-directed-roles-role-reversal"
+            ],
+            "baseRates": {
+              "entailed": 0.495,
+              "refuted": 0.505,
+              "underdetermined": 0
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.48333333333333334,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49346314476915454,
+              0.506120284882565
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.48743296366392125,
+              0.5117753541600221
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.5033333333333333,
+            "balancedAccuracy": 0.5066740823136818,
+            "confidenceInterval95": [
+              0.45143806414269827,
+              0.5616576514767444
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4299868248921973,
+              0.5828777248140555
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.48833333333333334,
+            "balancedAccuracy": 0.4853726362625139,
+            "confidenceInterval95": [
+              0.43026318134720404,
+              0.540926372679051
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.40904955908687557,
+              0.5625484793041855
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.4816666666666667,
+            "balancedAccuracy": 0.4899332591768632,
+            "confidenceInterval95": [
+              0.4410250929163313,
+              0.5388896406962989
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4219940308101355,
+              0.5579699137790478
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9873428598865895,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9756576095038991,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.5,
+            "balancedAccuracy": 0.49899888765294775,
+            "confidenceInterval95": [
+              0.44288019976555004,
+              0.5551679400019821
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4211848124935724,
+              0.5769092555157714
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.5116666666666667,
+            "balancedAccuracy": 0.5097330367074527,
+            "confidenceInterval95": [
+              0.4537733453523991,
+              0.5654946728181693
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4320680002502967,
+              0.5870160716265453
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.4666666666666667,
+            "balancedAccuracy": 0.46262513904338154,
+            "confidenceInterval95": [
+              0.408748165804442,
+              0.5175492448201924
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.388156206343786,
+              0.5391056349862677
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.495,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.493615244700201,
+              0.5062599073919573
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4877218830604481,
+              0.5120408409151174
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.485,
+            "balancedAccuracy": 0.48399839983998394,
+            "confidenceInterval95": [
+              0.42914670647987607,
+              0.5392797724100897
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4080248559575338,
+              0.5607977593430399
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.5083333333333333,
+            "balancedAccuracy": 0.5079007900790079,
+            "confidenceInterval95": [
+              0.45179747639641876,
+              0.5638150985345729
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4300414638739509,
+              0.5853963647509214
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.485,
+            "balancedAccuracy": 0.48399839983998394,
+            "confidenceInterval95": [
+              0.42914670647987607,
+              0.5392797724100897
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4080248559575338,
+              0.5607977593430399
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9873553373082438,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9756810421453307,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.49666666666666665,
+            "balancedAccuracy": 0.49744974497449745,
+            "confidenceInterval95": [
+              0.4419341815747796,
+              0.5530102494656844
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.42046082625907744,
+              0.5745255416373447
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.515,
+            "balancedAccuracy": 0.514968163483015,
+            "confidenceInterval95": [
+              0.4585816903513892,
+              0.5709768968024329
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4366687257199511,
+              0.5925410917807048
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.485,
+            "balancedAccuracy": 0.48486515318198486,
+            "confidenceInterval95": [
+              0.42888052766624685,
+              0.5412358958321548
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4073275170828594,
+              0.563145315868296
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "selectedOnDevelopment": "localGraphInvariants",
+        "finalSelectedPredictor": {
+          "featureSet": "localGraphInvariants",
+          "accuracy": 1,
+          "balancedAccuracy": 1,
+          "confidenceInterval95": [
+            0.9873553373082438,
+            1
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.9756810421453307,
+            1
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 0
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 0.5352868620195352,
+          "confidenceInterval95": [
+            0.4831878166369472,
+            0.586444747672872
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 1,
+          "detected": true
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-analogy-directed-roles-match",
+            "sampleSize": 297,
+            "rates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-analogy-directed-roles-role-reversal",
+            "sampleSize": 303,
+            "rates": {
+              "entailed": 0,
+              "refuted": 1,
+              "underdetermined": 0
+            }
+          }
+        ],
+        "disposition": "cueLimited",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      },
+      "coupledFrames": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed"
+        ],
+        "threshold": {
+          "balancedBaseline": 1,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 1,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-coupled-mappingQuantity",
+              "training-coupled-membershipOrder",
+              "training-coupled-temporalSpatial"
+            ],
+            "baseRates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-coupled-mappingQuantity",
+              "development-coupled-membershipOrder",
+              "development-coupled-temporalSpatial"
+            ],
+            "baseRates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-coupled-mappingQuantity",
+              "assessment-coupled-membershipOrder",
+              "assessment-coupled-temporalSpatial"
+            ],
+            "baseRates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9936380666717896,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9876920344025409,
+              0.9999999999999999
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          }
+        ],
+        "selectedOnDevelopment": "conclusionOperator",
+        "finalSelectedPredictor": {
+          "featureSet": "conclusionOperator",
+          "accuracy": 1,
+          "balancedAccuracy": 1,
+          "confidenceInterval95": [
+            0.9936380666717896,
+            1
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.9876920344025409,
+            0.9999999999999999
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 0
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 1,
+          "confidenceInterval95": [
+            0.9936380666717896,
+            1
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 1,
+          "detected": true
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-coupled-mappingQuantity",
+            "sampleSize": 360,
+            "rates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-coupled-membershipOrder",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-coupled-temporalSpatial",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          }
+        ],
+        "disposition": "cueLimited",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      },
+      "proportional": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed",
+          "refuted"
+        ],
+        "threshold": {
+          "balancedBaseline": 0.5,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 0.55,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-proportional-equivalent-ratios-ground-l4",
+              "training-proportional-equivalent-ratios-ground-l5",
+              "training-proportional-exact-scaling-ground-l4",
+              "training-proportional-exact-scaling-ground-l5",
+              "training-proportional-fraction-ratioGreater-ground-l2",
+              "training-proportional-fraction-ratioGreater-ground-l3",
+              "training-proportional-fraction-ratioLess-ground-l2",
+              "training-proportional-fraction-ratioLess-ground-l3",
+              "training-proportional-integer-ratioGreater-ground-l1",
+              "training-proportional-integer-ratioLess-ground-l1"
+            ],
+            "baseRates": {
+              "entailed": 0.5011111111111111,
+              "refuted": 0.4988888888888889,
+              "underdetermined": 0
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-proportional-equivalent-ratios-ground-l1",
+              "development-proportional-equivalent-ratios-ground-l2",
+              "development-proportional-exact-scaling-ground-l3",
+              "development-proportional-exact-scaling-ground-l4",
+              "development-proportional-exact-scaling-ground-l5"
+            ],
+            "baseRates": {
+              "entailed": 0.455,
+              "refuted": 0.545,
+              "underdetermined": 0
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-proportional-equivalent-ratios-ground-l3",
+              "assessment-proportional-equivalent-ratios-ground-l4",
+              "assessment-proportional-equivalent-ratios-ground-l5",
+              "assessment-proportional-exact-scaling-ground-l3",
+              "assessment-proportional-exact-scaling-ground-l4",
+              "assessment-proportional-exact-scaling-ground-l5",
+              "assessment-proportional-fraction-ratioGreater-ground-l1",
+              "assessment-proportional-fraction-ratioGreater-ground-l2",
+              "assessment-proportional-fraction-ratioLess-ground-l1",
+              "assessment-proportional-fraction-ratioLess-ground-l2"
+            ],
+            "baseRates": {
+              "entailed": 0.5116666666666667,
+              "refuted": 0.48833333333333334,
+              "underdetermined": 0
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.455,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49306173638643913,
+              0.5058057995125159
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4866712621079592,
+              0.5111768641644054
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.455,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49306173638643913,
+              0.5058057995125159
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4866712621079592,
+              0.5111768641644054
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.455,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49306173638643913,
+              0.5058057995125159
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4866712621079592,
+              0.5111768641644054
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.455,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49306173638643913,
+              0.5058057995125159
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4866712621079592,
+              0.5111768641644054
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 600
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.455,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49306173638643913,
+              0.5058057995125159
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4866712621079592,
+              0.5111768641644054
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.455,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49306173638643913,
+              0.5058057995125159
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4866712621079592,
+              0.5111768641644054
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.455,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49306173638643913,
+              0.5058057995125159
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4866712621079592,
+              0.5111768641644054
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.555,
+            "balancedAccuracy": 0.5245992539570521,
+            "confidenceInterval95": [
+              0.4829292193169695,
+              0.5664073608963158
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4665626632501466,
+              0.58288395153414
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.48833333333333334,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49352920884404344,
+              0.5061793530853014
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4875584346106183,
+              0.5118876869682789
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.48833333333333334,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49352920884404344,
+              0.5061793530853014
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4875584346106183,
+              0.5118876869682789
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.48833333333333334,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49352920884404344,
+              0.5061793530853014
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4875584346106183,
+              0.5118876869682789
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.48833333333333334,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49352920884404344,
+              0.5061793530853014
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4875584346106183,
+              0.5118876869682789
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 600
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.48833333333333334,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49352920884404344,
+              0.5061793530853014
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4875584346106183,
+              0.5118876869682789
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.48833333333333334,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49352920884404344,
+              0.5061793530853014
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4875584346106183,
+              0.5118876869682789
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.48833333333333334,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49352920884404344,
+              0.5061793530853014
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4875584346106183,
+              0.5118876869682789
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.49,
+            "balancedAccuracy": 0.4938466498426921,
+            "confidenceInterval95": [
+              0.44074956978928453,
+              0.5470033205551873
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4201757998052006,
+              0.5676342918685648
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "selectedOnDevelopment": "previousLabelsAndScheduler",
+        "finalSelectedPredictor": {
+          "featureSet": "previousLabelsAndScheduler",
+          "accuracy": 0.49,
+          "balancedAccuracy": 0.4938466498426921,
+          "confidenceInterval95": [
+            0.44074956978928453,
+            0.5470033205551873
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.4201757998052006,
+            0.5676342918685648
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 1
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 0.5095774366043735,
+          "confidenceInterval95": [
+            0.453275063824396,
+            0.5656480532805448
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 0.5,
+          "detected": false
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-proportional-equivalent-ratios-ground-l3",
+            "sampleSize": 37,
+            "rates": {
+              "entailed": 0.5405405405405406,
+              "refuted": 0.4594594594594595,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-proportional-equivalent-ratios-ground-l4",
+            "sampleSize": 40,
+            "rates": {
+              "entailed": 0.6,
+              "refuted": 0.4,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-proportional-equivalent-ratios-ground-l5",
+            "sampleSize": 49,
+            "rates": {
+              "entailed": 0.40816326530612246,
+              "refuted": 0.5918367346938775,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-proportional-exact-scaling-ground-l3",
+            "sampleSize": 83,
+            "rates": {
+              "entailed": 0.42168674698795183,
+              "refuted": 0.5783132530120482,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-proportional-exact-scaling-ground-l4",
+            "sampleSize": 80,
+            "rates": {
+              "entailed": 0.5875,
+              "refuted": 0.4125,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-proportional-exact-scaling-ground-l5",
+            "sampleSize": 71,
+            "rates": {
+              "entailed": 0.5211267605633803,
+              "refuted": 0.4788732394366197,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-proportional-fraction-ratioGreater-ground-l1",
+            "sampleSize": 62,
+            "rates": {
+              "entailed": 0.5645161290322581,
+              "refuted": 0.43548387096774194,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-proportional-fraction-ratioGreater-ground-l2",
+            "sampleSize": 59,
+            "rates": {
+              "entailed": 0.5084745762711864,
+              "refuted": 0.4915254237288136,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-proportional-fraction-ratioLess-ground-l1",
+            "sampleSize": 58,
+            "rates": {
+              "entailed": 0.4482758620689655,
+              "refuted": 0.5517241379310345,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-proportional-fraction-ratioLess-ground-l2",
+            "sampleSize": 61,
+            "rates": {
+              "entailed": 0.5409836065573771,
+              "refuted": 0.45901639344262296,
+              "underdetermined": 0
+            }
+          }
+        ],
+        "disposition": "cueLimited",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      },
+      "temporalIntervals": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed",
+          "refuted",
+          "underdetermined"
+        ],
+        "threshold": {
+          "balancedBaseline": 0.3333333333333333,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 0.3833333333333333,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-interval-direct-after-l1",
+              "training-interval-direct-before-l1",
+              "training-interval-direct-before-l2",
+              "training-interval-direct-during-l2",
+              "training-interval-direct-during-l3",
+              "training-interval-direct-during-l4",
+              "training-interval-direct-during-l5",
+              "training-interval-direct-finishes-l3",
+              "training-interval-direct-finishes-l4",
+              "training-interval-direct-finishes-l5",
+              "training-interval-direct-starts-l3",
+              "training-interval-direct-starts-l4",
+              "training-interval-direct-starts-l5",
+              "training-interval-transitive-during-l3",
+              "training-interval-transitive-during-l4",
+              "training-interval-transitive-during-l5",
+              "training-interval-transitive-finishes-l3",
+              "training-interval-transitive-finishes-l4",
+              "training-interval-transitive-finishes-l5",
+              "training-interval-transitive-starts-l3",
+              "training-interval-transitive-starts-l4",
+              "training-interval-transitive-starts-l5"
+            ],
+            "baseRates": {
+              "entailed": 0.31777777777777777,
+              "refuted": 0.3522222222222222,
+              "underdetermined": 0.33
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-interval-direct-before-l3",
+              "development-interval-direct-before-l4",
+              "development-interval-direct-before-l5",
+              "development-interval-direct-during-l1",
+              "development-interval-direct-during-l2",
+              "development-interval-direct-finishes-l3",
+              "development-interval-direct-finishes-l4",
+              "development-interval-direct-finishes-l5",
+              "development-interval-direct-overlaps-l1",
+              "development-interval-direct-overlaps-l2",
+              "development-interval-direct-starts-l3",
+              "development-interval-direct-starts-l4",
+              "development-interval-direct-starts-l5",
+              "development-interval-transitive-before-l3",
+              "development-interval-transitive-before-l4",
+              "development-interval-transitive-before-l5",
+              "development-interval-transitive-finishes-l3",
+              "development-interval-transitive-finishes-l4",
+              "development-interval-transitive-finishes-l5",
+              "development-interval-transitive-starts-l3",
+              "development-interval-transitive-starts-l4",
+              "development-interval-transitive-starts-l5"
+            ],
+            "baseRates": {
+              "entailed": 0.3283333333333333,
+              "refuted": 0.3466666666666667,
+              "underdetermined": 0.325
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-interval-direct-after-l1",
+              "assessment-interval-direct-after-l2",
+              "assessment-interval-direct-equals-l1",
+              "assessment-interval-direct-equals-l2",
+              "assessment-interval-direct-equals-l3",
+              "assessment-interval-direct-equals-l4",
+              "assessment-interval-direct-equals-l5",
+              "assessment-interval-direct-finishes-l3",
+              "assessment-interval-direct-finishes-l4",
+              "assessment-interval-direct-finishes-l5",
+              "assessment-interval-direct-starts-l3",
+              "assessment-interval-direct-starts-l4",
+              "assessment-interval-direct-starts-l5",
+              "assessment-interval-transitive-equals-l3",
+              "assessment-interval-transitive-equals-l4",
+              "assessment-interval-transitive-equals-l5",
+              "assessment-interval-transitive-finishes-l3",
+              "assessment-interval-transitive-finishes-l4",
+              "assessment-interval-transitive-finishes-l5",
+              "assessment-interval-transitive-starts-l3",
+              "assessment-interval-transitive-starts-l4",
+              "assessment-interval-transitive-starts-l5"
+            ],
+            "baseRates": {
+              "entailed": 0.33,
+              "refuted": 0.3566666666666667,
+              "underdetermined": 0.31333333333333335
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.31833333333333336,
+            "balancedAccuracy": 0.31340839081955835,
+            "confidenceInterval95": [
+              0.25817936747090026,
+              0.3758547895781735
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.23866889467656194,
+              0.4019425009439499
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 119
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.41833333333333333,
+            "balancedAccuracy": 0.41545945594168937,
+            "confidenceInterval95": [
+              0.36289338176503044,
+              0.4713168384507598
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3430611148882387,
+              0.4941478816294389
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 182
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.4816666666666667,
+            "balancedAccuracy": 0.483974358974359,
+            "confidenceInterval95": [
+              0.45548316500199765,
+              0.5129826508316179
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.44131431614665195,
+              0.5276261512179657
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.3466666666666667,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.32728856529281003,
+              0.34614913743256975
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.32176704023349156,
+              0.35783075043086
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 600
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.3466666666666667,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.32728856529281003,
+              0.34614913743256975
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.32176704023349156,
+              0.35783075043086
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.31833333333333336,
+            "balancedAccuracy": 0.31340839081955835,
+            "confidenceInterval95": [
+              0.25817936747090026,
+              0.3758547895781735
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.23866889467656194,
+              0.4019425009439499
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 119
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.41833333333333333,
+            "balancedAccuracy": 0.41545945594168937,
+            "confidenceInterval95": [
+              0.36289338176503044,
+              0.4713168384507598
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3430611148882387,
+              0.4941478816294389
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 182
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.335,
+            "balancedAccuracy": 0.3308695605015402,
+            "confidenceInterval95": [
+              0.2747699125206886,
+              0.3934983218071572
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2547450198511744,
+              0.4194736731552777
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.355,
+            "balancedAccuracy": 0.3505170013919268,
+            "confidenceInterval95": [
+              0.30493571642154044,
+              0.40189579977536233
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.28733151241261795,
+              0.4247829405998778
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 146
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.45,
+            "balancedAccuracy": 0.44770332073970964,
+            "confidenceInterval95": [
+              0.40255336208707915,
+              0.49489252904637926
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3840627660120681,
+              0.515241542371724
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 225
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.4666666666666667,
+            "balancedAccuracy": 0.4766355140186916,
+            "confidenceInterval95": [
+              0.44845457680710715,
+              0.5053098063406273
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4343440865631633,
+              0.5198839654101843
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.3566666666666667,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3274550560284782,
+              0.346352533436083
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3220803812130932,
+              0.35821221262174685
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 600
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.3566666666666667,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.3274550560284782,
+              0.346352533436083
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3220803812130932,
+              0.35821221262174685
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.355,
+            "balancedAccuracy": 0.3505170013919268,
+            "confidenceInterval95": [
+              0.30493571642154044,
+              0.40189579977536233
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.28733151241261795,
+              0.4247829405998778
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 225
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.45,
+            "balancedAccuracy": 0.44770332073970964,
+            "confidenceInterval95": [
+              0.40255336208707915,
+              0.49489252904637926
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3840627660120681,
+              0.515241542371724
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 225
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.345,
+            "balancedAccuracy": 0.3393633424454661,
+            "confidenceInterval95": [
+              0.28264596169186046,
+              0.40234888370428745
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2623282588921799,
+              0.42837689486638225
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          }
+        ],
+        "selectedOnDevelopment": "entityFrequenciesAndPositions",
+        "finalSelectedPredictor": {
+          "featureSet": "entityFrequenciesAndPositions",
+          "accuracy": 0.4666666666666667,
+          "balancedAccuracy": 0.4766355140186916,
+          "confidenceInterval95": [
+            0.44845457680710715,
+            0.5053098063406273
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.4343440865631633,
+            0.5198839654101843
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 0
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 0.3473677585827118,
+          "confidenceInterval95": [
+            0.30612588680525127,
+            0.39496374315045624
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 1,
+          "detected": true
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-interval-direct-after-l1",
+            "sampleSize": 63,
+            "rates": {
+              "entailed": 0.2857142857142857,
+              "refuted": 0.31746031746031744,
+              "underdetermined": 0.3968253968253968
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-after-l2",
+            "sampleSize": 57,
+            "rates": {
+              "entailed": 0.2982456140350877,
+              "refuted": 0.3684210526315789,
+              "underdetermined": 0.3333333333333333
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-equals-l1",
+            "sampleSize": 57,
+            "rates": {
+              "entailed": 0.38596491228070173,
+              "refuted": 0.38596491228070173,
+              "underdetermined": 0.22807017543859648
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-equals-l2",
+            "sampleSize": 63,
+            "rates": {
+              "entailed": 0.36507936507936506,
+              "refuted": 0.2698412698412698,
+              "underdetermined": 0.36507936507936506
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-equals-l3",
+            "sampleSize": 17,
+            "rates": {
+              "entailed": 0.17647058823529413,
+              "refuted": 0.29411764705882354,
+              "underdetermined": 0.5294117647058824
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-equals-l4",
+            "sampleSize": 18,
+            "rates": {
+              "entailed": 0.2777777777777778,
+              "refuted": 0.1111111111111111,
+              "underdetermined": 0.6111111111111112
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-equals-l5",
+            "sampleSize": 15,
+            "rates": {
+              "entailed": 0.2,
+              "refuted": 0.4,
+              "underdetermined": 0.4
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-finishes-l3",
+            "sampleSize": 27,
+            "rates": {
+              "entailed": 0.25925925925925924,
+              "refuted": 0.3333333333333333,
+              "underdetermined": 0.4074074074074074
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-finishes-l4",
+            "sampleSize": 19,
+            "rates": {
+              "entailed": 0.15789473684210525,
+              "refuted": 0.2631578947368421,
+              "underdetermined": 0.5789473684210527
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-finishes-l5",
+            "sampleSize": 21,
+            "rates": {
+              "entailed": 0.14285714285714285,
+              "refuted": 0.047619047619047616,
+              "underdetermined": 0.8095238095238095
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-starts-l3",
+            "sampleSize": 23,
+            "rates": {
+              "entailed": 0.13043478260869565,
+              "refuted": 0.34782608695652173,
+              "underdetermined": 0.5217391304347826
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-starts-l4",
+            "sampleSize": 20,
+            "rates": {
+              "entailed": 0.05,
+              "refuted": 0.2,
+              "underdetermined": 0.75
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-direct-starts-l5",
+            "sampleSize": 25,
+            "rates": {
+              "entailed": 0.28,
+              "refuted": 0.08,
+              "underdetermined": 0.64
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-transitive-equals-l3",
+            "sampleSize": 15,
+            "rates": {
+              "entailed": 0.6666666666666666,
+              "refuted": 0.3333333333333333,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-transitive-equals-l4",
+            "sampleSize": 21,
+            "rates": {
+              "entailed": 0.47619047619047616,
+              "refuted": 0.5238095238095238,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-transitive-equals-l5",
+            "sampleSize": 19,
+            "rates": {
+              "entailed": 0.42105263157894735,
+              "refuted": 0.5789473684210527,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-transitive-finishes-l3",
+            "sampleSize": 18,
+            "rates": {
+              "entailed": 0.5,
+              "refuted": 0.5,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-transitive-finishes-l4",
+            "sampleSize": 19,
+            "rates": {
+              "entailed": 0.3157894736842105,
+              "refuted": 0.6842105263157895,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-transitive-finishes-l5",
+            "sampleSize": 20,
+            "rates": {
+              "entailed": 0.5,
+              "refuted": 0.5,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-transitive-starts-l3",
+            "sampleSize": 20,
+            "rates": {
+              "entailed": 0.45,
+              "refuted": 0.55,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-transitive-starts-l4",
+            "sampleSize": 23,
+            "rates": {
+              "entailed": 0.43478260869565216,
+              "refuted": 0.5652173913043478,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-interval-transitive-starts-l5",
+            "sampleSize": 20,
+            "rates": {
+              "entailed": 0.55,
+              "refuted": 0.45,
+              "underdetermined": 0
+            }
+          }
+        ],
+        "disposition": "cueLimited",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      },
+      "contextScope": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed",
+          "refuted",
+          "underdetermined"
+        ],
+        "threshold": {
+          "balancedBaseline": 0.3333333333333333,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 0.3833333333333333,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-scope-explicit-binding",
+              "training-scope-forall-exists-vs-exists-forall",
+              "training-scope-operator-comprehension",
+              "training-scope-two-context-role-switch-sees-l4",
+              "training-scope-two-context-role-switch-sees-l5",
+              "training-scope-two-context-role-switch-signalsTo-l3"
+            ],
+            "baseRates": {
+              "entailed": 0.37333333333333335,
+              "refuted": 0.38555555555555554,
+              "underdetermined": 0.2411111111111111
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-scope-explicit-binding",
+              "development-scope-forall-exists-vs-exists-forall",
+              "development-scope-operator-comprehension",
+              "development-scope-two-context-role-switch-sees-l4",
+              "development-scope-two-context-role-switch-sees-l5",
+              "development-scope-two-context-role-switch-signalsTo-l3"
+            ],
+            "baseRates": {
+              "entailed": 0.385,
+              "refuted": 0.3466666666666667,
+              "underdetermined": 0.2683333333333333
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-scope-explicit-binding",
+              "assessment-scope-forall-exists-vs-exists-forall",
+              "assessment-scope-operator-comprehension",
+              "assessment-scope-two-context-role-switch-sees-l4",
+              "assessment-scope-two-context-role-switch-sees-l5",
+              "assessment-scope-two-context-role-switch-signalsTo-l3"
+            ],
+            "baseRates": {
+              "entailed": 0.37833333333333335,
+              "refuted": 0.35333333333333333,
+              "underdetermined": 0.2683333333333333
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.7316666666666667,
+            "balancedAccuracy": 0.6666666666666666,
+            "confidenceInterval95": [
+              0.655169145224134,
+              0.674434932282466
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.644649596681896,
+              0.6814596103443727
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.37166666666666665,
+            "balancedAccuracy": 0.3307248307248307,
+            "confidenceInterval95": [
+              0.2918259226108608,
+              0.37775058310890386
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.27687590520726585,
+              0.4000451188303451
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.36333333333333334,
+            "balancedAccuracy": 0.3290945165945166,
+            "confidenceInterval95": [
+              0.28571736028755,
+              0.3804526196814552
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.2691171487284793,
+              0.404270061233085
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9807342129416682,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9631899863375232,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.3466666666666667,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.32728856529281003,
+              0.346554352351142
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.32176704023349156,
+              0.3585770538959683
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.37166666666666665,
+            "balancedAccuracy": 0.3307248307248307,
+            "confidenceInterval95": [
+              0.2918259226108608,
+              0.37775058310890386
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.27687590520726585,
+              0.4000451188303451
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.37166666666666665,
+            "balancedAccuracy": 0.3307248307248307,
+            "confidenceInterval95": [
+              0.2918259226108608,
+              0.37775058310890386
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.27687590520726585,
+              0.4000451188303451
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.37833333333333335,
+            "balancedAccuracy": 0.3414432789432789,
+            "confidenceInterval95": [
+              0.2983719199592143,
+              0.39211434596565775
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.28177641618804966,
+              0.41557689798017217
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.7316666666666667,
+            "balancedAccuracy": 0.6666666666666666,
+            "confidenceInterval95": [
+              0.6551866827608379,
+              0.674434932282466
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.6446821117451648,
+              0.6814596103443727
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.38166666666666665,
+            "balancedAccuracy": 0.34260798492782535,
+            "confidenceInterval95": [
+              0.3034576488294915,
+              0.3893815533117419
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.28827960205314773,
+              0.411446219263001
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.3616666666666667,
+            "balancedAccuracy": 0.32831158396364946,
+            "confidenceInterval95": [
+              0.28493884309928136,
+              0.37966701071360515
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.268340605320818,
+              0.40348485634686626
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.980751750478372,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.963222501400792,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.37833333333333335,
+            "balancedAccuracy": 0.3333333333333333,
+            "confidenceInterval95": [
+              0.32778609516944374,
+              0.34703434469107175
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.32270427396204376,
+              0.3594817725612518
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.38166666666666665,
+            "balancedAccuracy": 0.34260798492782535,
+            "confidenceInterval95": [
+              0.3034576488294915,
+              0.3893815533117419
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.28827960205314773,
+              0.411446219263001
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.38166666666666665,
+            "balancedAccuracy": 0.34260798492782535,
+            "confidenceInterval95": [
+              0.3034576488294915,
+              0.3893815533117419
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.28827960205314773,
+              0.411446219263001
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.37333333333333335,
+            "balancedAccuracy": 0.33651262017565725,
+            "confidenceInterval95": [
+              0.29505578935799553,
+              0.38575191555143173
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.279092678359092,
+              0.4087489033577721
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "selectedOnDevelopment": "surfaceLengthAndTokens",
+        "finalSelectedPredictor": {
+          "featureSet": "surfaceLengthAndTokens",
+          "accuracy": 1,
+          "balancedAccuracy": 1,
+          "confidenceInterval95": [
+            0.980751750478372,
+            1
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.963222501400792,
+            1
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 0
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 0.3333402598841881,
+          "confidenceInterval95": [
+            0.2897112868878485,
+            0.38476272600457057
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 1,
+          "detected": true
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-scope-explicit-binding",
+            "sampleSize": 76,
+            "rates": {
+              "entailed": 0.5789473684210527,
+              "refuted": 0.42105263157894735,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-scope-forall-exists-vs-exists-forall",
+            "sampleSize": 44,
+            "rates": {
+              "entailed": 0,
+              "refuted": 0,
+              "underdetermined": 1
+            }
+          },
+          {
+            "structureFamily": "assessment-scope-operator-comprehension",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.49166666666666664,
+              "refuted": 0.5083333333333333,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-scope-two-context-role-switch-sees-l4",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.3416666666666667,
+              "refuted": 0.325,
+              "underdetermined": 0.3333333333333333
+            }
+          },
+          {
+            "structureFamily": "assessment-scope-two-context-role-switch-sees-l5",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.35,
+              "refuted": 0.38333333333333336,
+              "underdetermined": 0.26666666666666666
+            }
+          },
+          {
+            "structureFamily": "assessment-scope-two-context-role-switch-signalsTo-l3",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.3416666666666667,
+              "refuted": 0.2833333333333333,
+              "underdetermined": 0.375
+            }
+          }
+        ],
+        "disposition": "cueLimited",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      },
+      "graphStructure": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed",
+          "refuted"
+        ],
+        "threshold": {
+          "balancedBaseline": 0.5,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 0.55,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-graph-degree-matched-2cycle-vs-path",
+              "training-graph-multi-label-map"
+            ],
+            "baseRates": {
+              "entailed": 0.4,
+              "refuted": 0.6,
+              "underdetermined": 0
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-graph-degree-matched-2cycle-vs-path",
+              "development-graph-multi-label-map"
+            ],
+            "baseRates": {
+              "entailed": 0.4,
+              "refuted": 0.6,
+              "underdetermined": 0
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-graph-degree-matched-2cycle-vs-path",
+              "assessment-graph-multi-label-map"
+            ],
+            "baseRates": {
+              "entailed": 0.4,
+              "refuted": 0.6,
+              "underdetermined": 0
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.6,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49472077959199834,
+              0.5078772448999679
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.48982683597071075,
+              0.5151060695208602
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 10
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.605,
+            "balancedAccuracy": 0.5340277777777778,
+            "confidenceInterval95": [
+              0.4940260741981501,
+              0.5749779865175502
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.47847867848913517,
+              0.5913574774306363
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.6,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49472077959199834,
+              0.5078772448999679
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.48982683597071075,
+              0.5151060695208602
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 3
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 1,
+            "balancedAccuracy": 1,
+            "confidenceInterval95": [
+              0.9868435346920305,
+              1
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.9747207664498505,
+              1
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.6066666666666667,
+            "balancedAccuracy": 0.5694444444444444,
+            "confidenceInterval95": [
+              0.516366549169889,
+              0.6216620953204581
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4955551730080195,
+              0.6416588482652111
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          }
+        ],
+        "selectedOnDevelopment": "premiseOperatorCounts",
+        "finalSelectedPredictor": {
+          "featureSet": "premiseOperatorCounts",
+          "accuracy": 1,
+          "balancedAccuracy": 1,
+          "confidenceInterval95": [
+            0.9868435346920305,
+            1
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.9747207664498505,
+            1
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 0
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 0.5,
+          "confidenceInterval95": [
+            0.49472077959199834,
+            0.5078772448999679
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 1,
+          "detected": true
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-graph-degree-matched-2cycle-vs-path",
+            "sampleSize": 360,
+            "rates": {
+              "entailed": 0,
+              "refuted": 1,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-graph-multi-label-map",
+            "sampleSize": 240,
+            "rates": {
+              "entailed": 1,
+              "refuted": 0,
+              "underdetermined": 0
+            }
+          }
+        ],
+        "disposition": "cueLimited",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      },
+      "transformations": {
+        "configVersion": "cue-audit/1.0.0",
+        "labels": [
+          "entailed",
+          "refuted"
+        ],
+        "threshold": {
+          "balancedBaseline": 0.5,
+          "maximumExcess": 0.05,
+          "engineeringThreshold": 0.55,
+          "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+        },
+        "splits": {
+          "training": {
+            "sampleSize": 900,
+            "structureFamilies": [
+              "training-transform-control-l1",
+              "training-transform-control-l2",
+              "training-transform-control-l4",
+              "training-transform-control-l5",
+              "training-transform-order-sensitive-l3",
+              "training-transform-order-sensitive-l4",
+              "training-transform-order-sensitive-l5"
+            ],
+            "baseRates": {
+              "entailed": 0.5044444444444445,
+              "refuted": 0.4955555555555556,
+              "underdetermined": 0
+            }
+          },
+          "development": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "development-transform-control-l1",
+              "development-transform-control-l2",
+              "development-transform-control-l4",
+              "development-transform-control-l5",
+              "development-transform-order-sensitive-l3",
+              "development-transform-order-sensitive-l4",
+              "development-transform-order-sensitive-l5"
+            ],
+            "baseRates": {
+              "entailed": 0.47,
+              "refuted": 0.53,
+              "underdetermined": 0
+            }
+          },
+          "test": {
+            "sampleSize": 600,
+            "structureFamilies": [
+              "assessment-transform-control-l1",
+              "assessment-transform-control-l2",
+              "assessment-transform-control-l4",
+              "assessment-transform-control-l5",
+              "assessment-transform-order-sensitive-l3",
+              "assessment-transform-order-sensitive-l5"
+            ],
+            "baseRates": {
+              "entailed": 0.525,
+              "refuted": 0.475,
+              "underdetermined": 0
+            }
+          }
+        },
+        "developmentPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.47,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.4932801943453997,
+              0.5059681532778858
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.48708566022047306,
+              0.5114859239080402
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.4766666666666667,
+            "balancedAccuracy": 0.5048842499665462,
+            "confidenceInterval95": [
+              0.48453995832347174,
+              0.5243976054985545
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4753216868849877,
+              0.5328649109458871
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 553
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.49333333333333335,
+            "balancedAccuracy": 0.499330924662117,
+            "confidenceInterval95": [
+              0.444090097521158,
+              0.5544384600780008
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4226716702297038,
+              0.5757372618357149
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.4766666666666667,
+            "balancedAccuracy": 0.5048842499665462,
+            "confidenceInterval95": [
+              0.48453995832347174,
+              0.5243976054985545
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4753216868849877,
+              0.5328649109458871
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 553
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.47,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.4932801943453997,
+              0.5059681532778858
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.48708566022047306,
+              0.5114859239080402
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.47,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.4932801943453997,
+              0.5059681532778858
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.48708566022047306,
+              0.5114859239080402
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.47,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.4932801943453997,
+              0.5059681532778858
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.48708566022047306,
+              0.5114859239080402
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 600
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.505,
+            "balancedAccuracy": 0.5169610598153352,
+            "confidenceInterval95": [
+              0.46497130900990913,
+              0.5682207228587104
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.44458883099253776,
+              0.5879360677183022
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 1
+          }
+        ],
+        "finalHeldOutPredictors": [
+          {
+            "featureSet": "conclusionOperator",
+            "accuracy": 0.475,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49334998836732663,
+              0.5060243079949417
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.48721812549245946,
+              0.5115927773974678
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "premiseOperatorCounts",
+            "accuracy": 0.4816666666666667,
+            "balancedAccuracy": 0.4949874686716792,
+            "confidenceInterval95": [
+              0.44714148288049654,
+              0.5426271203403774
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4284314281718503,
+              0.5611542774973692
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 372
+          },
+          {
+            "featureSet": "entityFrequenciesAndPositions",
+            "accuracy": 0.475,
+            "balancedAccuracy": 0.4799498746867168,
+            "confidenceInterval95": [
+              0.42500541904465783,
+              0.5352786875384525
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.40383969275392506,
+              0.5568020510024269
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "surfaceLengthAndTokens",
+            "accuracy": 0.4816666666666667,
+            "balancedAccuracy": 0.4949874686716792,
+            "confidenceInterval95": [
+              0.44714148288049654,
+              0.5426271203403774
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4284314281718503,
+              0.5611542774973692
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 372
+          },
+          {
+            "featureSet": "localGraphInvariants",
+            "accuracy": 0.475,
+            "balancedAccuracy": 0.5,
+            "confidenceInterval95": [
+              0.49334998836732663,
+              0.5060243079949417
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.48721812549245946,
+              0.5115927773974678
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          },
+          {
+            "featureSet": "singlePremise",
+            "accuracy": 0.48333333333333334,
+            "balancedAccuracy": 0.4928989139515455,
+            "confidenceInterval95": [
+              0.44082105174173264,
+              0.5449173702863278
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.4205928586267342,
+              0.5650961661067427
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 415
+          },
+          {
+            "featureSet": "twoPremises",
+            "accuracy": 0.49833333333333335,
+            "balancedAccuracy": 0.49331662489557226,
+            "confidenceInterval95": [
+              0.4383300275773839,
+              0.548598195587048
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.41712044543662286,
+              0.5700772283781806
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 240
+          },
+          {
+            "featureSet": "previousLabelsAndScheduler",
+            "accuracy": 0.47333333333333333,
+            "balancedAccuracy": 0.4726817042606516,
+            "confidenceInterval95": [
+              0.4168669757606921,
+              0.5292052234516247
+            ],
+            "bonferroniConfidenceInterval95": [
+              0.3954666152799732,
+              0.5512595351497861
+            ],
+            "sampleSize": 600,
+            "uncoveredFeaturePatterns": 0
+          }
+        ],
+        "selectedOnDevelopment": "previousLabelsAndScheduler",
+        "finalSelectedPredictor": {
+          "featureSet": "previousLabelsAndScheduler",
+          "accuracy": 0.47333333333333333,
+          "balancedAccuracy": 0.4726817042606516,
+          "confidenceInterval95": [
+            0.4168669757606921,
+            0.5292052234516247
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.3954666152799732,
+            0.5512595351497861
+          ],
+          "sampleSize": 600,
+          "uncoveredFeaturePatterns": 0
+        },
+        "multipleSearches": 8,
+        "negativeControl": {
+          "shuffledLabelBalancedAccuracy": 0.49298245614035086,
+          "confidenceInterval95": [
+            0.4370119256751951,
+            0.5491813671745533
+          ],
+          "passed": true
+        },
+        "leakyControl": {
+          "detectedBalancedAccuracy": 0.5090225563909775,
+          "detected": false
+        },
+        "conditionalDistributions": [
+          {
+            "structureFamily": "assessment-transform-control-l1",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.5083333333333333,
+              "refuted": 0.49166666666666664,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-transform-control-l2",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.5583333333333333,
+              "refuted": 0.44166666666666665,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-transform-control-l4",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.49166666666666664,
+              "refuted": 0.5083333333333333,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-transform-control-l5",
+            "sampleSize": 50,
+            "rates": {
+              "entailed": 0.54,
+              "refuted": 0.46,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-transform-order-sensitive-l3",
+            "sampleSize": 120,
+            "rates": {
+              "entailed": 0.48333333333333334,
+              "refuted": 0.5166666666666667,
+              "underdetermined": 0
+            }
+          },
+          {
+            "structureFamily": "assessment-transform-order-sensitive-l5",
+            "sampleSize": 70,
+            "rates": {
+              "entailed": 0.6142857142857143,
+              "refuted": 0.38571428571428573,
+              "underdetermined": 0
+            }
+          }
+        ],
+        "disposition": "cueLimited",
+        "limitationsRu": [
+          "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+          "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+          "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+        ]
+      }
+    },
+    "pooled": {
+      "configVersion": "cue-audit/1.0.0",
+      "labels": [
+        "entailed",
+        "refuted",
+        "underdetermined"
+      ],
+      "threshold": {
+        "balancedBaseline": 0.3333333333333333,
+        "maximumExcess": 0.05,
+        "engineeringThreshold": 0.3833333333333333,
+        "interpretationRu": "Порог — инженерный фильтр поверхностных подсказок, а не доказательство их отсутствия и не научная оценка переноса."
+      },
+      "splits": {
+        "training": {
+          "sampleSize": 9000,
+          "structureFamilies": [
+            "training-analogy-directed-roles-match",
+            "training-analogy-directed-roles-role-reversal",
+            "training-categorical-branch-all",
+            "training-categorical-chain-all",
+            "training-categorical-chain-no",
+            "training-categorical-chain-some",
+            "training-categorical-chain-someNot",
+            "training-coupled-mappingQuantity",
+            "training-coupled-membershipOrder",
+            "training-coupled-temporalSpatial",
+            "training-graph-degree-matched-2cycle-vs-path",
+            "training-graph-multi-label-map",
+            "training-hierarchy-membership-inclusion-entailed",
+            "training-hierarchy-membership-inclusion-refuted",
+            "training-hierarchy-membership-inclusion-underdetermined",
+            "training-hierarchy-monotonic-exception-entailed",
+            "training-hierarchy-monotonic-exception-refuted",
+            "training-hierarchy-monotonic-exception-underdetermined",
+            "training-interval-direct-after-l1",
+            "training-interval-direct-before-l1",
+            "training-interval-direct-before-l2",
+            "training-interval-direct-during-l2",
+            "training-interval-direct-during-l3",
+            "training-interval-direct-during-l4",
+            "training-interval-direct-during-l5",
+            "training-interval-direct-finishes-l3",
+            "training-interval-direct-finishes-l4",
+            "training-interval-direct-finishes-l5",
+            "training-interval-direct-starts-l3",
+            "training-interval-direct-starts-l4",
+            "training-interval-direct-starts-l5",
+            "training-interval-transitive-during-l3",
+            "training-interval-transitive-during-l4",
+            "training-interval-transitive-during-l5",
+            "training-interval-transitive-finishes-l3",
+            "training-interval-transitive-finishes-l4",
+            "training-interval-transitive-finishes-l5",
+            "training-interval-transitive-starts-l3",
+            "training-interval-transitive-starts-l4",
+            "training-interval-transitive-starts-l5",
+            "training-order-adjacency-l3",
+            "training-order-adjacency-l4",
+            "training-order-adjacency-l5",
+            "training-order-between-l3",
+            "training-order-between-l4",
+            "training-order-between-l5",
+            "training-order-left-chain-l2",
+            "training-order-non-strict-chain-l2",
+            "training-order-partial-diamond-l3",
+            "training-order-partial-diamond-l4",
+            "training-order-partial-diamond-l5",
+            "training-order-strict-chain-l1",
+            "training-order-strict-chain-l2",
+            "training-proportional-equivalent-ratios-ground-l4",
+            "training-proportional-equivalent-ratios-ground-l5",
+            "training-proportional-exact-scaling-ground-l4",
+            "training-proportional-exact-scaling-ground-l5",
+            "training-proportional-fraction-ratioGreater-ground-l2",
+            "training-proportional-fraction-ratioGreater-ground-l3",
+            "training-proportional-fraction-ratioLess-ground-l2",
+            "training-proportional-fraction-ratioLess-ground-l3",
+            "training-proportional-integer-ratioGreater-ground-l1",
+            "training-proportional-integer-ratioLess-ground-l1",
+            "training-scope-explicit-binding",
+            "training-scope-forall-exists-vs-exists-forall",
+            "training-scope-operator-comprehension",
+            "training-scope-two-context-role-switch-sees-l4",
+            "training-scope-two-context-role-switch-sees-l5",
+            "training-scope-two-context-role-switch-signalsTo-l3",
+            "training-transform-control-l1",
+            "training-transform-control-l2",
+            "training-transform-control-l4",
+            "training-transform-control-l5",
+            "training-transform-order-sensitive-l3",
+            "training-transform-order-sensitive-l4",
+            "training-transform-order-sensitive-l5"
+          ],
+          "baseRates": {
+            "entailed": 0.4597777777777778,
+            "refuted": 0.382,
+            "underdetermined": 0.1582222222222222
+          }
+        },
+        "development": {
+          "sampleSize": 6000,
+          "structureFamilies": [
+            "development-analogy-directed-roles-match",
+            "development-analogy-directed-roles-role-reversal",
+            "development-categorical-branch-all",
+            "development-categorical-chain-all",
+            "development-categorical-chain-no",
+            "development-categorical-chain-some",
+            "development-categorical-chain-someNot",
+            "development-coupled-mappingQuantity",
+            "development-coupled-membershipOrder",
+            "development-coupled-temporalSpatial",
+            "development-graph-degree-matched-2cycle-vs-path",
+            "development-graph-multi-label-map",
+            "development-hierarchy-membership-inclusion-entailed",
+            "development-hierarchy-membership-inclusion-refuted",
+            "development-hierarchy-membership-inclusion-underdetermined",
+            "development-hierarchy-monotonic-exception-entailed",
+            "development-hierarchy-monotonic-exception-refuted",
+            "development-hierarchy-monotonic-exception-underdetermined",
+            "development-interval-direct-before-l3",
+            "development-interval-direct-before-l4",
+            "development-interval-direct-before-l5",
+            "development-interval-direct-during-l1",
+            "development-interval-direct-during-l2",
+            "development-interval-direct-finishes-l3",
+            "development-interval-direct-finishes-l4",
+            "development-interval-direct-finishes-l5",
+            "development-interval-direct-overlaps-l1",
+            "development-interval-direct-overlaps-l2",
+            "development-interval-direct-starts-l3",
+            "development-interval-direct-starts-l4",
+            "development-interval-direct-starts-l5",
+            "development-interval-transitive-before-l3",
+            "development-interval-transitive-before-l4",
+            "development-interval-transitive-before-l5",
+            "development-interval-transitive-finishes-l3",
+            "development-interval-transitive-finishes-l4",
+            "development-interval-transitive-finishes-l5",
+            "development-interval-transitive-starts-l3",
+            "development-interval-transitive-starts-l4",
+            "development-interval-transitive-starts-l5",
+            "development-order-adjacency-l1",
+            "development-order-adjacency-l2",
+            "development-order-between-l3",
+            "development-order-between-l4",
+            "development-order-between-l5",
+            "development-order-cyclic-clockwise-l3",
+            "development-order-cyclic-clockwise-l4",
+            "development-order-cyclic-clockwise-l5",
+            "development-order-exact-displacement-l1",
+            "development-order-exact-displacement-l2",
+            "development-order-partial-diamond-l3",
+            "development-order-partial-diamond-l4",
+            "development-order-partial-diamond-l5",
+            "development-proportional-equivalent-ratios-ground-l1",
+            "development-proportional-equivalent-ratios-ground-l2",
+            "development-proportional-exact-scaling-ground-l3",
+            "development-proportional-exact-scaling-ground-l4",
+            "development-proportional-exact-scaling-ground-l5",
+            "development-scope-explicit-binding",
+            "development-scope-forall-exists-vs-exists-forall",
+            "development-scope-operator-comprehension",
+            "development-scope-two-context-role-switch-sees-l4",
+            "development-scope-two-context-role-switch-sees-l5",
+            "development-scope-two-context-role-switch-signalsTo-l3",
+            "development-transform-control-l1",
+            "development-transform-control-l2",
+            "development-transform-control-l4",
+            "development-transform-control-l5",
+            "development-transform-order-sensitive-l3",
+            "development-transform-order-sensitive-l4",
+            "development-transform-order-sensitive-l5"
+          ],
+          "baseRates": {
+            "entailed": 0.4625,
+            "refuted": 0.38,
+            "underdetermined": 0.1575
+          }
+        },
+        "test": {
+          "sampleSize": 6000,
+          "structureFamilies": [
+            "assessment-analogy-directed-roles-match",
+            "assessment-analogy-directed-roles-role-reversal",
+            "assessment-categorical-reserved-mixed-witness-v1",
+            "assessment-coupled-mappingQuantity",
+            "assessment-coupled-membershipOrder",
+            "assessment-coupled-temporalSpatial",
+            "assessment-graph-degree-matched-2cycle-vs-path",
+            "assessment-graph-multi-label-map",
+            "assessment-hierarchy-membership-inclusion-entailed",
+            "assessment-hierarchy-membership-inclusion-refuted",
+            "assessment-hierarchy-membership-inclusion-underdetermined",
+            "assessment-hierarchy-monotonic-exception-entailed",
+            "assessment-hierarchy-monotonic-exception-refuted",
+            "assessment-hierarchy-monotonic-exception-underdetermined",
+            "assessment-interval-direct-after-l1",
+            "assessment-interval-direct-after-l2",
+            "assessment-interval-direct-equals-l1",
+            "assessment-interval-direct-equals-l2",
+            "assessment-interval-direct-equals-l3",
+            "assessment-interval-direct-equals-l4",
+            "assessment-interval-direct-equals-l5",
+            "assessment-interval-direct-finishes-l3",
+            "assessment-interval-direct-finishes-l4",
+            "assessment-interval-direct-finishes-l5",
+            "assessment-interval-direct-starts-l3",
+            "assessment-interval-direct-starts-l4",
+            "assessment-interval-direct-starts-l5",
+            "assessment-interval-transitive-equals-l3",
+            "assessment-interval-transitive-equals-l4",
+            "assessment-interval-transitive-equals-l5",
+            "assessment-interval-transitive-finishes-l3",
+            "assessment-interval-transitive-finishes-l4",
+            "assessment-interval-transitive-finishes-l5",
+            "assessment-interval-transitive-starts-l3",
+            "assessment-interval-transitive-starts-l4",
+            "assessment-interval-transitive-starts-l5",
+            "assessment-order-between-l1",
+            "assessment-order-between-l2",
+            "assessment-order-equality-l1",
+            "assessment-order-equality-l2",
+            "assessment-order-reserved-double-fork-v1-l3",
+            "assessment-order-reserved-double-fork-v1-l4",
+            "assessment-order-reserved-double-fork-v1-l5",
+            "assessment-proportional-equivalent-ratios-ground-l3",
+            "assessment-proportional-equivalent-ratios-ground-l4",
+            "assessment-proportional-equivalent-ratios-ground-l5",
+            "assessment-proportional-exact-scaling-ground-l3",
+            "assessment-proportional-exact-scaling-ground-l4",
+            "assessment-proportional-exact-scaling-ground-l5",
+            "assessment-proportional-fraction-ratioGreater-ground-l1",
+            "assessment-proportional-fraction-ratioGreater-ground-l2",
+            "assessment-proportional-fraction-ratioLess-ground-l1",
+            "assessment-proportional-fraction-ratioLess-ground-l2",
+            "assessment-scope-explicit-binding",
+            "assessment-scope-forall-exists-vs-exists-forall",
+            "assessment-scope-operator-comprehension",
+            "assessment-scope-two-context-role-switch-sees-l4",
+            "assessment-scope-two-context-role-switch-sees-l5",
+            "assessment-scope-two-context-role-switch-signalsTo-l3",
+            "assessment-transform-control-l1",
+            "assessment-transform-control-l2",
+            "assessment-transform-control-l4",
+            "assessment-transform-control-l5",
+            "assessment-transform-order-sensitive-l3",
+            "assessment-transform-order-sensitive-l5"
+          ],
+          "baseRates": {
+            "entailed": 0.4676666666666667,
+            "refuted": 0.3898333333333333,
+            "underdetermined": 0.1425
+          }
+        }
+      },
+      "developmentPredictors": [
+        {
+          "featureSet": "conclusionOperator",
+          "accuracy": 0.54,
+          "balancedAccuracy": 0.5026954147129585,
+          "confidenceInterval95": [
+            0.4797113799080616,
+            0.5259021784704297
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.4707286631674521,
+            0.5350933257229997
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 277
+        },
+        {
+          "featureSet": "premiseOperatorCounts",
+          "accuracy": 0.5548333333333333,
+          "balancedAccuracy": 0.5326621232761584,
+          "confidenceInterval95": [
+            0.5110352588405175,
+            0.5541881829332757
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.5024980803824792,
+            0.5626305096448173
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 852
+        },
+        {
+          "featureSet": "entityFrequenciesAndPositions",
+          "accuracy": 0.5443333333333333,
+          "balancedAccuracy": 0.5251720642948713,
+          "confidenceInterval95": [
+            0.5019969702195344,
+            0.5483074841673754
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.4928698683073675,
+            0.557396998954454
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 10
+        },
+        {
+          "featureSet": "surfaceLengthAndTokens",
+          "accuracy": 0.6725,
+          "balancedAccuracy": 0.6077122485894416,
+          "confidenceInterval95": [
+            0.5866978376185058,
+            0.6285599712854558
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.5783808759905588,
+            0.636718661216699
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 2556
+        },
+        {
+          "featureSet": "localGraphInvariants",
+          "accuracy": 0.5708333333333333,
+          "balancedAccuracy": 0.4283625730994152,
+          "confidenceInterval95": [
+            0.4218492013078798,
+            0.43600570432415897
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.41909436158330243,
+            0.439820006798364
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 0
+        },
+        {
+          "featureSet": "singlePremise",
+          "accuracy": 0.5353333333333333,
+          "balancedAccuracy": 0.46020551880201,
+          "confidenceInterval95": [
+            0.4399337211291739,
+            0.48106771798934583
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.43210926348777967,
+            0.4894459376476252
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 236
+        },
+        {
+          "featureSet": "twoPremises",
+          "accuracy": 0.5513333333333333,
+          "balancedAccuracy": 0.5300196813354708,
+          "confidenceInterval95": [
+            0.5080934384356411,
+            0.5518583259305289
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.49944263182407855,
+            0.5604266852047992
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 899
+        },
+        {
+          "featureSet": "previousLabelsAndScheduler",
+          "accuracy": 0.48733333333333334,
+          "balancedAccuracy": 0.3840382487750909,
+          "confidenceInterval95": [
+            0.37109317524591107,
+            0.39818236592176165
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.3659502018706182,
+            0.4044503521913599
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 0
+        }
+      ],
+      "finalHeldOutPredictors": [
+        {
+          "featureSet": "conclusionOperator",
+          "accuracy": 0.5768333333333333,
+          "balancedAccuracy": 0.5031562756163496,
+          "confidenceInterval95": [
+            0.4839686984689843,
+            0.5229114946502263
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.4765555244893375,
+            0.5308553188427662
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 220
+        },
+        {
+          "featureSet": "premiseOperatorCounts",
+          "accuracy": 0.5388333333333334,
+          "balancedAccuracy": 0.4377564694264518,
+          "confidenceInterval95": [
+            0.41905018231328056,
+            0.45738992851888916
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.41191923732887875,
+            0.4653898374764173
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 1307
+        },
+        {
+          "featureSet": "entityFrequenciesAndPositions",
+          "accuracy": 0.5298333333333334,
+          "balancedAccuracy": 0.4628601275995421,
+          "confidenceInterval95": [
+            0.44087375141923596,
+            0.48546989228938514
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.4323870153043161,
+            0.49454068128078693
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 392
+        },
+        {
+          "featureSet": "surfaceLengthAndTokens",
+          "accuracy": 0.6526666666666666,
+          "balancedAccuracy": 0.5829595279022578,
+          "confidenceInterval95": [
+            0.5619694592098401,
+            0.6039293747600548
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.5537041561720962,
+            0.612173973537026
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 2772
+        },
+        {
+          "featureSet": "localGraphInvariants",
+          "accuracy": 0.5781666666666667,
+          "balancedAccuracy": 0.4278181559070828,
+          "confidenceInterval95": [
+            0.421396503697538,
+            0.43551179297184883
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.41867927755834505,
+            0.43942086570990324
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 0
+        },
+        {
+          "featureSet": "singlePremise",
+          "accuracy": 0.526,
+          "balancedAccuracy": 0.42761656615700616,
+          "confidenceInterval95": [
+            0.4086682741427469,
+            0.44753681353780633
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.40145269915223086,
+            0.4556634529171025
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 731
+        },
+        {
+          "featureSet": "twoPremises",
+          "accuracy": 0.5305,
+          "balancedAccuracy": 0.46036386167516485,
+          "confidenceInterval95": [
+            0.4387981767546221,
+            0.48255261885752887
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.4304774853452891,
+            0.49145722421149635
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 678
+        },
+        {
+          "featureSet": "previousLabelsAndScheduler",
+          "accuracy": 0.4796666666666667,
+          "balancedAccuracy": 0.3909426240215252,
+          "confidenceInterval95": [
+            0.37217299563591655,
+            0.41085319618714244
+          ],
+          "bonferroniConfidenceInterval95": [
+            0.3650619673025289,
+            0.41903410202050445
+          ],
+          "sampleSize": 6000,
+          "uncoveredFeaturePatterns": 0
+        }
+      ],
+      "selectedOnDevelopment": "surfaceLengthAndTokens",
+      "finalSelectedPredictor": {
+        "featureSet": "surfaceLengthAndTokens",
+        "accuracy": 0.6526666666666666,
+        "balancedAccuracy": 0.5829595279022578,
+        "confidenceInterval95": [
+          0.5619694592098401,
+          0.6039293747600548
+        ],
+        "bonferroniConfidenceInterval95": [
+          0.5537041561720962,
+          0.612173973537026
+        ],
+        "sampleSize": 6000,
+        "uncoveredFeaturePatterns": 2772
+      },
+      "multipleSearches": 8,
+      "negativeControl": {
+        "shuffledLabelBalancedAccuracy": 0.3323973618290414,
+        "confidenceInterval95": [
+          0.3246745760016036,
+          0.3416866057997688
+        ],
+        "passed": true
+      },
+      "leakyControl": {
+        "detectedBalancedAccuracy": 0.9186963317169554,
+        "detected": true
+      },
+      "conditionalDistributions": [
+        {
+          "structureFamily": "assessment-analogy-directed-roles-match",
+          "sampleSize": 297,
+          "rates": {
+            "entailed": 1,
+            "refuted": 0,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-analogy-directed-roles-role-reversal",
+          "sampleSize": 303,
+          "rates": {
+            "entailed": 0,
+            "refuted": 1,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-categorical-reserved-mixed-witness-v1",
+          "sampleSize": 600,
+          "rates": {
+            "entailed": 0.34,
+            "refuted": 0.45166666666666666,
+            "underdetermined": 0.20833333333333334
+          }
+        },
+        {
+          "structureFamily": "assessment-coupled-mappingQuantity",
+          "sampleSize": 360,
+          "rates": {
+            "entailed": 1,
+            "refuted": 0,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-coupled-membershipOrder",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 1,
+            "refuted": 0,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-coupled-temporalSpatial",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 1,
+            "refuted": 0,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-graph-degree-matched-2cycle-vs-path",
+          "sampleSize": 360,
+          "rates": {
+            "entailed": 0,
+            "refuted": 1,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-graph-multi-label-map",
+          "sampleSize": 240,
+          "rates": {
+            "entailed": 1,
+            "refuted": 0,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-hierarchy-membership-inclusion-entailed",
+          "sampleSize": 43,
+          "rates": {
+            "entailed": 1,
+            "refuted": 0,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-hierarchy-membership-inclusion-refuted",
+          "sampleSize": 44,
+          "rates": {
+            "entailed": 0,
+            "refuted": 1,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-hierarchy-membership-inclusion-underdetermined",
+          "sampleSize": 33,
+          "rates": {
+            "entailed": 0,
+            "refuted": 0,
+            "underdetermined": 1
+          }
+        },
+        {
+          "structureFamily": "assessment-hierarchy-monotonic-exception-entailed",
+          "sampleSize": 176,
+          "rates": {
+            "entailed": 1,
+            "refuted": 0,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-hierarchy-monotonic-exception-refuted",
+          "sampleSize": 150,
+          "rates": {
+            "entailed": 0,
+            "refuted": 1,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-hierarchy-monotonic-exception-underdetermined",
+          "sampleSize": 154,
+          "rates": {
+            "entailed": 0,
+            "refuted": 0,
+            "underdetermined": 1
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-after-l1",
+          "sampleSize": 63,
+          "rates": {
+            "entailed": 0.2857142857142857,
+            "refuted": 0.31746031746031744,
+            "underdetermined": 0.3968253968253968
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-after-l2",
+          "sampleSize": 57,
+          "rates": {
+            "entailed": 0.2982456140350877,
+            "refuted": 0.3684210526315789,
+            "underdetermined": 0.3333333333333333
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-equals-l1",
+          "sampleSize": 57,
+          "rates": {
+            "entailed": 0.38596491228070173,
+            "refuted": 0.38596491228070173,
+            "underdetermined": 0.22807017543859648
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-equals-l2",
+          "sampleSize": 63,
+          "rates": {
+            "entailed": 0.36507936507936506,
+            "refuted": 0.2698412698412698,
+            "underdetermined": 0.36507936507936506
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-equals-l3",
+          "sampleSize": 17,
+          "rates": {
+            "entailed": 0.17647058823529413,
+            "refuted": 0.29411764705882354,
+            "underdetermined": 0.5294117647058824
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-equals-l4",
+          "sampleSize": 18,
+          "rates": {
+            "entailed": 0.2777777777777778,
+            "refuted": 0.1111111111111111,
+            "underdetermined": 0.6111111111111112
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-equals-l5",
+          "sampleSize": 15,
+          "rates": {
+            "entailed": 0.2,
+            "refuted": 0.4,
+            "underdetermined": 0.4
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-finishes-l3",
+          "sampleSize": 27,
+          "rates": {
+            "entailed": 0.25925925925925924,
+            "refuted": 0.3333333333333333,
+            "underdetermined": 0.4074074074074074
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-finishes-l4",
+          "sampleSize": 19,
+          "rates": {
+            "entailed": 0.15789473684210525,
+            "refuted": 0.2631578947368421,
+            "underdetermined": 0.5789473684210527
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-finishes-l5",
+          "sampleSize": 21,
+          "rates": {
+            "entailed": 0.14285714285714285,
+            "refuted": 0.047619047619047616,
+            "underdetermined": 0.8095238095238095
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-starts-l3",
+          "sampleSize": 23,
+          "rates": {
+            "entailed": 0.13043478260869565,
+            "refuted": 0.34782608695652173,
+            "underdetermined": 0.5217391304347826
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-starts-l4",
+          "sampleSize": 20,
+          "rates": {
+            "entailed": 0.05,
+            "refuted": 0.2,
+            "underdetermined": 0.75
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-direct-starts-l5",
+          "sampleSize": 25,
+          "rates": {
+            "entailed": 0.28,
+            "refuted": 0.08,
+            "underdetermined": 0.64
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-transitive-equals-l3",
+          "sampleSize": 15,
+          "rates": {
+            "entailed": 0.6666666666666666,
+            "refuted": 0.3333333333333333,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-transitive-equals-l4",
+          "sampleSize": 21,
+          "rates": {
+            "entailed": 0.47619047619047616,
+            "refuted": 0.5238095238095238,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-transitive-equals-l5",
+          "sampleSize": 19,
+          "rates": {
+            "entailed": 0.42105263157894735,
+            "refuted": 0.5789473684210527,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-transitive-finishes-l3",
+          "sampleSize": 18,
+          "rates": {
+            "entailed": 0.5,
+            "refuted": 0.5,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-transitive-finishes-l4",
+          "sampleSize": 19,
+          "rates": {
+            "entailed": 0.3157894736842105,
+            "refuted": 0.6842105263157895,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-transitive-finishes-l5",
+          "sampleSize": 20,
+          "rates": {
+            "entailed": 0.5,
+            "refuted": 0.5,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-transitive-starts-l3",
+          "sampleSize": 20,
+          "rates": {
+            "entailed": 0.45,
+            "refuted": 0.55,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-transitive-starts-l4",
+          "sampleSize": 23,
+          "rates": {
+            "entailed": 0.43478260869565216,
+            "refuted": 0.5652173913043478,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-interval-transitive-starts-l5",
+          "sampleSize": 20,
+          "rates": {
+            "entailed": 0.55,
+            "refuted": 0.45,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-order-between-l1",
+          "sampleSize": 70,
+          "rates": {
+            "entailed": 0.4,
+            "refuted": 0.32857142857142857,
+            "underdetermined": 0.2714285714285714
+          }
+        },
+        {
+          "structureFamily": "assessment-order-between-l2",
+          "sampleSize": 60,
+          "rates": {
+            "entailed": 0.31666666666666665,
+            "refuted": 0.4,
+            "underdetermined": 0.2833333333333333
+          }
+        },
+        {
+          "structureFamily": "assessment-order-equality-l1",
+          "sampleSize": 50,
+          "rates": {
+            "entailed": 0.32,
+            "refuted": 0.34,
+            "underdetermined": 0.34
+          }
+        },
+        {
+          "structureFamily": "assessment-order-equality-l2",
+          "sampleSize": 60,
+          "rates": {
+            "entailed": 0.26666666666666666,
+            "refuted": 0.31666666666666665,
+            "underdetermined": 0.4166666666666667
+          }
+        },
+        {
+          "structureFamily": "assessment-order-reserved-double-fork-v1-l3",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.3333333333333333,
+            "refuted": 0.375,
+            "underdetermined": 0.2916666666666667
+          }
+        },
+        {
+          "structureFamily": "assessment-order-reserved-double-fork-v1-l4",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.325,
+            "refuted": 0.31666666666666665,
+            "underdetermined": 0.35833333333333334
+          }
+        },
+        {
+          "structureFamily": "assessment-order-reserved-double-fork-v1-l5",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.3416666666666667,
+            "refuted": 0.3416666666666667,
+            "underdetermined": 0.31666666666666665
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-equivalent-ratios-ground-l3",
+          "sampleSize": 37,
+          "rates": {
+            "entailed": 0.5405405405405406,
+            "refuted": 0.4594594594594595,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-equivalent-ratios-ground-l4",
+          "sampleSize": 40,
+          "rates": {
+            "entailed": 0.6,
+            "refuted": 0.4,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-equivalent-ratios-ground-l5",
+          "sampleSize": 49,
+          "rates": {
+            "entailed": 0.40816326530612246,
+            "refuted": 0.5918367346938775,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-exact-scaling-ground-l3",
+          "sampleSize": 83,
+          "rates": {
+            "entailed": 0.42168674698795183,
+            "refuted": 0.5783132530120482,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-exact-scaling-ground-l4",
+          "sampleSize": 80,
+          "rates": {
+            "entailed": 0.5875,
+            "refuted": 0.4125,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-exact-scaling-ground-l5",
+          "sampleSize": 71,
+          "rates": {
+            "entailed": 0.5211267605633803,
+            "refuted": 0.4788732394366197,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-fraction-ratioGreater-ground-l1",
+          "sampleSize": 62,
+          "rates": {
+            "entailed": 0.5645161290322581,
+            "refuted": 0.43548387096774194,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-fraction-ratioGreater-ground-l2",
+          "sampleSize": 59,
+          "rates": {
+            "entailed": 0.5084745762711864,
+            "refuted": 0.4915254237288136,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-fraction-ratioLess-ground-l1",
+          "sampleSize": 58,
+          "rates": {
+            "entailed": 0.4482758620689655,
+            "refuted": 0.5517241379310345,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-proportional-fraction-ratioLess-ground-l2",
+          "sampleSize": 61,
+          "rates": {
+            "entailed": 0.5409836065573771,
+            "refuted": 0.45901639344262296,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-scope-explicit-binding",
+          "sampleSize": 76,
+          "rates": {
+            "entailed": 0.5789473684210527,
+            "refuted": 0.42105263157894735,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-scope-forall-exists-vs-exists-forall",
+          "sampleSize": 44,
+          "rates": {
+            "entailed": 0,
+            "refuted": 0,
+            "underdetermined": 1
+          }
+        },
+        {
+          "structureFamily": "assessment-scope-operator-comprehension",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.49166666666666664,
+            "refuted": 0.5083333333333333,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-scope-two-context-role-switch-sees-l4",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.3416666666666667,
+            "refuted": 0.325,
+            "underdetermined": 0.3333333333333333
+          }
+        },
+        {
+          "structureFamily": "assessment-scope-two-context-role-switch-sees-l5",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.35,
+            "refuted": 0.38333333333333336,
+            "underdetermined": 0.26666666666666666
+          }
+        },
+        {
+          "structureFamily": "assessment-scope-two-context-role-switch-signalsTo-l3",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.3416666666666667,
+            "refuted": 0.2833333333333333,
+            "underdetermined": 0.375
+          }
+        },
+        {
+          "structureFamily": "assessment-transform-control-l1",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.5083333333333333,
+            "refuted": 0.49166666666666664,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-transform-control-l2",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.5583333333333333,
+            "refuted": 0.44166666666666665,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-transform-control-l4",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.49166666666666664,
+            "refuted": 0.5083333333333333,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-transform-control-l5",
+          "sampleSize": 50,
+          "rates": {
+            "entailed": 0.54,
+            "refuted": 0.46,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-transform-order-sensitive-l3",
+          "sampleSize": 120,
+          "rates": {
+            "entailed": 0.48333333333333334,
+            "refuted": 0.5166666666666667,
+            "underdetermined": 0
+          }
+        },
+        {
+          "structureFamily": "assessment-transform-order-sensitive-l5",
+          "sampleSize": 70,
+          "rates": {
+            "entailed": 0.6142857142857143,
+            "refuted": 0.38571428571428573,
+            "underdetermined": 0
+          }
+        }
+      ],
+      "disposition": "cueLimited",
+      "limitationsRu": [
+        "Проверены только перечисленные неглубокие признаки и модели поиска по точному совпадению.",
+        "Успешный аудит не исключает стратегию, которую набор предикторов не представляет.",
+        "Полезные алгоритмы порядка, чётности и координат оцениваются отдельно и сами по себе не считаются дефектом."
+      ]
+    }
+  },
+  "executionChecks": {
+    "generationComplete": true,
+    "negativeControlPassed": true,
+    "leakyControlDetected": true,
+    "passed": true
+  },
+  "eligibility": {
+    "pooledDisposition": "cueLimited",
+    "pooledThresholdPassed": false,
+    "eligibleFamilies": [
+      "categorical"
+    ],
+    "cueLimitedFamilies": [
+      "order",
+      "hierarchy",
+      "analogy",
+      "coupledFrames",
+      "proportional",
+      "temporalIntervals",
+      "contextScope",
+      "graphStructure",
+      "transformations"
+    ],
+    "insufficientSampleFamilies": [],
+    "interpretationRu": "Семейство со статусом cueLimited нельзя включать в основной высокоинтеграционный пул до переработки; это инженерный фильтр, а не научное доказательство отсутствия подсказок."
+  },
+  "limitationsRu": [
+    "Это инженерная проверка перечисленных поверхностных признаков, а не доказательство отсутствия всех возможных подсказок.",
+    "Успех или неуспех предиктора не является оценкой общего интеллекта, переноса или нейронной способности.",
+    "Задания создаются локально; отчёт не отправляется автоматически."
+  ]
+}

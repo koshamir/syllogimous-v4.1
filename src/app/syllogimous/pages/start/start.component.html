@@ -1,0 +1,72 @@
+<app-card>
+    <div body style="min-width: 320px; padding-top: 3rem;">
+        <app-progress-and-performance></app-progress-and-performance>
+        
+        <ul class="list-group mb-4">
+            <li class="list-group-item flex-between">
+                <b>Уровень</b>
+                <div>{{ game.tier | ruLabel }} · {{ game.score }} баллов <small class="text-muted">(следующий: {{ nextTier | ruLabel }}<i [ngbTooltip]="'Осталось баллов: ' + pointsRemaining" class="bi bi-info-circle ms-1"></i>)</small></div>
+            </li>
+    
+            <li class="list-group-item flex-between">
+                <b>Правильно</b>
+                <div>{{ correctQs.length }}</div>
+            </li>
+
+            <li class="list-group-item flex-between">
+                <b>Время вышло</b>
+                <div>{{ unansweredQs.length }}</div>
+            </li>
+
+            <li class="list-group-item flex-between">
+                <b>Неправильно</b>
+                <div>{{ incorrectQs.length }}</div>
+            </li>
+
+            <li class="list-group-item flex-between">
+                <b>Лучшая серия</b>
+                <div>{{ longestStreak.length }}</div>
+            </li>
+        
+            <li class="list-group-item flex-between">
+                <b>Текущая серия</b>
+                <div>{{ currentStreak.length }}</div>
+            </li>
+        
+            <li class="list-group-item flex-between">
+                <b>Сегодня в игре</b>
+                <div>{{ formatTime(timePlayedToday) }}</div>
+            </li>
+
+            <li class="list-group-item flex-between">
+                <b>За неделю</b>
+                <div>{{ formatTime(timePlayedThisWeek) }}</div>
+            </li>
+        </ul>
+
+        <div class="text-center">
+            <a class="btn btn-outline-primary" (click)="router.navigate([EnumScreens.Settings])">
+                <i class="bi bi-gear"></i> Настройки
+            </a>
+        </div>
+    </div>
+
+    <div footer class="text-center d-flex flex-wrap justify-content-center gap-3">
+        <button
+            style="width: 150px;"
+            class="btn btn-primary"
+            (click)="game.playArcadeMode()"
+        >Обычная игра</button>
+        <button
+            style="width: 150px;"
+            class="btn btn-outline-primary"
+            (click)="router.navigate([EnumScreens.PlaygroundMode])"
+        >Свободная игра</button>
+        <a
+            style="width: 190px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center;"
+            class="btn btn-outline-primary"
+            routerLink="/experimental"
+            aria-label="Открыть экспериментальную тренировку отношений"
+        >Экспериментальная тренировка</a>
+    </div>
+</app-card>

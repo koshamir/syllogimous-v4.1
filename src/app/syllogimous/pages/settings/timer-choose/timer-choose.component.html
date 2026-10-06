@@ -1,0 +1,16 @@
+<div class="timer-choices">
+    <div class="timer-choice">
+        <input type="radio" id="timer-choice-2" name="timer-kind" (click)="setTimer('2')">
+        <label for="timer-choice-2" ngbTooltip="Таймер подстраивается по ходу игры">Адаптивный таймер</label>
+    </div>
+
+    <div class="timer-choice">
+        <input type="radio" id="timer-choice-1" name="timer-kind" (click)="setTimer('1')">
+        <label for="timer-choice-1" ngbTooltip="Своя длительность для каждого типа заданий">Свой таймер</label>
+    </div>
+
+    <div class="timer-choice">
+        <input type="radio" id="timer-choice-0" name="timer-kind" (click)="setTimer('0')">
+        <label for="timer-choice-0" ngbTooltip="Игра без ограничения времени">Без таймера</label>
+    </div>
+</div>

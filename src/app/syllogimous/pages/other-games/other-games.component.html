@@ -1,0 +1,46 @@
+<app-card>
+    <div body class="py-3 px-md-3">
+        <p>Здесь собраны другие мои игры для тренировки мышления.</p>
+        <p>Идеями и отзывами можно поделиться в Telegram: <i>@FredoCorleone</i>.</p>
+        <p>Приятной тренировки!</p>
+        
+        <div class="d-grid gap-3">
+            <div>
+                <div class="section-minititle">Игры N-назад</div>
+                <div class="d-grid justify-content-start">
+                    <a href="https://4skinskywalker.github.io/3D-Hyper-N-back/" target="_blank">Гипер N-назад 3D</a>
+                    <a href="https://4skinskywalker.github.io/3D-Dual-N-back-Cubeception/" target="_blank">Двойной N-назад 3D: куб в кубе</a>
+                    <a href="https://4skinskywalker.github.io/3D-Dual-N-back-Cube-in-the-Middle/" target="_blank">Двойной N-назад 3D: куб в центре</a>
+                </div>
+            </div>
+    
+            <div>
+                <div class="section-minititle">Мысленное вращение</div>
+                <div class="d-grid justify-content-start">
+                    <a href="https://4skinskywalker.github.io/3d-rotation/" target="_blank">Вращение 3D</a>
+                    <a href="https://4skinskywalker.github.io/Mental-Rotation-Training/" target="_blank">Мысленное вращение коробки</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-minititle">Другие игры</div>
+                <div class="d-grid justify-content-start">
+                    <a href="https://4skinskywalker.github.io/logi-number/" target="_blank">Логи-число</a>
+                    <a href="https://4skinskywalker.github.io/Word-Memorization-Training/" target="_blank">Тренировка запоминания слов</a>
+                    <!--<a href="https://4skinskywalker.github.io/aptitude-tests/" target="_blank">Aptitude Tests</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div footer class="playcard-toolbar">
+        <div>
+            <button
+                class="btn btn-outline-primary"
+                (click)="router.navigate([EnumScreens.Start])"
+            >
+                <i class="bi bi-arrow-left"></i> Главная
+            </button>
+        </div>
+    </div>
+</app-card>

@@ -1,0 +1,28 @@
+<h2 class="text-center">Точность</h2>
+    
+<ul class="list-group">
+    <li class="list-group-item flex-between">
+        <b>Верные ответы</b>
+        <div>{{ correctQs.length }}</div>
+    </li>
+
+    <li class="list-group-item flex-between">
+        <b>Ошибки</b>
+        <div>{{ incorrectQs.length }}</div>
+    </li>
+
+    <li class="list-group-item flex-between">
+        <b>Без ответа</b>
+        <div>{{ unansweredQs.length }}</div>
+    </li>
+
+    <li class="list-group-item flex-between">
+        <b>Текущая серия</b>
+        <div>{{ currentStreak.length }}</div>
+    </li>
+
+    <li class="list-group-item flex-between">
+        <b>Лучшая серия</b>
+        <div>{{ longestStreak.length }}</div>
+    </li>
+</ul>

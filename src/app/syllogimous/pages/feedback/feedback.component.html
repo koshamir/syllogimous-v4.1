@@ -1,0 +1,39 @@
+<app-card>
+    <div body>
+        <app-progress-and-performance
+            [feedbackPage]="true"
+            [playgroundMode]="game.settings === game.playgroundSettings"
+        ></app-progress-and-performance>
+
+        <div
+            *ngIf="{
+                timeout: game.question.userAnswer === undefined,
+                validity: game.question.userAnswer === game.question.isValid
+            } as d"
+            class="feedback-wrap"
+            [class.feedback-timeout]="d.timeout"
+            [class.feedback-correct]="!d.timeout && d.validity"
+            [class.feedback-incorrect]="!d.timeout && !d.validity"
+        >
+            <div class="fs-1 fw-bold text-uppercase">
+                {{ d.timeout ? "Время вышло" : d.validity ? "Правильно" : "Неправильно" }}
+            </div>
+        </div>
+    </div>
+
+    <div footer class="playcard-toolbar">
+        <div>
+            <button
+                class="btn btn-outline-primary"
+                (click)="router.navigate([EnumScreens.Start]);"
+            >
+                <i class="bi bi-arrow-left"></i> Главная
+            </button>
+        </div>
+        <div>
+            <button class="btn btn-primary" (click)="game.play()">
+                Играть <i class="bi bi-play-fill"></i>
+            </button>
+        </div>
+    </div>
+</app-card>
