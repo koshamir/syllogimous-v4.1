@@ -5,3 +5,45 @@
 input, label {
     cursor: pointer;
 }
+
+.start-body {
+    width: 100%;
+    max-width: 100%;
+    padding-top: 3rem;
+}
+
+.start-action {
+    width: 150px;
+    min-height: 44px;
+}
+
+.start-action-wide {
+    width: 190px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .start-body {
+        padding-top: 1rem;
+    }
+
+    :host ::ng-deep .list-group-item.flex-between {
+        gap: 0.35rem 0.75rem;
+        align-items: flex-start;
+    }
+
+    .start-actions {
+        width: 100%;
+        display: grid !important;
+        grid-template-columns: 1fr;
+        gap: 0.6rem !important;
+    }
+
+    .start-action,
+    .start-action-wide {
+        width: 100%;
+        min-height: 48px;
+    }
+}
