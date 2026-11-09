@@ -53,3 +53,9 @@ repomix-output.txt
 !.env.*.example
 *.pem
 *.key
+
+# v5 audit-baseline build output
+/audit-baseline/out
+
+# Local tool configuration
+/.claude

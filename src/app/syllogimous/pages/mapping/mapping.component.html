@@ -1,0 +1,45 @@
+<app-card>
+    <div body class="mapping py-2 px-md-3">
+        <app-plan-banner segment="mapping"></app-plan-banner>
+        <div class="small text-muted mb-2">«Отображение структур» · уровень {{ level | number:'1.0-1' }}</div>
+        <div class="small mb-2">Системы описаны разными словами и с разными именами. Устройство системы — это кто с кем и как связан.</div>
+
+        <div class="systems">
+            <div *ngFor="let s of p.systems" class="card system">
+                <div class="card-header py-1 small fw-bold">{{ s.title }}</div>
+                <div class="card-body py-2">
+                    <div *ngFor="let st of s.statements" class="statement" [innerHTML]="st"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fw-bold my-2" [innerHTML]="p.question"></div>
+
+        <div class="options">
+            <button
+                *ngFor="let o of p.options; let i = index"
+                type="button"
+                class="btn opt"
+                [class.btn-outline-primary]="!done"
+                [class.btn-success]="done && o.id === p.correct"
+                [class.btn-danger]="done && o.id === chosen && o.id !== p.correct"
+                [class.btn-outline-secondary]="done && o.id !== chosen && o.id !== p.correct"
+                (click)="answer(o.id)"
+            >{{ o.label }}<small class="key">{{ i + 1 }}</small></button>
+        </div>
+
+        <div *ngIf="done" class="mt-3">
+            <div class="alert mb-2" [class.alert-success]="correct" [class.alert-danger]="!correct">
+                {{ correct ? 'Верно!' : 'Неверно. Правильный ответ: ' + correctLabel }}
+            </div>
+            <div class="explanation card"><div class="card-body small">
+                <div *ngFor="let line of p.explanation" [innerHTML]="line"></div>
+            </div></div>
+        </div>
+    </div>
+
+    <div footer class="playcard-toolbar">
+        <button class="btn btn-outline-primary" (click)="router.navigate([EnumScreens.Start])"><i class="bi bi-arrow-left"></i> Главная</button>
+        <button *ngIf="done" class="btn btn-primary" (click)="nextPuzzle()">Дальше <i class="bi bi-play-fill"></i></button>
+    </div>
+</app-card>

@@ -1,0 +1,118 @@
+<ng-template #chip let-e>
+    <button
+        type="button"
+        class="chip"
+        [class.selected]="selected === e"
+        [class.locked]="isLocked(e)"
+        [class.wrong]="wrong.has(e)"
+        (click)="tapChip(e); $event.stopPropagation()"
+    >
+        <span [innerHTML]="names[e]"></span>
+        <span *ngIf="p.attrs > 1 && color(e) >= 0" class="dot" [style.background]="COLOR_CSS[color(e)]"></span>
+    </button>
+</ng-template>
+
+<app-card>
+    <div body class="builder py-2 px-md-3">
+        <app-plan-banner segment="builder"></app-plan-banner>
+        <div class="small text-muted mb-2">«Конструктор» · уровень {{ level | number:'1.0-1' }}</div>
+
+        <div class="instructions mb-2">
+            <div *ngFor="let s of p.instructions" class="small" [innerHTML]="s"></div>
+        </div>
+
+        <ol class="clues">
+            <li *ngFor="let c of p.clues; let i = index" [class.violated]="violated.has(i)" [innerHTML]="c.text"></li>
+        </ol>
+
+        <!-- build: the board -->
+        <ng-container *ngIf="p.variant === 'build'">
+            <div class="small text-muted mb-1">Нажмите на имя, затем на место. Повторное нажатие на поставленное имя убирает его.</div>
+
+            <div *ngIf="p.kind === 'line' || p.kind === 'lineAttr'" class="board-line">
+                <div *ngFor="let s of slots" class="slot" (click)="tapSlot(s.v)">
+                    <div class="slot-label">{{ s.label }}</div>
+                    <ng-container *ngFor="let e of occupants(s.v)"><ng-container *ngTemplateOutlet="chip; context: { $implicit: e }"></ng-container></ng-container>
+                </div>
+            </div>
+
+            <div *ngIf="p.kind === 'circle'" class="board-circle">
+                <div class="table-disc"></div>
+                <div *ngFor="let s of slots" class="slot seat" [style.left.%]="s.x" [style.top.%]="s.y" (click)="tapSlot(s.v)">
+                    <div class="slot-label">{{ s.label }}</div>
+                    <ng-container *ngFor="let e of occupants(s.v)"><ng-container *ngTemplateOutlet="chip; context: { $implicit: e }"></ng-container></ng-container>
+                </div>
+            </div>
+
+            <div *ngIf="p.kind === 'groups'" class="board-groups">
+                <div *ngFor="let s of slots" class="group" (click)="tapSlot(s.v)">
+                    <div class="slot-label">{{ s.label }}</div>
+                    <ng-container *ngFor="let e of occupants(s.v)"><ng-container *ngTemplateOutlet="chip; context: { $implicit: e }"></ng-container></ng-container>
+                </div>
+            </div>
+
+            <div *ngIf="p.kind === 'grid'" class="board-grid">
+                <div *ngFor="let s of slots" class="slot" (click)="tapSlot(s.v)">
+                    <div class="slot-label">{{ s.label }}</div>
+                    <ng-container *ngFor="let e of occupants(s.v)"><ng-container *ngTemplateOutlet="chip; context: { $implicit: e }"></ng-container></ng-container>
+                </div>
+            </div>
+
+            <div class="pool mt-2" *ngIf="unplaced.length">
+                <ng-container *ngFor="let e of unplaced"><ng-container *ngTemplateOutlet="chip; context: { $implicit: e }"></ng-container></ng-container>
+            </div>
+
+            <div *ngIf="p.attrs > 1" class="colors mt-2">
+                <div class="small text-muted">Цвет шапки:</div>
+                <div *ngFor="let ent of p.entities; let e = index" class="color-row">
+                    <span class="me-2" [innerHTML]="names[e]"></span>
+                    <button *ngFor="let c of p.colors; let ci = index" type="button" class="color-btn"
+                        [class.active]="color(e) === ci" [style.background]="COLOR_CSS[ci]" [attr.aria-label]="c" (click)="setColor(e, ci)">{{ c }}</button>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- mustBe / count -->
+        <div *ngIf="p.variant === 'mustBe'" class="d-grid gap-2">
+            <div class="fw-bold">Какое из утверждений обязательно верно?</div>
+            <button *ngFor="let o of p.mustBe!.options; let i = index" type="button" class="btn text-start"
+                [class.btn-outline-primary]="!done" [class.btn-success]="done && i === p.mustBe!.correct"
+                [class.btn-danger]="done && i === choice && i !== p.mustBe!.correct" [class.btn-outline-secondary]="done && i !== choice && i !== p.mustBe!.correct"
+                (click)="answer(i)" [innerHTML]="o"></button>
+        </div>
+        <div *ngIf="p.variant === 'count'" class="d-grid gap-2">
+            <div class="fw-bold">Сколько расстановок подходят под все подсказки?</div>
+            <div class="d-flex gap-2 flex-wrap">
+                <button *ngFor="let o of p.count!.options; let i = index" type="button" class="btn"
+                    [class.btn-outline-primary]="!done" [class.btn-success]="done && i === p.count!.correct"
+                    [class.btn-danger]="done && i === choice && i !== p.count!.correct" [class.btn-outline-secondary]="done && i !== choice && i !== p.count!.correct"
+                    (click)="answer(i)">{{ o }}</button>
+            </div>
+        </div>
+
+        <div *ngIf="message" class="alert mt-3 mb-2" [class.alert-success]="done && !wrong.size && (choice === null || message === 'Верно!')" [class.alert-warning]="!done" [class.alert-danger]="done && (wrong.size || message === 'Неверно.')">{{ message }}</div>
+
+        <div *ngIf="done" class="explanation card mt-2">
+            <div class="card-body small d-grid gap-2">
+                <div *ngIf="p.variant === 'build'"><b>Решение:</b> <span [innerHTML]="solutionText()"></span></div>
+                <div *ngIf="p.variant === 'count'"><b>Подходящих расстановок:</b> {{ p.count!.worlds }}</div>
+                <div *ngIf="violated.size" class="lure-note">Нарушенные подсказки выделены в списке.</div>
+                <div *ngIf="p.trace.length">
+                    <div class="text-muted mb-1">Ход рассуждения</div>
+                    <div *ngFor="let s of p.trace" [innerHTML]="s.text"></div>
+                </div>
+                <div *ngIf="hasDistractors" class="text-muted">Некоторые подсказки лишние — их можно не использовать.</div>
+            </div>
+        </div>
+    </div>
+
+    <div footer class="playcard-toolbar">
+        <button class="btn btn-outline-primary" (click)="router.navigate([EnumScreens.Start])"><i class="bi bi-arrow-left"></i></button>
+        <ng-container *ngIf="!done && p.variant === 'build'">
+            <button class="btn btn-outline-secondary" (click)="undo()" [disabled]="!history.length">Отменить</button>
+            <button class="btn btn-outline-secondary" (click)="reset()">Сбросить</button>
+            <button class="btn btn-primary" (click)="check()" [disabled]="!complete">Проверить</button>
+        </ng-container>
+        <button *ngIf="done" class="btn btn-primary" (click)="nextPuzzle()">Дальше <i class="bi bi-play-fill"></i></button>
+    </div>
+</app-card>

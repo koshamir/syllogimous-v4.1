@@ -17,6 +17,7 @@ export const LS_SCORE = "SYL_SCORE";
 export const LS_COLOR_BLINDNESS_MODE = "SYL_COLOR_BLINDNESS_MODE";
 export const LS_SYLLOGISM_GENERATOR = "SYL_SYLLOGISM_GENERATOR";
 
+/** All keys exported / imported by the backup menu (v4.1 keys are kept so old data survives). */
 export const LS_PROPS = [
     LS_HISTORY,
     LS_TIMER,
@@ -29,6 +30,15 @@ export const LS_PROPS = [
     LS_PREMISES_UP_THRESHOLD,
     LS_PREMISES_DOWN_THRESHOLD,
     LS_SCORE,
+    "SYL_V5_SETTINGS",
+    "SYL_V5_LEVELS",
+    "SYL_V5_SCHEDULER",
+    "SYL_V5_LEVEL_HISTORY",
+    "SYL_V5_PG_SETTINGS",
+    "SYL_V5_PROBES",
+    "SYL_V5_MODES",
+    "SYL_V5_DAILY_PLAN",
+    LS_COLOR_BLINDNESS_MODE,
 ];
 
 for (const screen of Object.values(EnumScreens)) {

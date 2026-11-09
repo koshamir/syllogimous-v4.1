@@ -1,0 +1,12 @@
+<div class="answer-buttons" [class.choice]="isChoice" role="group" aria-label="Варианты ответа">
+    <button
+        *ngFor="let b of buttons"
+        type="button"
+        class="btn btn-lg answer-btn {{ b.css }}"
+        (click)="answer.emit(b.id)"
+        [attr.aria-keyshortcuts]="b.key || null"
+    >
+        <span [innerHTML]="b.label"></span>
+        <small *ngIf="b.key" class="answer-key">{{ b.key }}</small>
+    </button>
+</div>

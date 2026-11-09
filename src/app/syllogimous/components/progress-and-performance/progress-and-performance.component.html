@@ -42,42 +42,8 @@
             </div>
         </ng-container>
 
-        <ng-container *ngIf="!playgroundMode && feedbackPage && debug">
-            <div class="progress progressbar partials">
-                <div
-                    class="progress-bar text-center"
-                    [style.width]="trainingUnitPercentage.percentageRight + '%'"
-                    ngbTooltip="Доля правильных ответов в последних 10 заданиях этого типа."
-                    container="body"
-                >
-                    <span class="px-2">
-                        {{trainingUnitPercentage.right}}
-                    </span>
-                </div>
-    
-                <div
-                    class="progress-bar text-center"
-                    [style.width]="trainingUnitPercentage.percentageTimeout + '%'"
-                    ngbTooltip="Доля заданий без ответа среди последних 10 заданий этого типа."
-                    container="body"
-                >
-                    <span class="px-2">
-                        {{trainingUnitPercentage.timeout}}
-                    </span>
-                </div>
-    
-                <div
-                    class="progress-bar text-center position-relative overflow-visible"
-                    [style.width]="trainingUnitPercentage.percentageWrong + '%'"
-                    ngbTooltip="Доля ошибок в последних 10 заданиях этого типа."
-                    container="body"
-                >
-                    <span class="px-2">
-                        {{trainingUnitPercentage.wrong}}
-                    </span>
-                    <span class="progress-label">{{ game.question.type | ruLabel }}</span>
-                </div>
-            </div>
-        </ng-container>
+        <div *ngIf="feedbackPage && familyLevel !== null" class="text-center small text-muted mt-1">
+            {{ game.question.type | ruLabel }}: уровень {{ familyLevel }}{{ playgroundMode ? ' (свободный режим)' : '' }}
+        </div>
     </div>
 </div>

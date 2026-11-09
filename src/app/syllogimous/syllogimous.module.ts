@@ -41,6 +41,15 @@ import { TiersMatrixComponent } from './pages/tiers-matrix/tiers-matrix.componen
 import { OtherGamesComponent } from './pages/other-games/other-games.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { TutorialGraphMatchingComponent } from './pages/tutorial/graph-matching/graph-matching.component';
+import { AnswerButtonsComponent } from './components/answer-buttons/answer-buttons.component';
+import { StrategiesComponent } from './pages/strategies/strategies.component';
+import { V5StatsComponent } from './pages/stats/v5-stats/v5-stats.component';
+import { BuilderComponent } from './pages/builder/builder.component';
+import { MappingComponent } from './pages/mapping/mapping.component';
+import { FluencyComponent } from './pages/fluency/fluency.component';
+import { ProbesComponent } from './pages/probes/probes.component';
+import { PlanBannerComponent } from './components/plan-banner/plan-banner.component';
+import { TutorialConditionalComponent, TutorialGroups3Component, TutorialHierarchyComponent, TutorialPerspectiveComponent } from './pages/tutorial/frames/frames.components';
 
 const routes: Routes = [
     {
@@ -72,11 +81,20 @@ const routes: Routes = [
                     { path: EnumQuestionType.GraphMatching, component: TutorialGraphMatchingComponent },
                     { path: EnumQuestionType.Analogy, component: TutorialAnalogyComponent },
                     { path: EnumQuestionType.Binary, component: TutorialBinaryComponent },
+                    { path: EnumQuestionType.Groups3, component: TutorialGroups3Component },
+                    { path: EnumQuestionType.Conditional, component: TutorialConditionalComponent },
+                    { path: EnumQuestionType.Hierarchy, component: TutorialHierarchyComponent },
+                    { path: EnumQuestionType.Perspective, component: TutorialPerspectiveComponent },
                 ]
             },
             { path: EnumScreens.TiersMatrix, component: TiersMatrixComponent },
             { path: EnumScreens.PlaygroundMode, component: PlaygroundModeComponent },
             { path: EnumScreens.OtherGames, component: OtherGamesComponent },
+            { path: EnumScreens.Strategies, component: StrategiesComponent },
+            { path: EnumScreens.Builder, component: BuilderComponent },
+            { path: EnumScreens.Mapping, component: MappingComponent },
+            { path: EnumScreens.Fluency, component: FluencyComponent },
+            { path: EnumScreens.Probes, component: ProbesComponent },
         ]
     }
 ];
@@ -120,6 +138,18 @@ const routes: Routes = [
         TiersMatrixComponent,
         OtherGamesComponent,
         SettingsComponent,
+        AnswerButtonsComponent,
+        StrategiesComponent,
+        V5StatsComponent,
+        BuilderComponent,
+        MappingComponent,
+        FluencyComponent,
+        ProbesComponent,
+        PlanBannerComponent,
+        TutorialGroups3Component,
+        TutorialConditionalComponent,
+        TutorialHierarchyComponent,
+        TutorialPerspectiveComponent,
     ],
     imports: [
         CommonModule,

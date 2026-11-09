@@ -2,20 +2,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IDynamicField } from 'src/app/shared/components/dynamic-form/dynamic-form.component';
-import { areSettingsInvalid, QuestionSettings, Settings } from 'src/app/syllogimous/models/settings.models';
 import { GameService } from 'src/app/syllogimous/services/game.service';
-import { EnumScreens } from '../../constants/game.constants';
-import { EnumQuestionType } from '../../constants/question.constants';
-import { LS_PG_SETTINGS } from '../../constants/local-storage.constants';
-import { BINARY_OPERATOR_LABELS, BinaryOperator, questionTypeLabel } from '../../utils/russian.utils';
+import { EnumScreens, ORDERED_QUESTION_TYPES } from '../../constants/game.constants';
+import { BINARY_OP_LABELS, LS_V5_PG_SETTINGS, PlaygroundV5, TYPE_FAMILY } from '../../constants/v5.constants';
+import { questionTypeLabel } from '../../utils/russian.utils';
+import { BINARY_OPS, BinaryOp, ENGINE_FAMILIES, FamilyId } from '../../engine';
 
-const GENERIC_SETTING_LABELS: Record<string, string> = {
-    useEmojis: "Эмодзи",
-    meaningfulWords: "Понятные слова",
-    meta: "Метаотношения",
-    negation: "Инверсии",
-};
-
+/** Free mode (spec §6.7): per family — enabled + fixed level 1–20; the staircase is off. */
 @Component({
     selector: 'app-playground-Mode',
     templateUrl: './playground-mode.component.html',
@@ -26,117 +19,70 @@ export class PlaygroundModeComponent {
     fields: IDynamicField[] = [];
     formData: any = {};
     validationError: string | null = null;
-
-    genericEnables: [string, boolean][];
-    binaryEnables: [string, boolean][];
-    questionControls: [string, QuestionSettings][];
+    families: FamilyId[] = ORDERED_QUESTION_TYPES.map(t => TYPE_FAMILY[t]).filter(f => ENGINE_FAMILIES.includes(f));
 
     constructor(
         public router: Router,
         private modalService: NgbModal,
         private game: GameService,
     ) {
-        const settings = this.loadPlaygroundSettings() || new Settings();
-
-        this.genericEnables = Object.entries(settings.enabled).filter(([field]) => field !== "binary") as [string, boolean][];
-        this.binaryEnables = Object.entries(settings.enabled.binary);
-        this.questionControls = Object.entries(settings.question);
-
-        // Create generic boolean controls
-        for (const [field, value] of this.genericEnables) {
-            this.fields.push({
-                type: "checkbox",
-                label: GENERIC_SETTING_LABELS[field] || field,
-                field,
-                value,
-            });
-        }
-
-        // Create controls for questions (enable checkbox and num of premises slider)
-        let isFirst = true;
-        for (const [qt, qs] of this.questionControls) {
-            const filler = isFirst ? '<div class="pt-3"></div>' : "<div></div>";
-            isFirst = false;
+        const pg = this.load();
+        this.fields.push(
+            { type: 'checkbox', label: 'Два варианта ответа (Верно / Неверно)', field: 'binaryFormat', value: pg.format === 'binary' },
+            { type: 'checkbox', label: 'Инверсии', field: 'negations', value: pg.negations },
+            { type: 'checkbox', label: 'Мета-отношения', field: 'metas', value: pg.metas },
+        );
+        let first = true;
+        for (const f of this.families) {
+            const s = pg.families[f] ?? { enabled: true, level: 3 };
             this.fields.push(
-                {
-                    filler,
-                    field: "",
-                    label: ""
-                },
-                {
-                    field: qt,
-                    label: questionTypeLabel(qt),
-                    type: "checkbox",
-                    value: qs.enabled,
-                },
-                {
-                    field: qt + "premises",
-                    label: "Количество посылок",
-                    type: "range",
-                    value: qs.getNumOfPremises(),
-                    min: qs.minNumOfPremises,
-                    max: qs.maxNumOfPremises,
-                    step: 1
-                }
+                { filler: first ? '<div class="pt-3"></div>' : '<div></div>', field: '', label: '' },
+                { field: f, label: questionTypeLabel(this.game.typeOf(f)), type: 'checkbox', value: s.enabled },
+                { field: f + ':level', label: 'Уровень', type: 'range', value: s.level, min: 1, max: 20, step: 1 },
             );
+            first = false;
         }
+        this.fields.push({ filler: '<div class="pt-3 small text-muted">Логические связки</div>', field: '', label: '' });
+        for (const op of BINARY_OPS) this.fields.push({ type: 'checkbox', label: BINARY_OP_LABELS[op], field: 'op:' + op, value: pg.ops[op] });
+    }
 
-        // Create binary boolean controls
-        for (const [field, value] of this.binaryEnables) {
-            this.fields.push({
-                type: "checkbox",
-                label: BINARY_OPERATOR_LABELS[field as BinaryOperator] || field,
-                field,
-                value,
-            });
+    load(): PlaygroundV5 {
+        const def: PlaygroundV5 = {
+            families: {},
+            ops: Object.fromEntries(BINARY_OPS.map(o => [o, true])) as Record<BinaryOp, boolean>,
+            negations: true,
+            metas: true,
+            format: 'ternary',
+        };
+        try {
+            const raw = localStorage.getItem(LS_V5_PG_SETTINGS);
+            return raw ? { ...def, ...JSON.parse(raw) } : def;
+        } catch {
+            return def;
         }
     }
 
     async play(content: any) {
-        const settings = new Settings();
+        const pg: PlaygroundV5 = {
+            families: {},
+            ops: {} as Record<BinaryOp, boolean>,
+            negations: !!this.formData['negations'],
+            metas: !!this.formData['metas'],
+            format: this.formData['binaryFormat'] ? 'binary' : 'ternary',
+        };
+        for (const f of this.families) pg.families[f] = { enabled: !!this.formData[f], level: Number(this.formData[f + ':level']) || 1 };
+        for (const op of BINARY_OPS) pg.ops[op] = !!this.formData['op:' + op];
 
-        // Set generic boolean values
-        for (const [field, value] of this.genericEnables) {
-            (settings.enabled as any)[field] = this.formData[field];
-        }
-
-        // Set binary boolean values
-        for (const [field, value] of this.binaryEnables) {
-            (settings.enabled.binary as any)[field] = this.formData[field];
-        }
-
-        // Set question enables and num of premises
-        for (const [qt, qs] of this.questionControls) {
-            const _qt = qt as EnumQuestionType;
-            settings.question[_qt].enabled = this.formData[_qt];
-            settings.question[_qt].setNumOfPremises(this.formData[_qt + "premises"]);
-        }
-
-        // Check configuration
-        this.validationError = areSettingsInvalid(settings);
+        const enabled = this.families.filter(f => pg.families[f]?.enabled);
+        this.validationError = !enabled.length ? 'Выберите хотя бы один тип заданий'
+            : pg.families.binary?.enabled && !BINARY_OPS.some(o => pg.ops[o]) ? 'Выберите хотя бы одну логическую связку'
+                : null;
         if (this.validationError) {
-            await this.modalService.open(content, { centered: true }).result;
+            await this.modalService.open(content, { centered: true }).result.catch(() => undefined);
             return;
         }
-
-        this.game.playgroundSettings = settings;
-        console.log("Playground settings", settings);
-        this.savePlaygroundSettings(settings);
-
+        localStorage.setItem(LS_V5_PG_SETTINGS, JSON.stringify(pg));
+        this.game.playgroundSettings = pg;
         this.game.play();
-    }
-
-    loadPlaygroundSettings() {
-        const serialized = localStorage.getItem(LS_PG_SETTINGS);
-        if (serialized) {
-            const deserialized = JSON.parse(serialized) as Settings;
-            console.log("Loaded playground settings:", deserialized);
-            return new Settings(deserialized);
-        }
-        return undefined;
-    }
-
-    savePlaygroundSettings(settings: Settings) {
-        localStorage.setItem(LS_PG_SETTINGS, JSON.stringify(settings));
     }
 }

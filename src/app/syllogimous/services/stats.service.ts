@@ -3,6 +3,7 @@ import { GameService } from "./game.service";
 import { jsonCopy } from "src/app/utils/json";
 import { TypeBasedStats } from "../models/stats.models";
 import { EnumQuestionType } from "../constants/question.constants";
+import { isCorrect, isTimeout } from "../utils/answer.utils";
 
 @Injectable({
     providedIn: "root"
@@ -13,7 +14,7 @@ export class StatsService {
     ) { }
 
     calcStats = (timerType?: "0" | "1" | "2") => {
-        const questions = this.game.questions.filter(q => q.playgroundMode === !!this.game.playgroundSettings);
+        const questions = this.game.questions.filter(q => q.playgroundMode === this.game.isPlayground);
         const types = Object.values(EnumQuestionType).filter(qt => Object.values(EnumQuestionType).includes(qt));
         const typeBasedStats = new TypeBasedStats();
 
@@ -25,7 +26,7 @@ export class StatsService {
             
             tbs.type = type;
             tbs.completed = questionsByType.length;
-            tbs.accuracy = questionsByType.filter(q => q.userAnswer === q.isValid).length / (questionsByType.length || 1);
+            tbs.accuracy = questionsByType.filter(q => isCorrect(q) === true).length / (questionsByType.length || 1);
 
             for (const q of questionsByType) {
                 const ps = ((q.premises.length < 6) ? String(q.premises.length) : "6+") as "2" | "3" | "4" | "5" | "6+";
@@ -35,15 +36,15 @@ export class StatsService {
                 tbs.stats[ps].sum += dt;
                 tbs.stats[ps].count++;
 
-                if (q.userAnswer == undefined) {
+                if (isTimeout(q)) {
                     tbs.stats[ps].timeout++;
-                } else if (q.userAnswer === q.isValid) {
+                } else if (isCorrect(q) === true) {
                     tbs.stats[ps].correct++;
                 } else {
                     tbs.stats[ps].incorrect++;
                 }
     
-                if (q.userAnswer !== undefined) {
+                if (!isTimeout(q)) {
                     if (tbs.stats[ps].fastest === 0 || dt < tbs.stats[ps].fastest) {
                         tbs.stats[ps].fastest = dt;
                     }
@@ -57,15 +58,15 @@ export class StatsService {
                     tbs.stats[ps].last10Sum += dt;
                     tbs.stats[ps].last10Count++;
 
-                    if (q.userAnswer == undefined) {
+                    if (isTimeout(q)) {
                         tbs.stats[ps].last10Timeout++;
-                    } else if (q.userAnswer === q.isValid) {
+                    } else if (isCorrect(q) === true) {
                         tbs.stats[ps].last10Correct++;
                     } else {
                         tbs.stats[ps].last10Incorrect++;
                     }
         
-                    if (q.userAnswer !== undefined) {
+                    if (!isTimeout(q)) {
                         if (tbs.stats[ps].last10Fastest === 0 || dt < tbs.stats[ps].last10Fastest) {
                             tbs.stats[ps].last10Fastest = dt;
                         }
@@ -76,8 +77,6 @@ export class StatsService {
                 }
             };
         }
-
-        console.log("Stats", { types, typeBasedStats });
 
         return { types, questions, typeBasedStats: jsonCopy(typeBasedStats) as TypeBasedStats};
     }

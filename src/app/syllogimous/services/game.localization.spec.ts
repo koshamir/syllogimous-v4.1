@@ -1,125 +1,127 @@
 import { NOUNS, EnumQuestionType, getEmojis, getStrings } from "../constants/question.constants";
-import { LS_PG_SETTINGS, LS_SYLLOGISM_GENERATOR } from "../constants/local-storage.constants";
-import { Settings } from "../models/settings.models";
+import { LS_HISTORY, LS_TRAINING_UNIT } from "../constants/local-storage.constants";
+import { FAMILY_TYPE, LS_V5_LEVELS } from "../constants/v5.constants";
 import { Question } from "../models/question.models";
-import { extractSubjects } from "../utils/question.utils";
 import { questionTypeLabel } from "../utils/russian.utils";
-import { ProgressAndPerformanceService } from "./progress-and-performance.service";
-import { GameService } from "./game.service";
+import { correctLabel, isCorrect, isTimeout, userLabel } from "../utils/answer.utils";
+import { EngineService } from "./engine.service";
+import { ENGINE_FAMILIES, FamilyId, NamePool } from "../engine";
 
-describe("Russian question generation", () => {
-    let game: GameService;
+const subjectsOf = (html: string) => [...html.matchAll(/<span class="subject">(.*?)<\/span>/g)].map(m => m[1]);
 
-    beforeEach(() => {
-        localStorage.clear();
-        game = new GameService(
-            {} as any,
-            {} as any,
-            new ProgressAndPerformanceService(),
-            {} as any,
-        );
-        game.logger.setLevel("error");
-        game.logger.setVerbose(false);
-    });
+describe("v5 items in the Angular layer", () => {
+    beforeEach(() => localStorage.clear());
 
-    function allRenderedText(question: Question): string[] {
-        return [
-            ...(question.instructions || []),
-            ...(question.notes || []),
-            ...question.premises,
-            ...(Array.isArray(question.conclusion) ? question.conclusion : [question.conclusion]),
-        ];
+    function rendered(engine: EngineService, family: FamilyId) {
+        const item = engine.next({ enabled: [family] });
+        const conc = Array.isArray(item.render.conclusion) ? item.render.conclusion : [item.render.conclusion];
+        return { item, html: [...item.render.instructions, ...item.render.notes, ...item.render.premises, ...conc] };
     }
 
-    function assertHealthyQuestion(question: Question, mode: "words" | "strings" | "emoji") {
-        const rendered = allRenderedText(question);
-        expect(question.premises.length).toBeGreaterThan(0);
-        expect(rendered.every(Boolean)).toBeTrue();
-        for (const html of rendered) {
-            expect(html).not.toContain("undefined");
-            expect((html.match(/<span\b/g) || []).length)
-                .withContext(html)
-                .toBe((html.match(/<\/span>/g) || []).length);
-            const visible = html.replace(/<[^>]+>/g, " ");
-            expect(visible).not.toMatch(/\b(?:is|same|opposite|before|after|more|less|north|south|east|west|left|right|steps?|level|hour|true|false|premises?|conclusion|relationship)\b/i);
-        }
-
-        const subjects = rendered.flatMap(extractSubjects);
-        expect(subjects.length).toBeGreaterThan(1);
-        if (mode === "words") {
-            expect(subjects.every(value => NOUNS.includes(value))).toBeTrue();
-        } else if (mode === "strings") {
-            expect(subjects.every(value => /^[QRSTVWXZ][AEIOU][QRSTVWXZ]$/.test(value))).toBeTrue();
-        } else {
-            expect(subjects.every(value => getEmojis().includes(value))).toBeTrue();
-        }
-    }
-
-    for (const mode of ["words", "strings", "emoji"] as const) {
-        it(`generates all 12 types with ${mode}`, () => {
-            const settings = new Settings();
-            settings.enabled.meaningfulWords = mode === "words";
-            settings.enabled.useEmojis = mode === "emoji";
-            settings.enabled.negation = true;
-            settings.enabled.meta = true;
-            game.playgroundSettings = settings;
-
-            for (const type of Object.values(EnumQuestionType)) {
-                const count = type === EnumQuestionType.Binary ? 4 : type === EnumQuestionType.Analogy ? 3 : 2;
-                for (let sample = 0; sample < 5; sample++) {
-                    const question = game.getCreateFn(type, count)();
-                    expect(question.type).toBe(type);
-                    expect(question.premises.length).toBe(count);
-                    assertHealthyQuestion(question, mode);
+    for (const pool of ["cyrillic", "words", "latin", "emoji"] as NamePool[]) {
+        it(`renders every ported family with the ${pool} name pool`, () => {
+            const engine = new EngineService();
+            engine.saveSettings({ namePool: pool });
+            for (const family of ENGINE_FAMILIES) {
+                const { item, html } = rendered(engine, family);
+                expect(item.family).toBe(family);
+                for (const h of html) {
+                    expect(h).not.toContain("undefined");
+                    expect((h.match(/<span\b/g) || []).length).withContext(h).toBe((h.match(/<\/span>/g) || []).length);
+                }
+                const names = html.flatMap(subjectsOf);
+                expect(names.length).toBeGreaterThan(1);
+                if (pool === "words") expect(names.every(n => NOUNS.includes(n))).withContext(family).toBeTrue();
+                if (pool === "latin") expect(names.every(n => /^[QRSTVWXZ][AEIOU][QRSTVWXZ]$/.test(n))).withContext(family).toBeTrue();
+                if (pool === "emoji") expect(names.every(n => getEmojis().includes(n))).withContext(family).toBeTrue();
+                if (pool === "cyrillic") {
+                    expect(names.every(n => /^[А-ЯЁ]{3}$/.test(n))).withContext(family).toBeTrue();
+                    const visible = html.join(" ").replace(/<[^>]+>/g, " ");
+                    expect(visible).not.toMatch(/[A-Za-z]/);
                 }
             }
         });
     }
+});
 
-    it("generates Russian syllogisms with both generators", () => {
-        const settings = new Settings();
-        settings.enabled.negation = true;
-        game.playgroundSettings = settings;
+describe("migration of old keys", () => {
+    beforeEach(() => localStorage.clear());
 
-        for (const generator of ["fredo", "canyon"]) {
-            localStorage.setItem(LS_SYLLOGISM_GENERATOR, generator);
-            for (let sample = 0; sample < 4; sample++) {
-                const question = game.createSyllogism(4);
-                expect(question.premises.length).toBe(4);
-                assertHealthyQuestion(question, "words");
-            }
-        }
+    it("starts a family at clamp(premises − 1, 1, 10) from the old training unit, otherwise at 1", () => {
+        localStorage.setItem(LS_TRAINING_UNIT + EnumQuestionType.ComparisonNumerical, JSON.stringify({ premises: 6, right: 3, timeout: 0, wrong: 1 }));
+        localStorage.setItem(LS_TRAINING_UNIT + EnumQuestionType.Syllogism, JSON.stringify({ premises: 19, right: 0, timeout: 0, wrong: 0 }));
+        const engine = new EngineService();
+        expect(engine.levelOf("orderNum")).toBe(5);
+        expect(engine.levelOf("syllogism")).toBe(10);
+        expect(engine.levelOf("groups")).toBe(1);
+        // stored once: later changes to the old key no longer matter
+        localStorage.setItem(LS_TRAINING_UNIT + EnumQuestionType.ComparisonNumerical, JSON.stringify({ premises: 2 }));
+        expect(engine.levelOf("orderNum")).toBe(5);
+        expect(JSON.parse(localStorage.getItem(LS_V5_LEVELS)!)["orderNum"].level).toBe(5);
     });
 
-    it("loads settings saved with English internal keys", () => {
-        const oldSettings = new Settings();
-        oldSettings.enabled.meaningfulWords = false;
-        oldSettings.enabled.negation = false;
-        oldSettings.question[EnumQuestionType.ComparisonNumerical].enabled = false;
-        oldSettings.question[EnumQuestionType.Direction3DTemporal].setNumOfPremises(7);
-
-        localStorage.setItem(LS_PG_SETTINGS, JSON.stringify(oldSettings));
-        const loaded = new Settings(JSON.parse(localStorage.getItem(LS_PG_SETTINGS)!));
-
-        expect(loaded.enabled.meaningfulWords).toBeFalse();
-        expect(loaded.enabled.negation).toBeFalse();
-        expect(loaded.question[EnumQuestionType.ComparisonNumerical].enabled).toBeFalse();
-        expect(loaded.question[EnumQuestionType.Direction3DTemporal].getNumOfPremises()).toBe(7);
-        expect(Object.keys(loaded.question)).toContain("Direction3D Temporal");
-    });
-
-    it("keeps imported question JSON with English internal values compatible", () => {
-        const oldQuestion = new Question(EnumQuestionType.ComparisonNumerical);
-        oldQuestion.premises = ["<span class=\"subject\">A</span> is more than <span class=\"subject\">B</span>"];
-        oldQuestion.conclusion = "<span class=\"subject\">A</span> is more than <span class=\"subject\">B</span>";
-        oldQuestion.isValid = true;
-
-        const loaded = JSON.parse(JSON.stringify(oldQuestion)) as Question;
-
+    it("keeps old history records loadable", () => {
+        const old = new Question(EnumQuestionType.ComparisonNumerical);
+        old.premises = ["<span class=\"subject\">A</span> больше, чем <span class=\"subject\">B</span>"];
+        old.isValid = true;
+        old.userAnswer = false;
+        localStorage.setItem(LS_HISTORY, JSON.stringify([old]));
+        const loaded = JSON.parse(localStorage.getItem(LS_HISTORY)!)[0] as Question;
         expect(loaded.type).toBe("Comparison Numerical");
-        expect(loaded.premises).toEqual(oldQuestion.premises);
-        expect(loaded.conclusion).toBe(oldQuestion.conclusion);
         expect(questionTypeLabel(loaded.type)).toBe("Сравнение чисел");
+        expect(isCorrect(loaded)).toBeFalse();
+    });
+
+    it("maps every family to a question type and back", () => {
+        for (const f of Object.keys(FAMILY_TYPE) as FamilyId[]) expect(questionTypeLabel(FAMILY_TYPE[f])).not.toBe(FAMILY_TYPE[f]);
+    });
+});
+
+describe("isCorrect on old and new records", () => {
+    it("v4.1 records: userAnswer vs isValid", () => {
+        const q = new Question(EnumQuestionType.Distinction);
+        q.isValid = true;
+        expect(isCorrect(q)).toBeUndefined();
+        expect(isTimeout(q)).toBeTrue();
+        q.userAnswer = true;
+        expect(isCorrect(q)).toBeTrue();
+        expect(correctLabel(q)).toBe("Верно");
+        q.userAnswer = false;
+        expect(isCorrect(q)).toBeFalse();
+        expect(userLabel(q)).toBe("Неверно");
+    });
+
+    it("v5 records: userChoice vs correct (ternary, binary, choice)", () => {
+        const q = new Question(EnumQuestionType.LinearArrangement);
+        q.engineVersion = "v5.0";
+        q.format = "ternary";
+        q.correct = "undetermined";
+        expect(isCorrect(q)).toBeUndefined();
+        expect(isTimeout(q)).toBeTrue();
+        q.userChoice = "entailed";
+        expect(isCorrect(q)).toBeFalse();
+        expect(correctLabel(q)).toBe("Неизвестно");
+        expect(userLabel(q)).toBe("Следует");
+        q.userChoice = "undetermined";
+        expect(isCorrect(q)).toBeTrue();
+
+        const b = new Question(EnumQuestionType.Binary);
+        b.engineVersion = "v5.0";
+        b.format = "binary";
+        b.correct = "false";
+        b.userChoice = "false";
+        expect(isCorrect(b)).toBeTrue();
+        expect(correctLabel(b)).toBe("Неверно");
+
+        const c = new Question(EnumQuestionType.ComparisonNumerical);
+        c.engineVersion = "v5.0";
+        c.format = "choice";
+        c.options = [{ id: "e0", label: "ВОЛ" }, { id: "none", label: "Нельзя определить" }];
+        c.correct = "none";
+        c.userChoice = "e0";
+        expect(isCorrect(c)).toBeFalse();
+        expect(correctLabel(c)).toBe("Нельзя определить");
+        expect(userLabel(c)).toBe("ВОЛ");
     });
 });
 

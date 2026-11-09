@@ -16,7 +16,6 @@
             "outputPath": "dist/multi-layout",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "webWorkerTsConfig": "tsconfig.worker.json",
             "polyfills": [
               "zone.js"
             ],

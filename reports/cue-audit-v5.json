@@ -1,0 +1,8563 @@
+{
+  "engineVersion": "v5.0",
+  "date": "2026-11-09",
+  "N": 1500,
+  "levels": [
+    {
+      "family": "groups",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.1,
+        "kindPrior": 34.5,
+        "degreeGeneral": 31.9,
+        "myopic": 100,
+        "parity": 33.7,
+        "degree": 34,
+        "endpoint": 33.9,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 0,
+      "relaxations": 0,
+      "p50": 0.07769999999982247,
+      "p95": 0.195699999999988,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 31.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot parity",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 34,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot endpoint",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.2,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.5,
+        "kindPrior": 34.3,
+        "degreeGeneral": 32.6,
+        "myopic": 33.3,
+        "parity": 35.3,
+        "degree": 32.6,
+        "endpoint": 35.2,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "learned": 33.3,
+      "relaxations": 0,
+      "p50": 0.08619999999996253,
+      "p95": 0.15439999999989595,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot parity",
+          "value": 35.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 32.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot endpoint",
+          "value": 35.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 33.3,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.2,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.5,
+        "kindPrior": 35.9,
+        "degreeGeneral": 30.8,
+        "myopic": 33.3,
+        "parity": 33.5,
+        "degree": 35.5,
+        "endpoint": 34.2,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 48.8,
+      "relaxations": 0,
+      "p50": 0.12809999999990396,
+      "p95": 0.3751999999999498,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 35.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 30.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot parity",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 35.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot endpoint",
+          "value": 34.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 48.8,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 31.8,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.1,
+        "myopic": 33.3,
+        "parity": 31.9,
+        "degree": 32.8,
+        "endpoint": 33.5,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 52,
+      "learned": 38.2,
+      "relaxations": 0.1,
+      "p50": 0.2557000000001608,
+      "p95": 0.9580000000000837,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 31.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot parity",
+          "value": 31.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 32.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot endpoint",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 38.2,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.1,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 52,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.9,
+        "kindPrior": 33.9,
+        "degreeGeneral": 33.2,
+        "myopic": 33.3,
+        "parity": 33.4,
+        "degree": 33,
+        "endpoint": 33.4,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 48.6,
+      "relaxations": 0.7,
+      "p50": 0.38730000000032305,
+      "p95": 1.8897999999999229,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot parity",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot endpoint",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.7,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.9,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 48.6,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderNum",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.9,
+        "kindPrior": 33.3,
+        "degreeGeneral": 35.3,
+        "myopic": 100,
+        "netScore": 34.2,
+        "degree": 35.3,
+        "subject": 34.6,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 3.8,
+      "relaxations": 5.7,
+      "p50": 0.15899999999965075,
+      "p95": 1.4205999999994674,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 35.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 34.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 35.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 34.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 5.7,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.4,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderNum",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.1,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.1,
+        "myopic": 33.3,
+        "netScore": 33.3,
+        "degree": 33.1,
+        "subject": 33.1,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "learned": 38,
+      "relaxations": 0,
+      "p50": 0.46969999999964784,
+      "p95": 1.363999999999578,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 38,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderNum",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 35.1,
+        "kindPrior": 33.3,
+        "degreeGeneral": 31.5,
+        "myopic": 33.3,
+        "netScore": 32.6,
+        "degree": 31.5,
+        "subject": 32.4,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 51.4,
+      "relaxations": 0,
+      "p50": 0.6861000000008062,
+      "p95": 2.7569000000003143,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 35.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 31.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 31.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 32.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 2.8,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 51.4,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderNum",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 35.3,
+        "kindPrior": 33.9,
+        "degreeGeneral": 33.8,
+        "myopic": 33.3,
+        "netScore": 34.5,
+        "degree": 33.9,
+        "subject": 32.2,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.2,
+      "learned": 38.3,
+      "relaxations": 0,
+      "p50": 1.1010999999998603,
+      "p95": 3.60910000000149,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 35.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 34.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 32.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 38.3,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 3.6,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderNum",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 35.3,
+        "kindPrior": 33.6,
+        "degreeGeneral": 33.6,
+        "myopic": 33.3,
+        "netScore": 32,
+        "degree": 33.4,
+        "subject": 32,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "relaxations": 0,
+      "p50": 1.6278000000020256,
+      "p95": 4.421199999997043,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 35.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 32,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 4.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderTime",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 32.3,
+        "kindPrior": 33.3,
+        "degreeGeneral": 35,
+        "myopic": 100,
+        "netScore": 32.7,
+        "degree": 35,
+        "subject": 33.5,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 4.2,
+      "relaxations": 7.3,
+      "p50": 0.15089999999690917,
+      "p95": 1.7799999999988358,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 35,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 35,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 7.3,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.8,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderTime",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 32.7,
+        "kindPrior": 33.3,
+        "degreeGeneral": 32.3,
+        "myopic": 33.3,
+        "netScore": 32.1,
+        "degree": 32.3,
+        "subject": 31.4,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "learned": 34.7,
+      "relaxations": 0,
+      "p50": 0.38880000000062864,
+      "p95": 1.1044000000001688,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 31.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 34.7,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderTime",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.2,
+        "kindPrior": 33.3,
+        "degreeGeneral": 32.7,
+        "myopic": 33.3,
+        "netScore": 37,
+        "degree": 32.7,
+        "subject": 33.1,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.2,
+      "relaxations": 0,
+      "p50": 0.5292999999946915,
+      "p95": 2.2184000000052038,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 37,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 2.2,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderTime",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.5,
+        "kindPrior": 33.6,
+        "degreeGeneral": 32.1,
+        "myopic": 33.3,
+        "netScore": 32,
+        "degree": 32.3,
+        "subject": 32.1,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 51.6,
+      "learned": 39.2,
+      "relaxations": 0.3,
+      "p50": 0.8767000000007101,
+      "p95": 3.112300000000687,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 39.2,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.3,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 3.1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 51.6,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderTime",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 32.6,
+        "kindPrior": 31.8,
+        "degreeGeneral": 30.9,
+        "myopic": 33.3,
+        "netScore": 32.6,
+        "degree": 31.7,
+        "subject": 31.8,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 52.2,
+      "relaxations": 0.1,
+      "p50": 1.375,
+      "p95": 4.665100000005623,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 32.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 31.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 30.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 31.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot subject",
+          "value": 31.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.1,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 4.7,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 52.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "linear",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.1,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.5,
+        "myopic": 100,
+        "netScore": 33.5,
+        "degree": 33.5,
+        "instructionOrder": 31.9,
+        "stepMagnitude": 33.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 2.4,
+      "relaxations": 5.8,
+      "p50": 0.17470000000321306,
+      "p95": 1.8962000000028638,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 31.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 5.8,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.9,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "linear",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.2,
+        "kindPrior": 33.3,
+        "degreeGeneral": 32.7,
+        "myopic": 33.3,
+        "netScore": 33.6,
+        "degree": 32.7,
+        "instructionOrder": 34.2,
+        "stepMagnitude": 33.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "learned": 35.6,
+      "relaxations": 0,
+      "p50": 0.5939999999973224,
+      "p95": 2.3188999999983935,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 34.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 35.6,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 2.3,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "linear",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.3,
+        "kindPrior": 33.3,
+        "degreeGeneral": 35.3,
+        "myopic": 33.3,
+        "netScore": 31.2,
+        "degree": 35.3,
+        "instructionOrder": 34.2,
+        "stepMagnitude": 33.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.6,
+      "relaxations": 0,
+      "p50": 1.0495999999984633,
+      "p95": 10.675100000000384,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 35.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 31.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 35.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 34.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 10.7,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.6,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "linear",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.7,
+        "kindPrior": 32.5,
+        "degreeGeneral": 32.7,
+        "myopic": 33.3,
+        "netScore": 32.4,
+        "degree": 33.6,
+        "instructionOrder": 31.7,
+        "stepMagnitude": 33.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 47.4,
+      "learned": 35.8,
+      "relaxations": 0.4,
+      "p50": 2.545799999992596,
+      "p95": 19.508199999996577,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 31.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 35.8,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.4,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 19.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 47.4,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "linear",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.7,
+        "kindPrior": 33.7,
+        "degreeGeneral": 33.7,
+        "myopic": 33.3,
+        "netScore": 32.6,
+        "degree": 33.2,
+        "instructionOrder": 32.7,
+        "stepMagnitude": 33.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "relaxations": 0.1,
+      "p50": 6.027900000000955,
+      "p95": 32.95579999999609,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.1,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 33,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "circular",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.5,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 100,
+        "instructionOrder": 32.7,
+        "degree": 33.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 0.8,
+      "relaxations": 0.3,
+      "p50": 0.16429999998945277,
+      "p95": 0.7160999999905471,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.3,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.7,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "circular",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.6,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "instructionOrder": 33.1,
+        "degree": 33.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50.2,
+      "learned": 34.5,
+      "relaxations": 0.4,
+      "p50": 0.2477999999828171,
+      "p95": 0.996000000013737,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 34.5,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.4,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "circular",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 31.5,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "instructionOrder": 33,
+        "degree": 33.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 51.4,
+      "relaxations": 0.7,
+      "p50": 0.3249000000068918,
+      "p95": 1.393500000005588,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 31.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 33,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.7,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 51.4,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "circular",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 31.1,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "instructionOrder": 32.3,
+        "degree": 33.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50.8,
+      "learned": 34.9,
+      "relaxations": 1.7,
+      "p50": 0.3062999999965541,
+      "p95": 1.630299999989802,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 31.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 34.9,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 1.7,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.6,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50.8,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "circular",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 32.8,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "instructionOrder": 33,
+        "degree": 33.4,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49,
+      "relaxations": 1.6,
+      "p50": 0.2810999999928754,
+      "p95": 1.398300000000745,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 32.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot instructionOrder",
+          "value": 33,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 1.6,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir2d",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.8,
+        "kindPrior": 32.3,
+        "degreeGeneral": 31.7,
+        "myopic": 100,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 33.8,
+        "axisCount": 33.1,
+        "netScore": 34.5,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 0,
+      "relaxations": 0,
+      "p50": 0.13010000000940636,
+      "p95": 0.2885999999998603,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 31.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 34.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.3,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir2d",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.1,
+        "kindPrior": 33.6,
+        "degreeGeneral": 32.1,
+        "myopic": 33.3,
+        "adjacencyPhrase": 32.3,
+        "stepMagnitude": 33.1,
+        "axisCount": 34.3,
+        "netScore": 34,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50.2,
+      "learned": 35.1,
+      "relaxations": 0,
+      "p50": 0.17000000001280569,
+      "p95": 0.35960000002523884,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 34,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 35.1,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir2d",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 31.8,
+        "kindPrior": 32.1,
+        "degreeGeneral": 34.2,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.8,
+        "stepMagnitude": 33.9,
+        "axisCount": 33.6,
+        "netScore": 32.6,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 54,
+      "relaxations": 3.6,
+      "p50": 0.22299999999813735,
+      "p95": 1.025099999998929,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 31.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 34.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 3.6,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 54,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir2d",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 31.7,
+        "kindPrior": 31.4,
+        "degreeGeneral": 34.3,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.5,
+        "stepMagnitude": 33.7,
+        "axisCount": 34.2,
+        "netScore": 31.4,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 54.8,
+      "learned": 34.9,
+      "relaxations": 3.4,
+      "p50": 0.2970000000204891,
+      "p95": 1.2041000000026543,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 31.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 31.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 34.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 31.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 34.9,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 3.4,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.2,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 54.8,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir2d",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 29.7,
+        "kindPrior": 34.8,
+        "degreeGeneral": 31.9,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.4,
+        "stepMagnitude": 33,
+        "axisCount": 31.3,
+        "netScore": 33.9,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 53.6,
+      "relaxations": 3.3,
+      "p50": 0.3531999999831896,
+      "p95": 1.5010999999940395,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 29.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 31.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 31.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 3.3,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 53.6,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dSpace",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.7,
+        "kindPrior": 31.9,
+        "degreeGeneral": 32.5,
+        "myopic": 100,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 33.4,
+        "axisCount": 34.3,
+        "netScore": 33.9,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 0,
+      "relaxations": 0,
+      "p50": 0.12510000000474975,
+      "p95": 0.38950000001932494,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 31.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.4,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dSpace",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.3,
+        "kindPrior": 33.6,
+        "degreeGeneral": 34.7,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 33.5,
+        "axisCount": 33.4,
+        "netScore": 33,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.8,
+      "learned": 35,
+      "relaxations": 0,
+      "p50": 0.22000000000116415,
+      "p95": 0.6180000000167638,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 34.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 35,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.6,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.8,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dSpace",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.4,
+        "kindPrior": 34.4,
+        "degreeGeneral": 34.4,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 33.2,
+        "axisCount": 34.4,
+        "netScore": 33.7,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 54.4,
+      "relaxations": 5.5,
+      "p50": 0.3108000000065658,
+      "p95": 1.4004999999888241,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 34.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 34.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 5.5,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 54.4,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dSpace",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 32.4,
+        "kindPrior": 32.1,
+        "degreeGeneral": 33.4,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 33,
+        "axisCount": 30.5,
+        "netScore": 33.4,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 55,
+      "learned": 35.1,
+      "relaxations": 6,
+      "p50": 0.42960000000311993,
+      "p95": 1.7436999999918044,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 32.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 30.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 35.1,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 6,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.7,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 55,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dSpace",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 31.7,
+        "kindPrior": 34.1,
+        "degreeGeneral": 33.4,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 32.7,
+        "axisCount": 32.5,
+        "netScore": 33.4,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 53.6,
+      "relaxations": 4.6,
+      "p50": 0.5881999999983236,
+      "p95": 2.415500000002794,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 31.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 32.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 4.6,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 2.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 53.6,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dTime",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.4,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.5,
+        "myopic": 100,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 32.2,
+        "axisCount": 31,
+        "netScore": 33.5,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 0,
+      "relaxations": 0,
+      "p50": 0.11340000000200234,
+      "p95": 0.3532999999879394,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 32.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 31,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.4,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dTime",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.3,
+        "kindPrior": 35.1,
+        "degreeGeneral": 32.5,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 32.3,
+        "axisCount": 31.5,
+        "netScore": 33,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "learned": 34.4,
+      "relaxations": 0,
+      "p50": 0.2024000000092201,
+      "p95": 0.5288000000000466,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 35.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 31.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 34.4,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dTime",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.9,
+        "kindPrior": 32.7,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 33.6,
+        "axisCount": 32.5,
+        "netScore": 34.5,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "relaxations": 6.3,
+      "p50": 0.2968000000109896,
+      "p95": 1.5007999999797903,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 32.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 34.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 6.3,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dTime",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.2,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.7,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 33.8,
+        "axisCount": 33.9,
+        "netScore": 33,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 54.4,
+      "learned": 34.8,
+      "relaxations": 5.9,
+      "p50": 0.40220000001136214,
+      "p95": 1.7351999999955297,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 33.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 33,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 34.8,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 5.9,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.7,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 54.4,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dTime",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 35.4,
+        "kindPrior": 34.1,
+        "degreeGeneral": 35.9,
+        "myopic": 33.3,
+        "adjacencyPhrase": 33.3,
+        "stepMagnitude": 34,
+        "axisCount": 33,
+        "netScore": 32.1,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 53.6,
+      "relaxations": 6.4,
+      "p50": 0.5348999999987427,
+      "p95": 2.3619999999937136,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 35.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 35.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot adjacencyPhrase",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot stepMagnitude",
+          "value": 34,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot axisCount",
+          "value": 33,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot netScore",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 6.4,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 2.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 53.6,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "syllogism",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 31,
+        "kindPrior": 31.7,
+        "degreeGeneral": 32.9,
+        "myopic": 100,
+        "atmosphere": 32.1,
+        "matching": 34.6,
+        "figural": 32.9,
+        "conversion": 66.7,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 51,
+      "relaxations": 6.3,
+      "p50": 0.6112000000139233,
+      "p95": 1.2827999999863096,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 31,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 31.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot atmosphere",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 34.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot figural",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 6.3,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.3,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "syllogism",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 32.6,
+        "kindPrior": 32.6,
+        "degreeGeneral": 32.4,
+        "myopic": 33.3,
+        "atmosphere": 29.9,
+        "matching": 32.8,
+        "figural": 33.2,
+        "conversion": 66.7,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 51,
+      "learned": 35.4,
+      "relaxations": 0,
+      "p50": 1.360000000015134,
+      "p95": 2.8439000000071246,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 32.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot atmosphere",
+          "value": 29.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 32.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot figural",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 35.4,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 2.8,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 51,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "syllogism",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 31.9,
+        "kindPrior": 32.1,
+        "degreeGeneral": 34.1,
+        "myopic": 33.3,
+        "atmosphere": 34.1,
+        "matching": 32.9,
+        "figural": 32.5,
+        "conversion": 64.7,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50.2,
+      "relaxations": 3.7,
+      "p50": 1.7853999999933876,
+      "p95": 4.012199999997392,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 31.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 34.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot atmosphere",
+          "value": 34.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot figural",
+          "value": 32.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 3.7,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "syllogism",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 32.7,
+        "kindPrior": 31.7,
+        "degreeGeneral": 32.1,
+        "myopic": 33.3,
+        "atmosphere": 33.8,
+        "matching": 32.9,
+        "figural": 32.9,
+        "conversion": 64.1,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.6,
+      "learned": 32.3,
+      "relaxations": 4.6,
+      "p50": 2.776400000002468,
+      "p95": 4.810599999997066,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 31.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot atmosphere",
+          "value": 33.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot figural",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 32.3,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 4.6,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 4.8,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.6,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "syllogism",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.8,
+        "kindPrior": 33.2,
+        "degreeGeneral": 32.7,
+        "myopic": 33.3,
+        "atmosphere": 30.8,
+        "matching": 33.4,
+        "figural": 33.2,
+        "conversion": 65,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.4,
+      "relaxations": 4.2,
+      "p50": 3.636499999993248,
+      "p95": 5.247399999992922,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot atmosphere",
+          "value": 30.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot figural",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 4.2,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 5.2,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.4,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "analogy",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 30.6,
+        "kindPrior": 31.7,
+        "degreeGeneral": 33.3,
+        "myopic": 100,
+        "cooccurrence": 33.3,
+        "chainLength": 61.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 51.2,
+      "relaxations": 0,
+      "p50": 0.12040000001434237,
+      "p95": 0.4689000000071246,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 30.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 31.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot cooccurrence",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.5,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "analogy",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.1,
+        "kindPrior": 32.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "cooccurrence": 33.3,
+        "chainLength": 60.2,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 54,
+      "learned": 31.3,
+      "relaxations": 0,
+      "p50": 0.297099999996135,
+      "p95": 2.2973000000056345,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot cooccurrence",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 31.3,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 2.3,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 54,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "analogy",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.3,
+        "kindPrior": 34.4,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "cooccurrence": 33.3,
+        "chainLength": 58.7,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.6,
+      "relaxations": 0,
+      "p50": 0.6959999999962747,
+      "p95": 9.190299999987474,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot cooccurrence",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 9.2,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.6,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "analogy",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.9,
+        "kindPrior": 33.5,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "cooccurrence": 33.3,
+        "chainLength": 60.5,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 48.2,
+      "learned": 34.7,
+      "relaxations": 0,
+      "p50": 1.4923999999882653,
+      "p95": 17.74309999999241,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot cooccurrence",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 34.7,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 17.7,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 48.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "analogy",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.9,
+        "kindPrior": 32.9,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "cooccurrence": 33.3,
+        "chainLength": 59.8,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "relaxations": 0,
+      "p50": 1.6510999999882188,
+      "p95": 9.51009999998496,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot cooccurrence",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 9.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups3",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 32.7,
+        "kindPrior": 32.7,
+        "degreeGeneral": 33.3,
+        "myopic": 100,
+        "twoGroups": 33.5,
+        "degree": 33.5,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 48.6,
+      "relaxations": 0,
+      "p50": 0.06889999995473772,
+      "p95": 0.09359999996377155,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot twoGroups",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.1,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups3",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.3,
+        "kindPrior": 34,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "twoGroups": 34.1,
+        "degree": 35.6,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 46.2,
+      "learned": 33.1,
+      "relaxations": 0,
+      "p50": 0.09549999999580905,
+      "p95": 0.14699999999720603,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot twoGroups",
+          "value": 34.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 35.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 33.1,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 46.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups3",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.5,
+        "kindPrior": 33.7,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "twoGroups": 31.7,
+        "degree": 32.9,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49,
+      "relaxations": 0,
+      "p50": 0.13089999998919666,
+      "p95": 0.6139999999431893,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot twoGroups",
+          "value": 31.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.6,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups3",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.4,
+        "kindPrior": 34.1,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "twoGroups": 32.8,
+        "degree": 31.8,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 46.2,
+      "learned": 34.7,
+      "relaxations": 0,
+      "p50": 0.19860000000335276,
+      "p95": 0.30640000000130385,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot twoGroups",
+          "value": 32.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 31.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 34.7,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.3,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 46.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups3",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.1,
+        "kindPrior": 34.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "twoGroups": 33.3,
+        "degree": 32.9,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 48,
+      "relaxations": 0,
+      "p50": 0.22179999999934807,
+      "p95": 0.3196999999927357,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot twoGroups",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degree",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.3,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 48,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "conditional",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.3,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "matching": 33.3,
+        "polarity": 33.6,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 0.2,
+      "relaxations": 0.1,
+      "p50": 0.09120000002440065,
+      "p95": 0.2831000000005588,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot polarity",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.1,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.3,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "conditional",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.3,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "matching": 33.3,
+        "polarity": 34.9,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.8,
+      "learned": 37,
+      "relaxations": 0,
+      "p50": 0.12510000000474975,
+      "p95": 0.3492999999434687,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot polarity",
+          "value": 34.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 37,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.3,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.8,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "conditional",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.3,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "matching": 33.3,
+        "polarity": 32.9,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "relaxations": 0,
+      "p50": 0.16349999996600673,
+      "p95": 0.46739999996498227,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot polarity",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "conditional",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.3,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "matching": 33.3,
+        "polarity": 34.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "learned": 35.3,
+      "relaxations": 0,
+      "p50": 0.1904000000213273,
+      "p95": 0.3941000000340864,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot polarity",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 35.3,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "conditional",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.3,
+        "kindPrior": 33.3,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "matching": 33.3,
+        "polarity": 33.7,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "relaxations": 0,
+      "p50": 0.21559999999590218,
+      "p95": 0.36869999999180436,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot matching",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot polarity",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "hierarchy",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.2,
+        "kindPrior": 33.9,
+        "degreeGeneral": 33.3,
+        "myopic": 100,
+        "chainOnly": 66.7,
+        "wordOrder": 33.1,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 0,
+      "relaxations": 0,
+      "p50": 0.1387000000104308,
+      "p95": 0.6138000000501052,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot wordOrder",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.6,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "hierarchy",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.2,
+        "kindPrior": 33.6,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "chainOnly": 66.7,
+        "wordOrder": 34.4,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "learned": 30.7,
+      "relaxations": 0,
+      "p50": 0.1640999999945052,
+      "p95": 0.5566000000108033,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot wordOrder",
+          "value": 34.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 30.7,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.6,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "hierarchy",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.3,
+        "kindPrior": 33.9,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "chainOnly": 66.7,
+        "wordOrder": 32.7,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.8,
+      "relaxations": 0,
+      "p50": 0.17960000003222376,
+      "p95": 0.47329999995417893,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot wordOrder",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.8,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "hierarchy",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.3,
+        "kindPrior": 32.4,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "chainOnly": 66.7,
+        "wordOrder": 34.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "learned": 35.2,
+      "relaxations": 0,
+      "p50": 0.21570000000065193,
+      "p95": 0.549799999978859,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot wordOrder",
+          "value": 34.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 35.2,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "hierarchy",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.9,
+        "kindPrior": 32.8,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "chainOnly": 66.7,
+        "wordOrder": 31.5,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "relaxations": 0,
+      "p50": 0.20659999997587875,
+      "p95": 0.501300000003539,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot wordOrder",
+          "value": 31.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "perspective",
+      "level": 2,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 32.9,
+        "kindPrior": 32.9,
+        "degreeGeneral": 32.7,
+        "myopic": 65.8,
+        "egocentric": 31.8,
+        "word": 32.3,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 0,
+      "relaxations": 0,
+      "p50": 0.17129999998724088,
+      "p95": 0.39830000000074506,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot egocentric",
+          "value": 31.8,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot word",
+          "value": 32.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.4,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "perspective",
+      "level": 6,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.5,
+        "kindPrior": 33.1,
+        "degreeGeneral": 32,
+        "myopic": 33.3,
+        "egocentric": 33.7,
+        "word": 32.2,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50,
+      "learned": 33,
+      "relaxations": 0,
+      "p50": 0.7075999999651685,
+      "p95": 2.1520000000018626,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 32,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot egocentric",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot word",
+          "value": 32.2,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 33,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 2.2,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "perspective",
+      "level": 10,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 31.6,
+        "kindPrior": 33.7,
+        "degreeGeneral": 31.4,
+        "myopic": 33.3,
+        "egocentric": 33.1,
+        "word": 34.5,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 50.2,
+      "relaxations": 0,
+      "p50": 3.1339000000152737,
+      "p95": 12.425199999997858,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 31.6,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 31.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot egocentric",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot word",
+          "value": 34.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 12.4,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 50.2,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "perspective",
+      "level": 14,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 34.9,
+        "kindPrior": 32.5,
+        "degreeGeneral": 33.4,
+        "myopic": 33.3,
+        "egocentric": 34,
+        "word": 33.1,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.8,
+      "learned": 34.2,
+      "relaxations": 0,
+      "p50": 3.0020000000367872,
+      "p95": 11.53100000001723,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 34.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 32.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.4,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot egocentric",
+          "value": 34,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot word",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 34.2,
+          "limit": "≤ 40.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 11.5,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.8,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "perspective",
+      "level": 18,
+      "N": 1500,
+      "classes": {
+        "entailed": 33.3,
+        "contradicted": 33.3,
+        "undetermined": 33.3
+      },
+      "majority": 33.3,
+      "bots": {
+        "prior": 33.1,
+        "kindPrior": 33.9,
+        "degreeGeneral": 33.3,
+        "myopic": 33.3,
+        "egocentric": 32.5,
+        "word": 34.7,
+        "oneModel": 66.7
+      },
+      "oneModelEonU": 49.8,
+      "relaxations": 0,
+      "p50": 2.9501999999629334,
+      "p95": 11.73589999997057,
+      "gates": [
+        {
+          "name": "class entailed",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class contradicted",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "class undetermined",
+          "value": 33.3,
+          "limit": "30–36.7",
+          "pass": true
+        },
+        {
+          "name": "bot prior",
+          "value": 33.1,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot kindPrior",
+          "value": 33.9,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot degreeGeneral",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot myopic",
+          "value": 33.3,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot egocentric",
+          "value": 32.5,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "bot word",
+          "value": 34.7,
+          "limit": "≤ 38.3",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 11.7,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "oneModel E|U",
+          "value": 49.8,
+          "limit": "40–60",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "choices": [
+    {
+      "family": "orderNum",
+      "level": 6,
+      "N": 750,
+      "chance": 16.7,
+      "none": 24.9,
+      "degree": 12,
+      "firstMention": 14.4,
+      "relaxations": 0,
+      "gates": [
+        {
+          "name": "choice «Нельзя определить»",
+          "value": 24.9,
+          "limit": "22–28",
+          "pass": true
+        },
+        {
+          "name": "choice bot degree",
+          "value": 12,
+          "limit": "≤ 23.7",
+          "pass": true
+        },
+        {
+          "name": "choice bot firstMention",
+          "value": 14.4,
+          "limit": "≤ 23.7",
+          "pass": true
+        },
+        {
+          "name": "choice relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderNum",
+      "level": 14,
+      "N": 750,
+      "chance": 12.1,
+      "none": 24.8,
+      "degree": 8.8,
+      "firstMention": 8.4,
+      "relaxations": 0,
+      "gates": [
+        {
+          "name": "choice «Нельзя определить»",
+          "value": 24.8,
+          "limit": "22–28",
+          "pass": true
+        },
+        {
+          "name": "choice bot degree",
+          "value": 8.8,
+          "limit": "≤ 19.1",
+          "pass": true
+        },
+        {
+          "name": "choice bot firstMention",
+          "value": 8.4,
+          "limit": "≤ 19.1",
+          "pass": true
+        },
+        {
+          "name": "choice relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderTime",
+      "level": 6,
+      "N": 750,
+      "chance": 16.7,
+      "none": 24.9,
+      "degree": 10.9,
+      "firstMention": 12.1,
+      "relaxations": 0,
+      "gates": [
+        {
+          "name": "choice «Нельзя определить»",
+          "value": 24.9,
+          "limit": "22–28",
+          "pass": true
+        },
+        {
+          "name": "choice bot degree",
+          "value": 10.9,
+          "limit": "≤ 23.7",
+          "pass": true
+        },
+        {
+          "name": "choice bot firstMention",
+          "value": 12.1,
+          "limit": "≤ 23.7",
+          "pass": true
+        },
+        {
+          "name": "choice relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderTime",
+      "level": 14,
+      "N": 750,
+      "chance": 12,
+      "none": 25.1,
+      "degree": 8.4,
+      "firstMention": 8.8,
+      "relaxations": 0,
+      "gates": [
+        {
+          "name": "choice «Нельзя определить»",
+          "value": 25.1,
+          "limit": "22–28",
+          "pass": true
+        },
+        {
+          "name": "choice bot degree",
+          "value": 8.4,
+          "limit": "≤ 19",
+          "pass": true
+        },
+        {
+          "name": "choice bot firstMention",
+          "value": 8.8,
+          "limit": "≤ 19",
+          "pass": true
+        },
+        {
+          "name": "choice relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "linear",
+      "level": 6,
+      "N": 750,
+      "chance": 16.7,
+      "none": 24.8,
+      "degree": 12.7,
+      "firstMention": 10.7,
+      "relaxations": 0,
+      "gates": [
+        {
+          "name": "choice «Нельзя определить»",
+          "value": 24.8,
+          "limit": "22–28",
+          "pass": true
+        },
+        {
+          "name": "choice bot degree",
+          "value": 12.7,
+          "limit": "≤ 23.7",
+          "pass": true
+        },
+        {
+          "name": "choice bot firstMention",
+          "value": 10.7,
+          "limit": "≤ 23.7",
+          "pass": true
+        },
+        {
+          "name": "choice relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "linear",
+      "level": 14,
+      "N": 750,
+      "chance": 12.1,
+      "none": 25.2,
+      "degree": 7.6,
+      "firstMention": 7.7,
+      "relaxations": 0,
+      "gates": [
+        {
+          "name": "choice «Нельзя определить»",
+          "value": 25.2,
+          "limit": "22–28",
+          "pass": true
+        },
+        {
+          "name": "choice bot degree",
+          "value": 7.6,
+          "limit": "≤ 19.1",
+          "pass": true
+        },
+        {
+          "name": "choice bot firstMention",
+          "value": 7.7,
+          "limit": "≤ 19.1",
+          "pass": true
+        },
+        {
+          "name": "choice relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "binaries": [
+    {
+      "family": "groups",
+      "level": 6,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups",
+      "level": 14,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderNum",
+      "level": 6,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderNum",
+      "level": 14,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderTime",
+      "level": 6,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "orderTime",
+      "level": 14,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "linear",
+      "level": 6,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "linear",
+      "level": 14,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "circular",
+      "level": 6,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "circular",
+      "level": 14,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir2d",
+      "level": 6,
+      "N": 750,
+      "entailed": 50.1,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50.1,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir2d",
+      "level": 14,
+      "N": 750,
+      "entailed": 50.1,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50.1,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dSpace",
+      "level": 6,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dSpace",
+      "level": 14,
+      "N": 750,
+      "entailed": 50.1,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50.1,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dTime",
+      "level": 6,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "dir3dTime",
+      "level": 14,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "syllogism",
+      "level": 6,
+      "N": 750,
+      "entailed": 50.3,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50.3,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "syllogism",
+      "level": 14,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "analogy",
+      "level": 6,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "analogy",
+      "level": 14,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups3",
+      "level": 6,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "groups3",
+      "level": 14,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "conditional",
+      "level": 6,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "conditional",
+      "level": 14,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "hierarchy",
+      "level": 6,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "hierarchy",
+      "level": 14,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "perspective",
+      "level": 6,
+      "N": 750,
+      "entailed": 49.9,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 49.9,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "perspective",
+      "level": 14,
+      "N": 750,
+      "entailed": 50,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "directs": [
+    {
+      "family": "graph",
+      "level": 2,
+      "sub": "iso",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "degreeSequence": 50,
+        "edgeTypeCount": 50,
+        "learned": 50
+      },
+      "reported": {
+        "jointDegree": 100
+      },
+      "p50": 0.1075999999884516,
+      "p95": 0.4337999999988824,
+      "gates": [
+        {
+          "name": "iso balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot degreeSequence",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot edgeTypeCount",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 50,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.4,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "graph",
+      "level": 6,
+      "sub": "iso",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "degreeSequence": 50,
+        "edgeTypeCount": 50,
+        "learned": 50.9
+      },
+      "reported": {
+        "jointDegree": 92.5
+      },
+      "p50": 0.05579999997280538,
+      "p95": 0.3169000000343658,
+      "gates": [
+        {
+          "name": "iso balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot degreeSequence",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot edgeTypeCount",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 50.9,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.3,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "graph",
+      "level": 10,
+      "sub": "iso",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "degreeSequence": 50,
+        "edgeTypeCount": 50,
+        "learned": 48.9
+      },
+      "reported": {
+        "jointDegree": 53.5
+      },
+      "p50": 0.15080000000307336,
+      "p95": 0.4340000000083819,
+      "gates": [
+        {
+          "name": "iso balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot degreeSequence",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot edgeTypeCount",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 48.9,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.4,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "graph",
+      "level": 14,
+      "sub": "iso",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "degreeSequence": 50,
+        "edgeTypeCount": 50,
+        "learned": 50.1
+      },
+      "reported": {
+        "jointDegree": 50
+      },
+      "p50": 0.11739999998826534,
+      "p95": 0.3426999999792315,
+      "gates": [
+        {
+          "name": "iso balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot degreeSequence",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot edgeTypeCount",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 50.1,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.3,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "graph",
+      "level": 18,
+      "sub": "iso",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "degreeSequence": 50,
+        "edgeTypeCount": 50,
+        "learned": 49.3
+      },
+      "reported": {
+        "jointDegree": 50
+      },
+      "p50": 0.11330000002635643,
+      "p95": 0.32630000001518056,
+      "gates": [
+        {
+          "name": "iso balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot degreeSequence",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot edgeTypeCount",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 49.3,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.3,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "graph",
+      "level": 2,
+      "sub": "map",
+      "N": 1500,
+      "values": {
+        "signature": 100,
+        "firstMention": 24.9,
+        "meanClass": 1,
+        "chance": 25
+      },
+      "reported": {},
+      "p50": 0.03129999997327104,
+      "p95": 0.04609999997774139,
+      "gates": [
+        {
+          "name": "map bot signature",
+          "value": 100,
+          "limit": "≤ 105",
+          "pass": true
+        },
+        {
+          "name": "map bot firstMention",
+          "value": 24.9,
+          "limit": "≤ 30",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "graph",
+      "level": 6,
+      "sub": "map",
+      "N": 1500,
+      "values": {
+        "signature": 50,
+        "firstMention": 20.5,
+        "meanClass": 2,
+        "chance": 20
+      },
+      "reported": {},
+      "p50": 0.047599999990779907,
+      "p95": 0.1023999999742955,
+      "gates": [
+        {
+          "name": "map bot signature",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "map bot firstMention",
+          "value": 20.5,
+          "limit": "≤ 25",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "mean signature class",
+          "value": 2,
+          "limit": "≥ 2",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "graph",
+      "level": 10,
+      "sub": "map",
+      "N": 1500,
+      "values": {
+        "signature": 50,
+        "firstMention": 14.5,
+        "meanClass": 2,
+        "chance": 16.7
+      },
+      "reported": {},
+      "p50": 0.054300000017974526,
+      "p95": 0.10979999997653067,
+      "gates": [
+        {
+          "name": "map bot signature",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "map bot firstMention",
+          "value": 14.5,
+          "limit": "≤ 21.7",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "mean signature class",
+          "value": 2,
+          "limit": "≥ 2",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "graph",
+      "level": 14,
+      "sub": "map",
+      "N": 1500,
+      "values": {
+        "signature": 50,
+        "firstMention": 14.9,
+        "meanClass": 2,
+        "chance": 13.7
+      },
+      "reported": {},
+      "p50": 0.06369999999878928,
+      "p95": 0.11410000000614673,
+      "gates": [
+        {
+          "name": "map bot signature",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "map bot firstMention",
+          "value": 14.9,
+          "limit": "≤ 18.7",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "mean signature class",
+          "value": 2,
+          "limit": "≥ 2",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "graph",
+      "level": 18,
+      "sub": "map",
+      "N": 1500,
+      "values": {
+        "signature": 50,
+        "firstMention": 11.7,
+        "meanClass": 2,
+        "chance": 12.5
+      },
+      "reported": {},
+      "p50": 0.06380000000353903,
+      "p95": 0.11579999997047707,
+      "gates": [
+        {
+          "name": "map bot signature",
+          "value": 50,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "map bot firstMention",
+          "value": 11.7,
+          "limit": "≤ 17.5",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 0.1,
+          "limit": "≤ 40",
+          "pass": true
+        },
+        {
+          "name": "mean signature class",
+          "value": 2,
+          "limit": "≥ 2",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "binary",
+      "level": 2,
+      "sub": "binary",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "operatorPrior": 48.7,
+        "learned": 49.7,
+        "relaxations": 0
+      },
+      "reported": {
+        "firstOnly": 64.9
+      },
+      "p50": 0.3102000000071712,
+      "p95": 1.1273999999975786,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot operatorPrior",
+          "value": 48.7,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 49.7,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 1.1,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "binary",
+      "level": 6,
+      "sub": "binary",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "operatorPrior": 49.6,
+        "learned": 50.6,
+        "relaxations": 0.1
+      },
+      "reported": {
+        "firstOnly": 65.9
+      },
+      "p50": 0.40159999998286366,
+      "p95": 2.502199999988079,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot operatorPrior",
+          "value": 49.6,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 50.6,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.1,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 2.5,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "binary",
+      "level": 10,
+      "sub": "binary",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "operatorPrior": 52.1,
+        "learned": 51.5,
+        "relaxations": 0
+      },
+      "reported": {
+        "firstOnly": 68.6
+      },
+      "p50": 0.7590000000200234,
+      "p95": 3.1061000000336207,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot operatorPrior",
+          "value": 52.1,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 51.5,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 3.1,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "binary",
+      "level": 14,
+      "sub": "binary",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "operatorPrior": 48.9,
+        "learned": 48.5,
+        "relaxations": 0.1
+      },
+      "reported": {
+        "firstOnly": 67.1
+      },
+      "p50": 2.183000000019092,
+      "p95": 12.806400000001304,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot operatorPrior",
+          "value": 48.9,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 48.5,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0.1,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 12.8,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "binary",
+      "level": 18,
+      "sub": "binary",
+      "N": 1500,
+      "values": {
+        "balance": 50,
+        "operatorPrior": 50.4,
+        "learned": 51.1,
+        "relaxations": 0
+      },
+      "reported": {
+        "firstOnly": 65.7
+      },
+      "p50": 2.669999999983702,
+      "p95": 15.004000000015367,
+      "gates": [
+        {
+          "name": "binary balance",
+          "value": 50,
+          "limit": "47–53",
+          "pass": true
+        },
+        {
+          "name": "bot operatorPrior",
+          "value": 50.4,
+          "limit": "≤ 55",
+          "pass": true
+        },
+        {
+          "name": "bot learned",
+          "value": 51.1,
+          "limit": "≤ 57",
+          "pass": true
+        },
+        {
+          "name": "relaxations",
+          "value": 0,
+          "limit": "≤ 10",
+          "pass": true
+        },
+        {
+          "name": "p95 ms",
+          "value": 15,
+          "limit": "≤ 40",
+          "pass": true
+        }
+      ]
+    }
+  ]
+}

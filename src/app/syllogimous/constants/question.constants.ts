@@ -11,6 +11,10 @@ export enum EnumQuestionType {
     GraphMatching = "Graph Matching",
     Analogy = "Analogy",
     Binary = "Binary",
+    Groups3 = "Groups3",
+    Conditional = "Conditional",
+    Hierarchy = "Hierarchy",
+    Perspective = "Perspective",
 }
 
 export enum EnumArrangements {

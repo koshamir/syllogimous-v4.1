@@ -44,29 +44,31 @@
             </li>
         </ul>
 
-        <div class="text-center">
+        <div class="text-center d-flex flex-wrap justify-content-center gap-2">
             <a class="btn btn-outline-primary" (click)="router.navigate([EnumScreens.Settings])">
                 <i class="bi bi-gear"></i> Настройки
             </a>
+            <a class="btn btn-outline-primary" (click)="router.navigate([EnumScreens.Strategies])">
+                <i class="bi bi-lightbulb"></i> Стратегии
+            </a>
         </div>
+        <p *ngIf="probeDue" class="text-center small mt-3 mb-0">
+            <a href="javascript:void(0)" (click)="router.navigate([EnumScreens.Probes])">Пора пройти «Контроль переноса»</a> — раз в 14 дней.
+        </p>
+        <p class="honest-note text-center mt-3 mb-0">Уровень в тренажёре — не IQ.</p>
     </div>
 
-    <div footer class="text-center d-flex flex-wrap justify-content-center gap-3">
-        <button
-            style="width: 150px;"
-            class="btn btn-primary"
-            (click)="game.playArcadeMode()"
-        >Обычная игра</button>
-        <button
-            style="width: 150px;"
-            class="btn btn-outline-primary"
-            (click)="router.navigate([EnumScreens.PlaygroundMode])"
-        >Свободная игра</button>
-        <a
-            style="width: 190px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center;"
-            class="btn btn-outline-primary"
-            routerLink="/experimental"
-            aria-label="Открыть экспериментальную тренировку отношений"
-        >Экспериментальная тренировка</a>
+    <div footer class="start-actions">
+        <div class="main-actions">
+            <button class="btn btn-success" (click)="startPlan()">Тренировка дня</button>
+            <button class="btn btn-primary" (click)="game.playArcadeMode()">Обычная игра</button>
+        </div>
+        <div class="mode-actions">
+            <button class="btn btn-sm btn-outline-primary" (click)="router.navigate([EnumScreens.Builder])">Конструктор</button>
+            <button class="btn btn-sm btn-outline-primary" (click)="router.navigate([EnumScreens.Mapping])">Отображение структур</button>
+            <button class="btn btn-sm btn-outline-primary" (click)="router.navigate([EnumScreens.Fluency])">Беглость</button>
+            <button class="btn btn-sm btn-outline-primary" (click)="router.navigate([EnumScreens.PlaygroundMode])">Свободная игра</button>
+            <button class="btn btn-sm btn-outline-secondary" (click)="router.navigate([EnumScreens.Probes])">Контроль переноса</button>
+        </div>
     </div>
 </app-card>

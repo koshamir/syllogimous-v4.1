@@ -1,0 +1,46 @@
+<div *ngIf="hasV5" class="d-grid gap-4">
+    <div>
+        <div class="section-minititle">Уровни по дням</div>
+        <svg *ngIf="dates.length" [attr.viewBox]="'0 0 ' + width + ' ' + height" width="100%" role="img" aria-label="Уровни по типам заданий">
+            <g font-size="8" fill="#868e96">
+                <ng-container *ngFor="let L of [1, 5, 10, 15, 20]">
+                    <line x1="20" [attr.x2]="width" [attr.y1]="y(L)" [attr.y2]="y(L)" stroke="#e9ecef" stroke-width="0.5"></line>
+                    <text x="2" [attr.y]="y(L) + 3">{{ L }}</text>
+                </ng-container>
+            </g>
+            <ng-container *ngFor="let l of lines">
+                <polyline [attr.points]="l.points" fill="none" [attr.stroke]="l.color" stroke-width="1.5"></polyline>
+                <circle *ngFor="let p of l.dots" [attr.cx]="p.x" [attr.cy]="p.y" r="2.2" [attr.fill]="l.color"></circle>
+            </ng-container>
+        </svg>
+        <div class="d-flex flex-wrap gap-2 small mt-1">
+            <span *ngFor="let l of lines"><span [style.color]="l.color">●</span> {{ l.label }} — {{ l.last }}</span>
+        </div>
+        <div class="small text-muted mt-1">Уровень в тренажёре — не IQ: он показывает только, какие задания вам сейчас по силам.</div>
+    </div>
+
+    <div>
+        <div class="section-minititle">Точность по правильному ответу</div>
+        <table class="table table-sm small mb-1">
+            <thead><tr><th>Ответ</th><th>Заданий</th><th>Верно</th></tr></thead>
+            <tbody><tr *ngFor="let r of byClass"><td>{{ r.label }}</td><td>{{ r.n }}</td><td>{{ r.n ? r.acc + '%' : '—' }}</td></tr></tbody>
+        </table>
+        <div class="small text-muted">Низкая точность на «Неизвестно» — признак рассуждения по одной модели: проверяй, нет ли второго мира.</div>
+    </div>
+
+    <div *ngIf="byLure.length">
+        <div class="section-minititle">Ошибки по типу ловушки</div>
+        <table class="table table-sm small mb-0">
+            <thead><tr><th>Ловушка</th><th>Заданий</th><th>Ошибок</th></tr></thead>
+            <tbody><tr *ngFor="let r of byLure"><td>{{ r.label }}</td><td>{{ r.n }}</td><td>{{ r.n ? (100 - r.acc) + '%' : '—' }}</td></tr></tbody>
+        </table>
+    </div>
+
+    <div *ngIf="bySigma.length">
+        <div class="section-minititle">Время верного ответа по глубине вывода σ</div>
+        <table class="table table-sm small mb-0">
+            <thead><tr><th>σ (посылок в опоре)</th><th>Ответов</th><th>Среднее время, с</th></tr></thead>
+            <tbody><tr *ngFor="let r of bySigma"><td>{{ r.sigma === '—' ? 'неизвестно / графы' : r.sigma }}</td><td>{{ r.n }}</td><td>{{ r.meanRt }}</td></tr></tbody>
+        </table>
+    </div>
+</div>

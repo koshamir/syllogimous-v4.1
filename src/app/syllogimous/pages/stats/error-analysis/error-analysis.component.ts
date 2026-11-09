@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Question } from 'src/app/syllogimous/models/question.models';
 import { GameService } from 'src/app/syllogimous/services/game.service';
+import { isCorrect } from 'src/app/syllogimous/utils/answer.utils';
 
 @Component({
     selector: 'app-error-analysis',
@@ -21,7 +22,7 @@ export class ErrorAnalysisComponent {
 
         const typeMistakesCount: Record<string, number> = {};
         this.questions
-            .filter(q => q.isValid !== q.userAnswer)
+            .filter(q => isCorrect(q) !== true)
             .forEach(q => {
                 typeMistakesCount[q.type] = typeMistakesCount[q.type] || 0;
                 typeMistakesCount[q.type]++;

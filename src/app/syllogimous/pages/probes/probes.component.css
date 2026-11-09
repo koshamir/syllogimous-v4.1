@@ -1,0 +1,71 @@
+.lst-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 3.2rem);
+    grid-auto-rows: 3.2rem;
+    gap: 2px;
+    justify-content: center;
+}
+
+.lst-cell {
+    border: 1px solid #adb5bd;
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    background: #fff;
+}
+
+.lst-cell.q {
+    background: #fff3bf;
+    font-weight: 700;
+}
+
+.shape-btn {
+    min-width: 48px;
+    min-height: 48px;
+    font-size: 1.4rem;
+}
+
+.series {
+    font-size: 1.4rem;
+    text-align: center;
+    letter-spacing: 0.03em;
+}
+
+.series-input {
+    max-width: 9rem;
+}
+
+.graphs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 0.5rem;
+}
+
+.probe-graph {
+    width: 100%;
+    max-width: 18rem;
+    margin: 0 auto;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.ext-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: 0.3rem;
+}
+
+.shape {
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: #343a40;
+}
+
+.shape-btn .shape {
+    fill: currentColor;
+}

@@ -1,6 +1,15 @@
 <app-card>
     <div body class="py-3 px-md-3">
         <router-outlet class="d-none"></router-outlet>
+        <div class="card mt-4">
+            <div class="card-body small">
+                <div class="fw-bold mb-1">Три ответа</div>
+                <div><b>Следует</b> — вывод верен во всех мирах, где верны посылки.</div>
+                <div><b>Противоречит</b> — вывод неверен во всех таких мирах.</div>
+                <div><b>Неизвестно</b> — есть мир, где вывод верен, и мир, где он неверен.</div>
+                <div class="text-muted mt-1">Клавиши: 1 / 2 / 3 или ← / ↓ / →. В настройках можно выбрать два ответа: «Верно / Неверно».</div>
+            </div>
+        </div>
     </div>
 
     <div *ngIf="!showBack; else showBackTemplate" footer class="playcard-toolbar">

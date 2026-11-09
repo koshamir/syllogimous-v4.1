@@ -11,9 +11,9 @@
             <div
                 class="card mx-md-3"
                 *ngFor="let q of questions"
-                [class.timeout]="q.userAnswer === undefined"
-                [class.correct]="q.userAnswer !== undefined && q.userAnswer === q.isValid"
-                [class.incorrect]="q.userAnswer !== undefined && q.userAnswer !== q.isValid"
+                [class.timeout]="isTimeout(q)"
+                [class.correct]="isCorrect(q) === true"
+                [class.incorrect]="isCorrect(q) === false"
             >
                 <div class="mode-title">{{q.playgroundMode ? "Свободный режим" : "Обычная игра"}}</div>
 
@@ -60,22 +60,22 @@
                 <small class="d-grid" style="grid-template-columns: repeat(4, 1fr);">
                     <div class="bd-left">
                         <div class="fw-bold">Тип задания</div>
-                        {{ q.type | ruLabel }}
+                        {{ q.type | ruLabel }}<span *ngIf="q.level !== undefined">, ур. {{ q.level | number:'1.0-1' }}</span>
                     </div>
     
                     <div class="bd-left">
                         <div class="fw-bold">Правильный ответ</div>
-                        {{ q.isValid | ruLabel }}
+                        <span [innerHTML]="correctLabel(q)"></span>
                     </div>
     
                     <div class="bd-left">
                         <div class="fw-bold">Ваш ответ</div>
-                        {{ (q.userAnswer === undefined) ? "Время вышло" : (q.userAnswer | ruLabel) }}
+                        <span [innerHTML]="userLabel(q)"></span>
                     </div>
     
                     <div class="bd-left">
                         <div class="fw-bold">Время</div>
-                        {{ (q.userAnswer === undefined) ? "Время вышло" : (((q.answeredAt - q.createdAt) / 1000) | number:".1-1") + " с" }}
+                        {{ isTimeout(q) ? "Время вышло" : (((q.answeredAt - q.createdAt) / 1000) | number:".1-1") + " с" }}
                     </div>
                 </small>
             </div>

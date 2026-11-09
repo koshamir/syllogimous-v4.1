@@ -1,0 +1,150 @@
+# Syllogimous v4.1 — legacy cue audit (regenerated 2026-11-08, N=1200 per cell)
+
+## legacy-cue-audit.ts
+
+=== negation=false meta=false ===
+Distinction n=2: P(valid)=53.5%  bot[count 'противоположен' parity, no chaining]=100.0%  fails=0
+Distinction n=4: P(valid)=51.8%  bot[count 'противоположен' parity, no chaining]=100.0%  fails=0
+Distinction n=6: P(valid)=49.3%  bot[count 'противоположен' parity, no chaining]=100.0%  fails=0
+Distinction n=10: P(valid)=49.1%  bot[count 'противоположен' parity, no chaining]=100.0%  fails=0
+Comparison Numerical n=2: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Numerical n=3: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Numerical n=5: bot[net-score of each term, no chaining]=85.6% (abstain 29%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Numerical n=8: bot[net-score of each term, no chaining]=70.8% (abstain 57%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Numerical n=12: bot[net-score of each term, no chaining]=65.0% (abstain 69%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=2: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=3: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=5: bot[net-score of each term, no chaining]=83.7% (abstain 32%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=8: bot[net-score of each term, no chaining]=74.2% (abstain 53%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=12: bot[net-score of each term, no chaining]=66.8% (abstain 68%)  ref-solver(non-meta)=100.0% fails=0
+Syllogism[canyon] n=2: bot[atmosphere]=77.4% bot[quantifier-prior, held-out]=68.5% | some:61%valid(n=351) some_not:71%valid(n=436) no:32%valid(n=227) all:11%valid(n=186) fails=0
+Syllogism[canyon] n=3: bot[atmosphere]=72.1% bot[quantifier-prior, held-out]=72.7% | some_not:73%valid(n=453) no:21%valid(n=211) all:6%valid(n=215) some:58%valid(n=321) fails=0
+Syllogism[canyon] n=4: bot[atmosphere]=71.8% bot[quantifier-prior, held-out]=78.8% | some_not:77%valid(n=499) some:65%valid(n=327) no:13%valid(n=183) all:3%valid(n=191) fails=0
+Syllogism[canyon] n=6: bot[atmosphere]=70.3% bot[quantifier-prior, held-out]=79.3% | some_not:75%valid(n=464) some:65%valid(n=344) no:5%valid(n=193) all:3%valid(n=199) fails=0
+Syllogism[canyon] n=8: bot[atmosphere]=70.6% bot[quantifier-prior, held-out]=76.8% | some_not:73%valid(n=488) all:2%valid(n=202) no:7%valid(n=193) some:65%valid(n=317) fails=0
+Syllogism[fredo] n=2: bot[atmosphere]=70.7% bot[quantifier-prior, held-out]=63.2% | some_not:67%valid(n=425) some:52%valid(n=315) all:19%valid(n=183) no:40%valid(n=277) fails=0
+Syllogism[fredo] n=3: bot[atmosphere]=70.1% bot[quantifier-prior, held-out]=68.2% | some_not:70%valid(n=411) some:60%valid(n=333) no:39%valid(n=256) all:11%valid(n=200) fails=0
+Syllogism[fredo] n=4: bot[atmosphere]=64.9% bot[quantifier-prior, held-out]=64.0% | some_not:65%valid(n=433) all:18%valid(n=182) no:40%valid(n=260) some:53%valid(n=325) fails=0
+Syllogism[fredo] n=6: bot[atmosphere]=65.2% bot[quantifier-prior, held-out]=69.3% | some:58%valid(n=324) some_not:71%valid(n=433) all:10%valid(n=193) no:37%valid(n=250) fails=0
+Syllogism[fredo] n=8: bot[atmosphere]=66.2% bot[quantifier-prior, held-out]=65.8% | all:10%valid(n=185) some:50%valid(n=335) no:37%valid(n=273) some_not:70%valid(n=407) fails=0
+Linear Arrangement n=2: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:55%valid(n=383) N позиций:59%valid(n=378) сразу:27%valid(n=298) рядом:60%valid(n=141) fails=0
+Linear Arrangement n=3: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:64%valid(n=421) сразу:22%valid(n=261) N позиций:59%valid(n=377) рядом:49%valid(n=141) fails=0
+Linear Arrangement n=5: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:63%valid(n=403) N позиций:66%valid(n=393) рядом:33%valid(n=139) сразу:14%valid(n=265) fails=0
+Linear Arrangement n=8: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:58%valid(n=420) N позиций:68%valid(n=402) сразу:12%valid(n=253) рядом:29%valid(n=125) fails=0
+Circular Arrangement n=2: bot[read order from instruction line, ignore premises]=100.0% | сразу:43%valid(n=388) левее/правее:39%valid(n=407) N позиций:42%valid(n=405) fails=0
+Circular Arrangement n=3: bot[read order from instruction line, ignore premises]=100.0% | рядом:79%valid(n=127) напротив:31%valid(n=172) N позиций:66%valid(n=318) левее/правее:39%valid(n=285) сразу:39%valid(n=298) fails=0
+Circular Arrangement n=5: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:56%valid(n=334) сразу:22%valid(n=241) напротив:26%valid(n=145) N позиций:77%valid(n=357) рядом:50%valid(n=123) fails=0
+Circular Arrangement n=8: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:68%valid(n=391) N позиций:64%valid(n=403) сразу:17%valid(n=265) рядом:28%valid(n=141) fails=0
+Direction2D n=2: P(valid | 'в соседней клетке')=100% (in 29% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=68.9%  ref-solver=100.0% fails=0
+Direction2D n=3: P(valid | 'в соседней клетке')=100% (in 28% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=69.8%  ref-solver=100.0% fails=0
+Direction2D n=5: P(valid | 'в соседней клетке')=100% (in 27% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=67.8%  ref-solver=100.0% fails=0
+Direction2D n=8: P(valid | 'в соседней клетке')=100% (in 18% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=62.8%  ref-solver=100.0% fails=0
+GraphMatching n=2: bot[count of 'связан с' equal ⇒ same]=66.2%  bot[degree sequence only]=100.0% fails=0
+GraphMatching n=3: bot[count of 'связан с' equal ⇒ same]=64.2%  bot[degree sequence only]=98.8% fails=0
+GraphMatching n=5: bot[count of 'связан с' equal ⇒ same]=61.1%  bot[degree sequence only]=98.1% fails=0
+GraphMatching n=8: bot[count of 'связан с' equal ⇒ same]=58.2%  bot[degree sequence only]=97.3% fails=0
+Analogy n=3: arrangement/diff:28%valid(n=161) arrangement/same:71%valid(n=148) comparison/diff:44%valid(n=198) comparison/same:55%valid(n=188) direction/diff:46%valid(n=109) direction/same:50%valid(n=84) distinction/diff:60%valid(n=142) distinction/same:38%valid(n=170) fails=0
+Analogy n=5: arrangement/diff:72%valid(n=139) arrangement/same:34%valid(n=151) comparison/diff:53%valid(n=178) comparison/same:42%valid(n=211) direction/diff:52%valid(n=108) direction/same:53%valid(n=112) distinction/diff:53%valid(n=147) distinction/same:51%valid(n=154) fails=0
+Analogy n=8: arrangement/diff:80%valid(n=130) arrangement/same:16%valid(n=135) comparison/diff:45%valid(n=201) comparison/same:54%valid(n=217) direction/diff:43%valid(n=103) direction/same:54%valid(n=82) distinction/diff:51%valid(n=148) distinction/same:49%valid(n=184) fails=0
+
+=== negation=true meta=false ===
+Distinction n=2: P(valid)=49.2%  bot[count 'противоположен' parity, no chaining]=100.0%  fails=0
+Distinction n=4: P(valid)=46.8%  bot[count 'противоположен' parity, no chaining]=100.0%  fails=0
+Distinction n=6: P(valid)=49.9%  bot[count 'противоположен' parity, no chaining]=100.0%  fails=0
+Distinction n=10: P(valid)=48.5%  bot[count 'противоположен' parity, no chaining]=100.0%  fails=0
+Comparison Numerical n=2: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Numerical n=3: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Numerical n=5: bot[net-score of each term, no chaining]=83.8% (abstain 31%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Numerical n=8: bot[net-score of each term, no chaining]=73.0% (abstain 54%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Numerical n=12: bot[net-score of each term, no chaining]=66.5% (abstain 70%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=2: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=3: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=5: bot[net-score of each term, no chaining]=84.6% (abstain 32%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=8: bot[net-score of each term, no chaining]=72.8% (abstain 54%)  ref-solver(non-meta)=100.0% fails=0
+Comparison Chronological n=12: bot[net-score of each term, no chaining]=66.4% (abstain 67%)  ref-solver(non-meta)=100.0% fails=0
+Syllogism[canyon] n=2: bot[atmosphere]=77.3% bot[quantifier-prior, held-out]=72.8% | all:7%valid(n=205) some:57%valid(n=349) some_not:74%valid(n=407) no:25%valid(n=239) fails=0
+Syllogism[canyon] n=3: bot[atmosphere]=71.3% bot[quantifier-prior, held-out]=76.2% | some_not:72%valid(n=465) some:69%valid(n=334) no:22%valid(n=192) all:4%valid(n=209) fails=0
+Syllogism[canyon] n=4: bot[atmosphere]=73.0% bot[quantifier-prior, held-out]=81.0% | some:65%valid(n=325) some_not:78%valid(n=482) all:2%valid(n=189) no:9%valid(n=204) fails=0
+Syllogism[canyon] n=6: bot[atmosphere]=67.5% bot[quantifier-prior, held-out]=78.0% | all:2%valid(n=205) some_not:72%valid(n=476) some:67%valid(n=326) no:10%valid(n=193) fails=0
+Syllogism[canyon] n=8: bot[atmosphere]=72.2% bot[quantifier-prior, held-out]=83.0% | some_not:76%valid(n=526) all:1%valid(n=192) some:66%valid(n=284) no:4%valid(n=198) fails=0
+Syllogism[fredo] n=2: bot[atmosphere]=68.3% bot[quantifier-prior, held-out]=62.2% | some:54%valid(n=350) some_not:69%valid(n=429) all:14%valid(n=169) no:48%valid(n=252) fails=0
+Syllogism[fredo] n=3: bot[atmosphere]=68.8% bot[quantifier-prior, held-out]=67.5% | all:13%valid(n=182) no:37%valid(n=249) some_not:71%valid(n=455) some:54%valid(n=314) fails=0
+Syllogism[fredo] n=4: bot[atmosphere]=66.5% bot[quantifier-prior, held-out]=69.2% | some_not:69%valid(n=403) some:56%valid(n=310) all:14%valid(n=211) no:40%valid(n=276) fails=0
+Syllogism[fredo] n=6: bot[atmosphere]=66.2% bot[quantifier-prior, held-out]=65.3% | no:42%valid(n=265) all:16%valid(n=197) some:51%valid(n=303) some_not:70%valid(n=435) fails=0
+Syllogism[fredo] n=8: bot[atmosphere]=64.0% bot[quantifier-prior, held-out]=65.2% | some_not:70%valid(n=449) no:39%valid(n=260) all:14%valid(n=168) some:53%valid(n=323) fails=0
+Linear Arrangement n=2: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:58%valid(n=363) сразу:25%valid(n=318) N позиций:56%valid(n=395) рядом:66%valid(n=124) fails=0
+Linear Arrangement n=3: bot[read order from instruction line, ignore premises]=100.0% | N позиций:60%valid(n=406) сразу:26%valid(n=282) левее/правее:61%valid(n=386) рядом:38%valid(n=126) fails=0
+Linear Arrangement n=5: bot[read order from instruction line, ignore premises]=100.0% | N позиций:63%valid(n=368) левее/правее:66%valid(n=423) сразу:22%valid(n=286) рядом:36%valid(n=123) fails=0
+Linear Arrangement n=8: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:65%valid(n=398) сразу:11%valid(n=269) рядом:20%valid(n=144) N позиций:66%valid(n=389) fails=0
+Circular Arrangement n=2: bot[read order from instruction line, ignore premises]=100.0% | сразу:37%valid(n=410) левее/правее:41%valid(n=387) N позиций:40%valid(n=403) fails=0
+Circular Arrangement n=3: bot[read order from instruction line, ignore premises]=100.0% | N позиций:70%valid(n=335) левее/правее:40%valid(n=259) сразу:31%valid(n=286) напротив:37%valid(n=183) рядом:77%valid(n=137) fails=0
+Circular Arrangement n=5: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:56%valid(n=333) рядом:47%valid(n=139) N позиций:70%valid(n=364) напротив:24%valid(n=155) сразу:23%valid(n=209) fails=0
+Circular Arrangement n=8: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:65%valid(n=420) N позиций:65%valid(n=415) сразу:14%valid(n=253) рядом:31%valid(n=112) fails=0
+Direction2D n=2: P(valid | 'в соседней клетке')=100% (in 29% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=70.1%  ref-solver=82.2% fails=0
+Direction2D n=3: P(valid | 'в соседней клетке')=100% (in 27% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=68.2%  ref-solver=83.2% fails=0
+Direction2D n=5: P(valid | 'в соседней клетке')=100% (in 29% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=67.3%  ref-solver=82.1% fails=0
+Direction2D n=8: P(valid | 'в соседней клетке')=100% (in 18% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=60.9%  ref-solver=87.9% fails=0
+GraphMatching n=2: bot[count of 'связан с' equal ⇒ same]=65.4%  bot[degree sequence only]=100.0% fails=0
+GraphMatching n=3: bot[count of 'связан с' equal ⇒ same]=61.5%  bot[degree sequence only]=99.1% fails=0
+GraphMatching n=5: bot[count of 'связан с' equal ⇒ same]=62.0%  bot[degree sequence only]=98.5% fails=0
+GraphMatching n=8: bot[count of 'связан с' equal ⇒ same]=59.9%  bot[degree sequence only]=97.7% fails=0
+Analogy n=3: arrangement/diff:24%valid(n=177) arrangement/same:78%valid(n=159) comparison/diff:57%valid(n=180) comparison/same:57%valid(n=186) direction/diff:43%valid(n=91) direction/same:52%valid(n=112) distinction/diff:55%valid(n=150) distinction/same:46%valid(n=145) fails=0
+Analogy n=5: arrangement/diff:74%valid(n=134) arrangement/same:35%valid(n=150) comparison/diff:49%valid(n=235) comparison/same:47%valid(n=183) direction/diff:42%valid(n=110) direction/same:50%valid(n=107) distinction/diff:48%valid(n=136) distinction/same:51%valid(n=145) fails=0
+Analogy n=8: arrangement/diff:85%valid(n=153) arrangement/same:15%valid(n=138) comparison/diff:51%valid(n=219) comparison/same:51%valid(n=197) direction/diff:53%valid(n=76) direction/same:46%valid(n=91) distinction/diff:46%valid(n=166) distinction/same:56%valid(n=160) fails=0
+
+=== negation=true meta=true ===
+Distinction n=2: P(valid)=50.6%  bot[count 'противоположен' parity, no chaining]=65.3%  fails=0
+Distinction n=4: P(valid)=51.3%  bot[count 'противоположен' parity, no chaining]=73.1%  fails=0
+Distinction n=6: P(valid)=50.8%  bot[count 'противоположен' parity, no chaining]=70.6%  fails=0
+Distinction n=10: P(valid)=50.7%  bot[count 'противоположен' parity, no chaining]=74.4%  fails=0
+Comparison Numerical n=2: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=74.2% fails=0
+Comparison Numerical n=3: bot[net-score of each term, no chaining]=90.0% (abstain 21%)  ref-solver(non-meta)=80.0% fails=0
+Comparison Numerical n=5: bot[net-score of each term, no chaining]=79.1% (abstain 30%)  ref-solver(non-meta)=83.5% fails=0
+Comparison Numerical n=8: bot[net-score of each term, no chaining]=68.9% (abstain 46%)  ref-solver(non-meta)=81.6% fails=0
+Comparison Numerical n=12: bot[net-score of each term, no chaining]=63.3% (abstain 54%)  ref-solver(non-meta)=80.9% fails=0
+Comparison Chronological n=2: bot[net-score of each term, no chaining]=100.0% (abstain 0%)  ref-solver(non-meta)=75.0% fails=0
+Comparison Chronological n=3: bot[net-score of each term, no chaining]=88.9% (abstain 23%)  ref-solver(non-meta)=81.9% fails=0
+Comparison Chronological n=5: bot[net-score of each term, no chaining]=78.5% (abstain 32%)  ref-solver(non-meta)=80.8% fails=0
+Comparison Chronological n=8: bot[net-score of each term, no chaining]=67.1% (abstain 46%)  ref-solver(non-meta)=81.4% fails=0
+Comparison Chronological n=12: bot[net-score of each term, no chaining]=62.9% (abstain 54%)  ref-solver(non-meta)=80.3% fails=0
+Syllogism[canyon] n=2: bot[atmosphere]=77.2% bot[quantifier-prior, held-out]=71.5% | no:33%valid(n=215) some:57%valid(n=375) some_not:76%valid(n=401) all:5%valid(n=209) fails=0
+Syllogism[canyon] n=3: bot[atmosphere]=72.0% bot[quantifier-prior, held-out]=75.3% | all:5%valid(n=181) some_not:74%valid(n=464) some:65%valid(n=347) no:20%valid(n=208) fails=0
+Syllogism[canyon] n=4: bot[atmosphere]=71.3% bot[quantifier-prior, held-out]=74.3% | some_not:73%valid(n=473) some:62%valid(n=329) no:13%valid(n=204) all:4%valid(n=194) fails=0
+Syllogism[canyon] n=6: bot[atmosphere]=71.3% bot[quantifier-prior, held-out]=79.2% | some_not:77%valid(n=486) all:1%valid(n=184) some:64%valid(n=349) no:8%valid(n=181) fails=0
+Syllogism[canyon] n=8: bot[atmosphere]=72.2% bot[quantifier-prior, held-out]=81.7% | some_not:76%valid(n=489) all:1%valid(n=187) no:5%valid(n=185) some:64%valid(n=339) fails=0
+Syllogism[fredo] n=2: bot[atmosphere]=71.9% bot[quantifier-prior, held-out]=67.5% | some_not:67%valid(n=425) no:36%valid(n=262) all:13%valid(n=201) some:62%valid(n=312) fails=0
+Syllogism[fredo] n=3: bot[atmosphere]=67.7% bot[quantifier-prior, held-out]=64.3% | no:42%valid(n=280) some:55%valid(n=322) some_not:69%valid(n=421) all:14%valid(n=177) fails=0
+Syllogism[fredo] n=4: bot[atmosphere]=67.2% bot[quantifier-prior, held-out]=68.2% | some_not:70%valid(n=431) some:53%valid(n=337) no:34%valid(n=255) all:13%valid(n=177) fails=0
+Syllogism[fredo] n=6: bot[atmosphere]=67.4% bot[quantifier-prior, held-out]=62.5% | some:49%valid(n=340) some_not:68%valid(n=439) all:11%valid(n=176) no:36%valid(n=245) fails=0
+Syllogism[fredo] n=8: bot[atmosphere]=65.3% bot[quantifier-prior, held-out]=65.2% | all:16%valid(n=186) no:35%valid(n=255) some_not:71%valid(n=427) some:52%valid(n=332) fails=0
+Linear Arrangement n=2: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:53%valid(n=337) сразу:27%valid(n=299) N позиций:57%valid(n=402) рядом:53%valid(n=162) fails=0
+Linear Arrangement n=3: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:59%valid(n=388) N позиций:59%valid(n=400) сразу:24%valid(n=281) рядом:51%valid(n=131) fails=0
+Linear Arrangement n=5: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:64%valid(n=378) рядом:36%valid(n=137) сразу:14%valid(n=268) N позиций:66%valid(n=417) fails=0
+Linear Arrangement n=8: bot[read order from instruction line, ignore premises]=100.0% | левее/правее:64%valid(n=401) сразу:17%valid(n=244) N позиций:65%valid(n=425) рядом:25%valid(n=130) fails=0
+Circular Arrangement n=2: bot[read order from instruction line, ignore premises]=100.0% | сразу:46%valid(n=419) N позиций:41%valid(n=387) левее/правее:41%valid(n=394) fails=0
+Circular Arrangement n=3: bot[read order from instruction line, ignore premises]=100.0% | рядом:75%valid(n=146) сразу:40%valid(n=295) левее/правее:41%valid(n=285) N позиций:61%valid(n=323) напротив:42%valid(n=151) fails=0
+Circular Arrangement n=5: bot[read order from instruction line, ignore premises]=100.0% | напротив:19%valid(n=145) N позиций:70%valid(n=385) сразу:20%valid(n=223) рядом:46%valid(n=103) левее/правее:53%valid(n=344) fails=0
+Circular Arrangement n=8: bot[read order from instruction line, ignore premises]=100.0% | N позиций:63%valid(n=370) левее/правее:64%valid(n=408) сразу:14%valid(n=275) рядом:31%valid(n=147) fails=0
+Direction2D n=2: P(valid | 'в соседней клетке')=100% (in 27% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=69.3%  ref-solver=82.9% fails=0
+Direction2D n=3: P(valid | 'в соседней клетке')=100% (in 26% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=67.0%  ref-solver=84.0% fails=0
+Direction2D n=5: P(valid | 'в соседней клетке')=100% (in 29% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=68.8%  ref-solver=83.5% fails=0
+Direction2D n=8: P(valid | 'в соседней клетке')=100% (in 16% of items)  bot[adjacent→valid, step>max premise step→invalid, else guess]=60.1%  ref-solver=88.4% fails=0
+GraphMatching n=2: bot[count of 'связан с' equal ⇒ same]=60.5%  bot[degree sequence only]=78.6% fails=0
+GraphMatching n=3: bot[count of 'связан с' equal ⇒ same]=51.6%  bot[degree sequence only]=66.3% fails=0
+GraphMatching n=5: bot[count of 'связан с' equal ⇒ same]=48.4%  bot[degree sequence only]=51.2% fails=0
+GraphMatching n=8: bot[count of 'связан с' equal ⇒ same]=50.1%  bot[degree sequence only]=51.3% fails=0
+Analogy n=3: arrangement/diff:22%valid(n=152) arrangement/same:74%valid(n=180) comparison/diff:50%valid(n=176) comparison/same:59%valid(n=181) direction/diff:53%valid(n=106) direction/same:42%valid(n=113) distinction/diff:51%valid(n=153) distinction/same:47%valid(n=139) fails=0
+Analogy n=5: arrangement/diff:68%valid(n=150) arrangement/same:28%valid(n=167) comparison/diff:52%valid(n=200) comparison/same:52%valid(n=189) direction/diff:42%valid(n=95) direction/same:47%valid(n=107) distinction/diff:49%valid(n=155) distinction/same:50%valid(n=137) fails=0
+Analogy n=8: arrangement/diff:84%valid(n=146) arrangement/same:19%valid(n=140) comparison/diff:53%valid(n=196) comparison/same:50%valid(n=220) direction/diff:43%valid(n=111) direction/same:52%valid(n=96) distinction/diff:50%valid(n=148) distinction/same:47%valid(n=143) fails=0
+
+## legacy-extra-audit.ts
+Direction2D (negation on, n=4): items containing a red diagonal 'в соседней клетке' phrase (only one axis actually inverted in ~2/3 of them): 58.5%
+Direction3D Spatial n=2: parts=2/max=1:67%v(n=515) parts=1/max=1:71%v(n=318) parts=3/max=1:66%v(n=190) parts=2/max=2:0%v(n=185) parts=1/max=2:0%v(n=121) parts=0/max=0:100%v(n=113) parts=3/max=2:0%v(n=58)
+Direction3D Spatial n=4: parts=2/max=2:47%v(n=397) parts=3/max=2:49%v(n=341) parts=2/max=1:68%v(n=236) parts=1/max=2:44%v(n=124) parts=3/max=1:67%v(n=118) parts=1/max=1:67%v(n=106) parts=2/max=3:0%v(n=65) parts=3/max=3:0%v(n=46)
+Direction3D Spatial n=7: parts=2/max=2:45%v(n=407) parts=3/max=2:48%v(n=329) parts=2/max=1:66%v(n=269) parts=1/max=1:64%v(n=121) parts=1/max=2:49%v(n=119) parts=3/max=1:72%v(n=104) parts=2/max=3:0%v(n=51) parts=3/max=3:0%v(n=42)
+Direction3D Temporal n=2: parts=1/max=1:77%v(n=504) parts=2/max=1:68%v(n=497) parts=3/max=1:69%v(n=174) parts=2/max=2:0%v(n=167) parts=1/max=2:0%v(n=106) parts=3/max=2:0%v(n=52)
+Direction3D Temporal n=4: parts=2/max=2:50%v(n=440) parts=3/max=2:51%v(n=314) parts=2/max=1:64%v(n=235) parts=1/max=1:78%v(n=148) parts=1/max=2:44%v(n=126) parts=3/max=1:68%v(n=110) parts=2/max=3:0%v(n=63) parts=3/max=3:0%v(n=43)
+Direction3D Temporal n=7: parts=2/max=2:48%v(n=448) parts=3/max=2:49%v(n=340) parts=2/max=1:72%v(n=215) parts=1/max=1:76%v(n=160) parts=1/max=2:52%v(n=131) parts=3/max=1:73%v(n=114) parts=2/max=3:0%v(n=54) parts=3/max=3:0%v(n=21)
+Binary n=4 operator priors: and:54%v(n=110) xor:51%v(n=101) xnor:55%v(n=98) nor:51%v(n=98) nand:53%v(n=104) or:45%v(n=89)
+Distinction n=6: premise graph is a simple path in 100% of items; conclusion joins the two path ends in 100%
+Comparison Numerical n=6: premise graph is a simple path in 100% of items; conclusion joins the two path ends in 5%

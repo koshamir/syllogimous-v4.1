@@ -1,0 +1,118 @@
+<ng-template #shapeTpl let-s>
+    <svg viewBox="0 0 20 20" class="shape" [attr.aria-label]="SHAPES[s]">
+        <circle *ngIf="s === 0" cx="10" cy="10" r="7"></circle>
+        <polygon *ngIf="s === 1" points="10,2.5 17.5,17 2.5,17"></polygon>
+        <rect *ngIf="s === 2" x="3.5" y="3.5" width="13" height="13"></rect>
+        <polygon *ngIf="s === 3" points="10,1.5 18.5,10 10,18.5 1.5,10"></polygon>
+    </svg>
+</ng-template>
+
+<ng-template #graphTpl let-g="g" let-pts="pts" let-target="target" let-clickable="clickable">
+    <svg viewBox="0 0 100 100" class="probe-graph" role="img">
+        <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#343a40"></path>
+            </marker>
+        </defs>
+        <ng-container *ngFor="let e of g.edges">
+            <line *ngIf="arrow(e, pts) as a" [attr.x1]="a.x1" [attr.y1]="a.y1" [attr.x2]="a.x2" [attr.y2]="a.y2" stroke="#343a40" stroke-width="1.2"
+                marker-end="url(#arr)" [attr.marker-start]="e.mut ? 'url(#arr)' : null"></line>
+        </ng-container>
+        <g *ngFor="let p of pts; let v = index" (click)="clickable && answer(v)" [class.clickable]="clickable">
+            <circle *ngIf="clickable" [attr.cx]="p.x" [attr.cy]="p.y" r="12" fill="transparent"></circle>
+            <circle [attr.cx]="p.x" [attr.cy]="p.y" r="6" [attr.fill]="v === target ? '#f08c00' : '#e9ecef'" stroke="#343a40" stroke-width="1"></circle>
+        </g>
+    </svg>
+</ng-template>
+
+<app-card>
+    <div body class="probes py-2 px-md-3">
+        <ng-container [ngSwitch]="phase">
+            <div *ngSwitchCase="'home'" class="d-grid gap-3">
+                <div class="small text-muted">«Контроль переноса»</div>
+                <p class="mb-0">Около 15 минут заданий, которые в тренажёре не тренируются: латинский квадрат, числовые ряды и сопоставление нарисованных схем. Без подсказок и разбора, на уровни не влияет.</p>
+                <p class="mb-0 small">Рост здесь — ближний перенос. Если его нет 4–6 недель, роста Gf ждать не стоит — меняй смесь режимов.</p>
+                <div class="alert mb-0 small" [class.alert-warning]="daysAgo === null || daysAgo >= 14" [class.alert-light]="daysAgo !== null && daysAgo < 14">
+                    {{ daysAgo === null ? 'Контроль ещё не проходили.' : daysAgo >= 14 ? 'Прошло ' + daysAgo + ' дн. — пора пройти контроль.' : 'Последний контроль — ' + daysAgo + ' дн. назад; следующий — через ' + (14 - daysAgo) + ' дн.' }}
+                </div>
+
+                <div *ngIf="state.sessions.length">
+                    <div class="section-minititle">Результаты по датам, % верных</div>
+                    <svg viewBox="0 0 300 120" width="100%" role="img" aria-label="Результаты контроля переноса">
+                        <line x1="8" x2="295" y1="110" y2="110" stroke="#dee2e6"></line>
+                        <line x1="8" x2="295" y1="10" y2="10" stroke="#f1f3f5"></line>
+                        <polyline [attr.points]="line('lst')" fill="none" stroke="#2a6fdb" stroke-width="2"></polyline>
+                        <polyline [attr.points]="line('series')" fill="none" stroke="#2b8a3e" stroke-width="2"></polyline>
+                        <polyline [attr.points]="line('graph')" fill="none" stroke="#d6336c" stroke-width="2"></polyline>
+                    </svg>
+                    <div class="small"><span style="color:#2a6fdb">●</span> квадраты · <span style="color:#2b8a3e">●</span> ряды · <span style="color:#d6336c">●</span> схемы</div>
+                    <table class="table table-sm small mt-2 mb-0">
+                        <thead><tr><th>Дата</th><th>Квадраты</th><th>Ряды</th><th>Схемы</th></tr></thead>
+                        <tbody><tr *ngFor="let s of state.sessions.slice().reverse()"><td>{{ s.date }}</td><td>{{ s.lst }}%</td><td>{{ s.series }}%</td><td>{{ s.graph }}%</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <div class="section-minititle">Внешние тесты (вручную)</div>
+                    <table *ngIf="state.external.length" class="table table-sm small mb-2">
+                        <thead><tr><th>Тест</th><th>Дата</th><th>Результат</th><th>Заметка</th><th></th></tr></thead>
+                        <tbody><tr *ngFor="let x of state.external; let i = index"><td>{{ x.name }}</td><td>{{ x.date }}</td><td>{{ x.score }}</td><td>{{ x.note }}</td>
+                            <td><button class="btn btn-sm btn-link p-0" (click)="removeExternal(i)" aria-label="Удалить">×</button></td></tr></tbody>
+                    </table>
+                    <div class="ext-form">
+                        <input class="form-control form-control-sm" placeholder="Название теста" [(ngModel)]="ext.name">
+                        <input class="form-control form-control-sm" type="date" [(ngModel)]="ext.date">
+                        <input class="form-control form-control-sm" placeholder="Результат" [(ngModel)]="ext.score">
+                        <input class="form-control form-control-sm" placeholder="Заметка" [(ngModel)]="ext.note">
+                        <button class="btn btn-sm btn-outline-primary" (click)="addExternal()">Добавить</button>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngSwitchCase="'run'">
+                <div class="small text-muted mb-2">{{ k + 1 }} / {{ steps.length }}</div>
+                <ng-container *ngIf="step.kind === 'lst'">
+                    <div class="mb-2">В каждой строке и каждом столбце каждая фигура встречается ровно один раз. Какая фигура должна стоять вместо «?»?</div>
+                    <div class="lst-grid">
+                        <div *ngFor="let c of session!.lst[step.i].grid" class="lst-cell" [class.q]="c === -2">
+                            <ng-container *ngIf="c >= 0"><ng-container *ngTemplateOutlet="shapeTpl; context: { $implicit: c }"></ng-container></ng-container>
+                            <span *ngIf="c === -2">?</span>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center mt-3">
+                        <button *ngFor="let s of SHAPES; let v = index" class="btn btn-outline-primary shape-btn" (click)="answer(v)" [attr.aria-label]="s">
+                            <ng-container *ngTemplateOutlet="shapeTpl; context: { $implicit: v }"></ng-container>
+                        </button>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="step.kind === 'series'">
+                    <div class="mb-2">Какое число следующее?</div>
+                    <div class="series">{{ session!.series[step.i].shown.join(',  ') }}, …</div>
+                    <div class="d-flex gap-2 justify-content-center mt-3">
+                        <input class="form-control series-input" inputmode="numeric" [(ngModel)]="seriesInput" (keydown.enter)="submitSeries()" aria-label="Ответ">
+                        <button class="btn btn-primary" (click)="submitSeries()">Далее</button>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="step.kind === 'graph'">
+                    <div class="mb-2">Схемы устроены одинаково. Нажмите на кружок второй схемы, который соответствует выделенному в первой.</div>
+                    <div class="graphs">
+                        <ng-container *ngTemplateOutlet="graphTpl; context: { g: session!.graph[step.i].g1, pts: session!.graph[step.i].layout1, target: session!.graph[step.i].target, clickable: false }"></ng-container>
+                        <ng-container *ngTemplateOutlet="graphTpl; context: { g: session!.graph[step.i].g2, pts: session!.graph[step.i].layout2, target: -1, clickable: true }"></ng-container>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div *ngSwitchCase="'done'" class="d-grid gap-2">
+                <div class="fw-bold">Контроль пройден</div>
+                <div *ngIf="last">Квадраты: {{ last.lst }}% · ряды: {{ last.series }}% · схемы: {{ last.graph }}%</div>
+                <div class="small text-muted">Результаты сохранены; уровни в тренажёре не изменились.</div>
+            </div>
+        </ng-container>
+    </div>
+
+    <div footer class="playcard-toolbar">
+        <button class="btn btn-outline-primary" (click)="router.navigate([EnumScreens.Start])"><i class="bi bi-arrow-left"></i> Главная</button>
+        <button *ngIf="phase === 'home'" class="btn btn-primary" (click)="start()">Начать контроль</button>
+        <button *ngIf="phase === 'done'" class="btn btn-primary" (click)="phase = 'home'">К результатам</button>
+    </div>
+</app-card>

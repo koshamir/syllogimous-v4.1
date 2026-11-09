@@ -1,0 +1,141 @@
+.clues {
+    padding-left: 1.4rem;
+    margin-bottom: 0.75rem;
+}
+
+.clues li {
+    margin-bottom: 0.2rem;
+}
+
+.clues li.violated {
+    background: rgba(220, 53, 69, 0.15);
+    border-radius: 0.25rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.25rem 0.6rem;
+    margin: 0.15rem;
+    border: 2px solid #495057;
+    border-radius: 999px;
+    background: #fff;
+    font-weight: 600;
+}
+
+.chip.selected {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.3);
+}
+
+.chip.locked {
+    border-style: dashed;
+    opacity: 0.85;
+}
+
+.chip.wrong {
+    border-color: #dc3545;
+    background: #fde8ea;
+}
+
+.dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.slot,
+.group {
+    border: 2px dashed #adb5bd;
+    border-radius: 0.6rem;
+    min-height: 64px;
+    padding: 0.2rem;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.slot-label {
+    font-size: 0.7rem;
+    color: #868e96;
+}
+
+.board-line {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 0.3rem;
+}
+
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.3rem;
+    max-width: 22rem;
+    margin: 0 auto;
+}
+
+.board-groups {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.board-groups .group {
+    flex: 1 1 8rem;
+    min-height: 90px;
+}
+
+.board-circle {
+    position: relative;
+    width: min(92vw, 22rem);
+    aspect-ratio: 1;
+    margin: 0.5rem auto;
+}
+
+.table-disc {
+    position: absolute;
+    inset: 22%;
+    border-radius: 50%;
+    background: #e9ecef;
+}
+
+.seat {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 4.6rem;
+    min-height: 58px;
+}
+
+.pool {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.color-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin: 0.2rem 0;
+}
+
+.color-btn {
+    border: 2px solid transparent;
+    border-radius: 0.4rem;
+    color: #fff;
+    min-height: 36px;
+    padding: 0 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.55;
+}
+
+.color-btn.active {
+    opacity: 1;
+    border-color: #212529;
+}

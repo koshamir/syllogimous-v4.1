@@ -61,43 +61,35 @@
         </div>
 
         <div class="card shadow-sm">
-            <div class="card-header py-2 small">Сложность</div>
+            <div class="card-header py-2 small">Тренировка дня</div>
+            <div class="card-body">
+                <div class="d-grid" style="gap: 0.75rem;">
+                    <app-input type="range" min="10" max="90" step="5" name="planMinutes"
+                        [label]="'Длительность: ' + planMinutes.value + ' мин'" [ngControl]="planMinutes" [noParenthesisValue]="true"></app-input>
+                    <app-input *ngFor="let k of PLAN_SEGMENTS" type="range" min="0" max="100" step="5" [name]="'plan-' + k"
+                        [label]="PLAN_LABELS[k] + ': ' + planShares[k].value + '%'" [ngControl]="planShares[k]" [noParenthesisValue]="true"></app-input>
+                    <p class="text-muted small mb-0">Доли пересчитываются пропорционально; по умолчанию 50 / 25 / 15 / 10.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header py-2 small">Тренировка</div>
             <div class="card-body">
                 <div class="d-grid" style="gap: 1rem;">
+                    <app-input type="select" name="format" label="Формат ответа" placeholder="Формат ответа" [ngControl]="format" [options]="formatChoices" />
                     <app-input
-                        type="range"
-                        min="10"
-                        max="30"
-                        step="5"
-                        name="trainingUnitLength"
-                        [label]="'Размер серии: ' + trainingUnitLength.value + ' заданий'"
-                        [ngControl]="trainingUnitLength"
-                        [noParenthesisValue]="true"
+                        type="range" min="70" max="85" step="5" name="targetAccuracy"
+                        [label]="'Целевая точность: ' + targetAccuracy.value + '%'"
+                        helper="Сложность подстраивается так, чтобы доля верных ответов держалась около этого значения (для двух вариантов +5%, для выбора из списка −5%)"
+                        [ngControl]="targetAccuracy" [noParenthesisValue]="true"
                     ></app-input>
-    
-                    <app-input
-                        type="range"
-                        min="0"
-                        max="0.9"
-                        step="0.1"
-                        helper="При такой доле ошибок число посылок уменьшится"
-                        name="premisesDownThreshold"
-                        [label]="'Порог снижения: ' + Math.round((premisesDownThreshold.value || 0)*100) + '%'"
-                        [ngControl]="premisesDownThreshold"
-                        [noParenthesisValue]="true"
-                    ></app-input>
-        
-                    <app-input
-                        type="range"
-                        min="0.1"
-                        max="1"
-                        step="0.1"
-                        helper="При такой доле верных ответов число посылок увеличится"
-                        name="premisesUpThreshold"
-                        [label]="'Порог повышения: ' + Math.round((premisesUpThreshold.value || 0)*100) + '%'"
-                        [ngControl]="premisesUpThreshold"
-                        [noParenthesisValue]="true"
-                    ></app-input>
+                    <app-input type="select" name="step" label="Шаг уровня после первых 15 заданий" placeholder="Шаг" [ngControl]="step" [options]="stepChoices" />
+                    <app-input type="select" name="explanation" label="Разбор после ответа" placeholder="Разбор" [ngControl]="explanation" [options]="explanationChoices" />
+                    <app-input type="select" name="namePool" label="Имена участников" placeholder="Имена" [ngControl]="namePool" [options]="poolChoices" />
+                    <app-input type="select" name="nameMode" label="Подбор имён" placeholder="Подбор имён" [ngControl]="nameMode" [options]="nameModeChoices" />
+                    <app-input type="checkbox" name="negations" label="Инверсии (красные слова)" [ngControl]="negations"></app-input>
+                    <app-input type="checkbox" name="metas" label="Мета-отношения" [ngControl]="metas"></app-input>
                 </div>
             </div>
         </div>

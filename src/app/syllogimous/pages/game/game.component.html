@@ -110,9 +110,7 @@
         </div>
     </div>
 
-    <div footer class="d-flex gap-3 justify-content-center">
-        <button *ngIf="!trueButtonToTheRight" class="btn btn-lg btn-success col-md-3 col-4" (click)="game.checkQuestion(true)">Верно</button>
-        <button class="btn btn-lg btn-danger col-md-3 col-4" (click)="game.checkQuestion(false)">Неверно</button>
-        <button *ngIf="trueButtonToTheRight" class="btn btn-lg btn-success col-md-3 col-4" (click)="game.checkQuestion(true)">Верно</button>
+    <div footer class="d-flex justify-content-center w-100">
+        <app-answer-buttons class="w-100" [question]="game.question" (answer)="game.checkQuestion($event)"></app-answer-buttons>
     </div>
 </app-card>

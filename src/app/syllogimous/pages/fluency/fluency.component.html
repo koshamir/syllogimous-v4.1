@@ -1,0 +1,68 @@
+<ng-template #legendTpl>
+    <div class="legend">
+        <div *ngFor="let l of block?.legend" class="legend-row">
+            <b>{{ l.words[0] }}</b> — {{ l.meaning[0] }}, <b>{{ l.words[1] }}</b> — {{ l.meaning[1] }}
+        </div>
+        <div class="small mt-2"><span class="swatch blue"></span> синяя рамка — обычные значения; <span class="swatch orange"></span> оранжевая — значения меняются местами.</div>
+    </div>
+</ng-template>
+
+<app-card>
+    <div body class="fluency py-2 px-md-3">
+        <app-plan-banner *ngIf="phase !== 'item'" segment="fluency"></app-plan-banner>
+        <ng-container [ngSwitch]="phase">
+            <div *ngSwitchCase="'intro'" class="d-grid gap-3">
+                <div class="small text-muted">«Беглость»</div>
+                <p class="mb-0">Блок из {{ 30 }} коротких заданий: два-три факта и вывод — «Верно» или «Неверно». На каждый тип своё время; оно сокращается, когда вы отвечаете верно, и растёт после ошибок.</p>
+                <p class="mb-0 small">Очки: быстрый верный ответ даёт почти 1, быстрая ошибка отнимает почти 1 — угадывание не окупается. Каждый третий блок — со словами-заменителями: легенду покажем перед блоком, во время блока её можно увидеть, удерживая клавишу <b>L</b>.</p>
+                <p class="mb-0 small text-muted">Это тренировка скорости простых выводов. Её перенос на общий интеллект не доказан, поэтому ей стоит уделять 10–15 % времени.</p>
+                <div *ngIf="nextIsContextual" class="alert alert-warning mb-0 small">Следующий блок — со словами-заменителями.</div>
+                <table class="table table-sm small mb-0">
+                    <thead><tr><th>Тип</th><th>Время на ответ, с</th></tr></thead>
+                    <tbody><tr *ngFor="let f of FLUENCY_FAMILIES"><td>{{ FAMILY_TITLES[f] }}</td><td>{{ deadline(f) | number:'1.1-1' }}</td></tr></tbody>
+                </table>
+                <div *ngIf="recent.length" class="small">
+                    <div class="text-muted">Последние блоки</div>
+                    <div *ngFor="let h of recent">{{ h.date }} · {{ h.accuracy }}% · {{ h.points }} очк.{{ h.contextual ? ' · заменители' : '' }}</div>
+                </div>
+            </div>
+
+            <div *ngSwitchCase="'legend'" class="d-grid gap-2">
+                <div class="fw-bold">Запомните слова этого блока ({{ legendLeft | number:'1.0-0' }} с)</div>
+                <ng-container *ngTemplateOutlet="legendTpl"></ng-container>
+            </div>
+
+            <div *ngSwitchCase="'item'" class="item-wrap" [class.frame-blue]="item.frame === 'normal'" [class.frame-orange]="item.frame === 'swapped'"
+                [class.flash-ok]="flash === 'ok'" [class.flash-err]="flash === 'err'">
+                <div class="d-flex justify-content-between small text-muted mb-2">
+                    <span>{{ i + 1 }} / {{ block!.items.length }}</span>
+                    <span>{{ FAMILY_TITLES[item.family] }}</span>
+                </div>
+                <div class="progress mb-3" style="height: 6px;"><div class="progress-bar" [style.width.%]="100 * remaining / deadline(item.family)"></div></div>
+                <div *ngFor="let p of item.premises" class="premise" [innerHTML]="p"></div>
+                <div class="conclusion mt-3" [innerHTML]="item.conclusion"></div>
+                <div *ngIf="showLegend" class="legend-overlay"><ng-container *ngTemplateOutlet="legendTpl"></ng-container></div>
+            </div>
+
+            <div *ngSwitchCase="'summary'" class="d-grid gap-2">
+                <div class="fw-bold">Блок завершён</div>
+                <div>Верно: {{ summary.accuracy }}% · очки: {{ summary.points }} · среднее время: {{ summary.meanTime }} с</div>
+                <table class="table table-sm small mb-0">
+                    <thead><tr><th>Тип</th><th>Время на ответ, с</th></tr></thead>
+                    <tbody><tr *ngFor="let f of FLUENCY_FAMILIES"><td>{{ FAMILY_TITLES[f] }}</td><td>{{ deadline(f) | number:'1.1-1' }}</td></tr></tbody>
+                </table>
+            </div>
+        </ng-container>
+    </div>
+
+    <div footer class="playcard-toolbar">
+        <button class="btn btn-outline-primary" (click)="router.navigate([EnumScreens.Start])"><i class="bi bi-arrow-left"></i></button>
+        <ng-container *ngIf="phase === 'item'">
+            <button class="btn btn-lg btn-success answer" (click)="answer(true)">Верно</button>
+            <button class="btn btn-lg btn-danger answer" (click)="answer(false)">Неверно</button>
+        </ng-container>
+        <button *ngIf="phase === 'intro' || phase === 'summary'" class="btn btn-primary" (click)="start()">{{ phase === 'intro' ? 'Начать блок' : 'Следующий блок' }}</button>
+        <button *ngIf="phase === 'item' && block?.contextual" class="btn btn-outline-secondary"
+            (mousedown)="showLegend = true" (mouseup)="showLegend = false" (touchstart)="showLegend = true" (touchend)="showLegend = false">L</button>
+    </div>
+</app-card>

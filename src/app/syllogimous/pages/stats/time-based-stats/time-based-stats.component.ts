@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Question } from 'src/app/syllogimous/models/question.models';
 import { GameService } from 'src/app/syllogimous/services/game.service';
 import { formatTime } from 'src/app/utils/date';
+import { isTimeout } from 'src/app/syllogimous/utils/answer.utils';
 
 @Component({
     selector: 'app-time-based-stats',
@@ -40,7 +41,7 @@ export class TimeBasedStatsComponent {
             this.timeBasedStats[ps].sum += dt;
             this.timeBasedStats[ps].count += 1;
 
-            if (q.userAnswer !== undefined) {
+            if (!isTimeout(q)) {
                 if (this.fastestAnswer === 0 || dt < this.fastestAnswer) {
                     this.fastestAnswer = dt;
                 }

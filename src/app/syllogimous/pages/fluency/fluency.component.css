@@ -1,0 +1,62 @@
+.item-wrap {
+    position: relative;
+    border: 4px solid transparent;
+    border-radius: 0.8rem;
+    padding: 0.8rem;
+    transition: background-color 0.15s;
+}
+
+.frame-blue {
+    border-color: #2a6fdb;
+}
+
+.frame-orange {
+    border-color: #f08c00;
+}
+
+.flash-ok {
+    background: #d3f9d8;
+}
+
+.flash-err {
+    background: #ffe3e3;
+}
+
+.premise {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.conclusion {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.answer {
+    min-height: 48px;
+    min-width: 7rem;
+}
+
+.legend-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.97);
+    padding: 1rem;
+    border-radius: 0.6rem;
+}
+
+.swatch {
+    display: inline-block;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 0.2rem;
+    vertical-align: middle;
+}
+
+.swatch.blue {
+    background: #2a6fdb;
+}
+
+.swatch.orange {
+    background: #f08c00;
+}

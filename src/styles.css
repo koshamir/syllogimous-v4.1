@@ -87,3 +87,42 @@ div:has(> input[type="range"]) ~ .form-text.input-helper {
     font-size: 1.25rem;
     line-height: 1.15;
 }
+
+/* ---- v5: explanation after the answer ---- */
+.is-support {
+    background: rgba(255, 213, 79, 0.35);
+    border-left: 3px solid #f0ad00;
+    padding-left: 0.4rem;
+    border-radius: 0.25rem;
+}
+
+.explanation .premises > div {
+    margin-bottom: 0.25rem;
+}
+
+.explanation-model {
+    overflow-x: auto;
+}
+
+table.v5-map {
+    border-collapse: collapse;
+    margin: 0.25rem 0;
+    font-size: 0.85rem;
+}
+
+table.v5-map td {
+    border: 1px solid #c8c8c8;
+    min-width: 2.2rem;
+    height: 1.8rem;
+    text-align: center;
+    padding: 0 0.2rem;
+}
+
+.lure-note {
+    color: #8a5a00;
+}
+
+.honest-note {
+    font-size: 0.85rem;
+    color: #6c757d;
+}

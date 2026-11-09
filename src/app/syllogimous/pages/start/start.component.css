@@ -5,3 +5,31 @@
 input, label {
     cursor: pointer;
 }
+.start-actions {
+    display: grid;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.main-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.main-actions .btn {
+    min-height: 48px;
+}
+
+.mode-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0.4rem;
+}
+
+.start-actions .btn {
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: normal;
+    min-height: 44px;
+}

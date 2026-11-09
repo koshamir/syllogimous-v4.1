@@ -10,26 +10,21 @@ import { GameService } from '../../services/game.service';
 export class DailyProgressComponent {
     @Input("feedbackPage") feedbackPage = false;
     @Input("playgroundMode") playgroundMode = false;
-    @Input("debug") debug = false;
 
     dailyProgressPercentage = 0;
     weeklyProgressPercentage = 0;
-    trainingUnitPercentage = {
-        right: 0,
-        timeout: 0,
-        wrong: 0,
-        percentageRight: 0,
-        percentageTimeout: 0,
-        percentageWrong: 0
-    };
 
     constructor(
         public game: GameService,
-        private progressAndPerformanceService: ProgressAndPerformanceService
+        progressAndPerformanceService: ProgressAndPerformanceService
     ) {
         const today = progressAndPerformanceService.getToday();
         this.dailyProgressPercentage = progressAndPerformanceService.calcDailyProgress(today);
         this.weeklyProgressPercentage = progressAndPerformanceService.calcWeeklyProgress(today);
-        this.trainingUnitPercentage = progressAndPerformanceService.calcTrainingUnitPercentages(game.question.type);
+    }
+
+    get familyLevel(): number | null {
+        const f = this.game.question.family;
+        return f ? Math.floor(this.game.familyLevel(f) * 10) / 10 : null;
     }
 }

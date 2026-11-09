@@ -13,6 +13,10 @@ export class TypeBasedStats {
     [EnumQuestionType.GraphMatching] = new TypeBasedStatsInner(EnumQuestionType.GraphMatching);
     [EnumQuestionType.Analogy] = new TypeBasedStatsInner(EnumQuestionType.Analogy);
     [EnumQuestionType.Binary] = new TypeBasedStatsInner(EnumQuestionType.Binary);
+    [EnumQuestionType.Groups3] = new TypeBasedStatsInner(EnumQuestionType.Groups3);
+    [EnumQuestionType.Conditional] = new TypeBasedStatsInner(EnumQuestionType.Conditional);
+    [EnumQuestionType.Hierarchy] = new TypeBasedStatsInner(EnumQuestionType.Hierarchy);
+    [EnumQuestionType.Perspective] = new TypeBasedStatsInner(EnumQuestionType.Perspective);
 }
 
 export class TypeBasedStatsInner {

@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { GameService } from './game.service';
 import { questionTypeLabel } from '../utils/russian.utils';
+import { correctLabel, isCorrect, isTimeout, userLabel } from '../utils/answer.utils';
+import { ANSWER_LABELS, LURE_LABELS } from '../constants/v5.constants';
+
+const csv = (s: string) => '"' + s.replace(/<[^>]+>/g, '').replace(/"/g, '""') + '"';
 
 @Injectable({
     providedIn: 'root'
@@ -43,7 +47,12 @@ export class StatsExportService {
             "Есть инверсия",
             "Есть метаотношения",
             "Количество инверсий",
-            "Количество метаотношений"
+            "Количество метаотношений",
+            "Уровень (v5)",
+            "Формат",
+            "Класс ответа",
+            "Ловушка",
+            "σ"
         ].join(",") + "\n";
 
         let lastArcadeScore = 0;
@@ -61,15 +70,20 @@ export class StatsExportService {
                 questionTypeLabel(q.type),
                 q.premises.length,
                 timeTaken.toFixed(1),
-                q.isValid ? 'Верно' : 'Неверно',
-                q.userAnswer === undefined ? '- - -' : (q.userAnswer ? 'Верно' : 'Неверно'),
-                q.userAnswer === undefined ? 'Время вышло' : (q.userAnswer === q.isValid ? 'Правильно' : 'Неправильно'),
+                csv(correctLabel(q)),
+                isTimeout(q) ? '- - -' : csv(userLabel(q)),
+                isTimeout(q) ? 'Время вышло' : (isCorrect(q) ? 'Правильно' : 'Неправильно'),
                 this.getTimerSetting(q.timerTypeOnAnswer),
                 q.playgroundMode ? lastArcadeScore : q.userScore,
                 q.negations > 0 ? 'Да' : 'Нет',
                 q.metaRelations > 0 ? 'Да' : 'Нет',
                 q.negations || 0,
-                q.metaRelations || 0
+                q.metaRelations || 0,
+                q.level ?? '',
+                q.format ?? 'binary',
+                q.answerClass ? ANSWER_LABELS[q.answerClass] : '',
+                q.lure ? LURE_LABELS[q.lure] : '',
+                q.metrics?.support ?? ''
             ];
             csvContent += row.join(',') + '\n';
         });

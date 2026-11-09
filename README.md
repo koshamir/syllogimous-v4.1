@@ -1,24 +1,57 @@
-# Syllogimous v4.1
+# Syllogimous v5
 
-This repository contains the modified Syllogimous v4.1 build maintained by [koshamir](https://github.com/koshamir), based on [Syllogimous v4 by 4skinSkywalker](https://github.com/4skinSkywalker/Syllogimous-v4). See [MODIFICATIONS.md](MODIFICATIONS.md) for the changes and original attribution.
+A relational-integration (RI) trainer in Russian: every item requires holding and integrating several relations at
+once, and any path to the answer that skips this integration (counting words, a prior over wording, reading the
+order from the instructions, a local heuristic) is audited down to chance level.
 
-> **Modification notice (September 2026):** this local review build adds a separately versioned experimental relational-reasoning and assessment mode. See [MODIFICATIONS.md](MODIFICATIONS.md) and [the architecture notes](docs/EXPERIMENTAL_REASONING_ARCHITECTURE.md). These changes remain subject to CC BY-NC 3.0 and do not claim to increase intelligence or neural capacity.
+Maintained by [koshamir](https://github.com/koshamir), based on [Syllogimous v4 by 4skinSkywalker](https://github.com/4skinSkywalker/Syllogimous-v4).
+See [MODIFICATIONS.md](MODIFICATIONS.md) for the changes and attribution. Play it on
+[GitHub Pages](https://koshamir.github.io/syllogimous-v4.1/) in a desktop or mobile browser.
 
-Play [Syllogimous v4.1](https://koshamir.github.io/syllogimous-v4.1/) in a desktop or Android browser.
+> **Honest caveat.** The trainer level is not IQ and not a measure of intelligence. Training transfers best to
+> similar tasks; growth of fluid intelligence is not promised. The «Контроль переноса» section exists to check
+> near transfer on formats that are never trained.
+
+## What v5 is
+
+- **Three answers** — «Следует / Неизвестно / Противоречит»: "Unknown" requires checking every model, guessing
+  chance drops to 33 %. A two-answer format is available in the settings.
+- **One deterministic engine** (`src/app/syllogimous/engine/`, pure TypeScript): an item is fully defined by
+  (engine version, family, level, parameters, seed). Every answer is computed by an exact solver and cross-checked
+  by independent brute force in the tests.
+- **Generation pipeline**: target answer and bot opinions are drawn first from independent bags, premises are built
+  constructively around them, then the solver verifies class, minimal support σ, non-locality and the lure.
+- **16 families**: same/opposite, three groups, number and time order, linear and circular order, 2D/3D directions,
+  space-time, syllogisms, graph comparison, analogies, logical connectives, conditions, hierarchy, perspective.
+- **Adaptive staircase** per family (≈ 75 % correct with three answers), interleaved families, a fingerprint window
+  against repeats, explanations after errors (decisive premises, one or two models, the lure, a strategy card).
+- **Modes**: regular game, free mode (fixed levels), «Конструктор» (build the model), «Отображение структур»
+  (role correspondence between systems), «Беглость» (speed of basic inferences), «Контроль переноса»
+  (untrained probes) and «Тренировка дня» (a planned session: 50 / 25 / 15 / 10 % of the minutes).
+
+Scientific rationale: [Scientific_Basis_Gf_RI_Transfer_EN.md](Scientific_Basis_Gf_RI_Transfer_EN.md).
+Implementation notes, deviations from the specification and audit results: [docs/V5_NOTES.md](docs/V5_NOTES.md),
+[reports/cue-audit-v5.md](reports/cue-audit-v5.md).
+
+## Commands
+
+```bash
+npm ci
+npm start                    # dev server
+npm run test:engine          # engine tests (Vitest, Node)
+npm run audit                # cue audit with gates (AUDIT_N=1500 by default; AUDIT_N=300 for a quick run)
+npm test                     # Angular unit tests (Karma, Chrome)
+npm run build:verify         # production build into dist-validation/
+npm run prep-deploy:prod     # production build into docs/ for GitHub Pages
+```
 
 ## GitHub Pages
 
-GitHub Pages publishes the `docs` folder from the `main` branch. To update the site, run `npm ci` and `npm run prep-deploy:prod`, then commit and push the updated files. The build keeps the architecture and study documentation in `docs` and provides `404.html` for direct links to Angular routes.
+GitHub Pages publishes the `docs` folder from the `main` branch. To update the site, run `npm ci` and
+`npm run prep-deploy:prod`, then commit and push the updated files. The build keeps `docs/V5_NOTES.md` in `docs`
+and provides `404.html` for direct links to Angular routes.
 
 Original version: [Syllogimous v4 by 4skinSkywalker](https://4skinskywalker.github.io/Syllogimous-v4/).
-
-## TODO
-- Allow customization of the start of the week.
-- Introduce a setting to adjust the density of directions.
-- Enable non-stepped, generic directions in direction questions.
-- Define meta relationships for directional and arrangement settings.
-- Introduce a new question type focused on hierarchy.
-- Add a switch to change between performance-based and tier-based number of premises.
 
 ## Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0)
 

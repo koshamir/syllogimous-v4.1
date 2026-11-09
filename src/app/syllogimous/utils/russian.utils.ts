@@ -15,6 +15,10 @@ export const QUESTION_TYPE_LABELS: Readonly<Record<EnumQuestionType, string>> = 
     [EnumQuestionType.GraphMatching]: "Сравнение графов",
     [EnumQuestionType.Analogy]: "Аналогии",
     [EnumQuestionType.Binary]: "Логические связки",
+    [EnumQuestionType.Groups3]: "Три группы",
+    [EnumQuestionType.Conditional]: "Условия",
+    [EnumQuestionType.Hierarchy]: "Иерархия",
+    [EnumQuestionType.Perspective]: "Точка зрения",
 };
 
 export const SCREEN_LABELS: Readonly<Record<EnumScreens, string>> = {
@@ -30,6 +34,11 @@ export const SCREEN_LABELS: Readonly<Record<EnumScreens, string>> = {
     [EnumScreens.Settings]: "Настройки",
     [EnumScreens.TiersMatrix]: "Таблица уровней",
     [EnumScreens.OtherGames]: "Другие игры",
+    [EnumScreens.Strategies]: "Стратегии",
+    [EnumScreens.Builder]: "Конструктор",
+    [EnumScreens.Mapping]: "Отображение структур",
+    [EnumScreens.Fluency]: "Беглость",
+    [EnumScreens.Probes]: "Контроль переноса",
 };
 
 export const TIER_LABELS: Readonly<Record<EnumTiers, string>> = {

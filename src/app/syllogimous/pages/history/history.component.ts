@@ -4,6 +4,7 @@ import { Question } from '../../models/question.models';
 import { Router } from '@angular/router';
 import { EnumScreens } from '../../constants/game.constants';
 import { ToastService } from 'src/app/services/toast.service';
+import { correctLabel, isCorrect, isTimeout, userLabel } from '../../utils/answer.utils';
 
 @Component({
     selector: 'app-history',
@@ -13,6 +14,10 @@ import { ToastService } from 'src/app/services/toast.service';
 export class HistoryComponent {
     Array = Array;
     EnumScreens = EnumScreens;
+    isCorrect = isCorrect;
+    isTimeout = isTimeout;
+    correctLabel = correctLabel;
+    userLabel = userLabel;
 
     allQuestions: Question[] = [];
     questions: Question[] = [];

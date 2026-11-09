@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Question } from 'src/app/syllogimous/models/question.models';
 import { GameService } from 'src/app/syllogimous/services/game.service';
+import { isCorrect, isTimeout } from 'src/app/syllogimous/utils/answer.utils';
 
 @Component({
     selector: 'app-accuracy-stats',
@@ -22,12 +23,12 @@ export class AccuracyStatsComponent {
     ngOnInit() {
         this.questions = this.game.questions;
 
-        this.correctQs = this.questions.filter(q => q.userAnswer !== undefined && q.isValid === q.userAnswer);
-        this.incorrectQs = this.questions.filter(q => q.userAnswer !== undefined && q.isValid !== q.userAnswer);
-        this.unansweredQs = this.questions.filter(q => q.userAnswer === undefined);
+        this.correctQs = this.questions.filter(q => isCorrect(q) === true);
+        this.incorrectQs = this.questions.filter(q => isCorrect(q) === false);
+        this.unansweredQs = this.questions.filter(q => isTimeout(q));
 
         for (const q of this.questions) {
-            if (q.isValid !== q.userAnswer) {
+            if (isCorrect(q) !== true) {
                 break;
             }
             this.currentStreak.push(q);
@@ -35,7 +36,7 @@ export class AccuracyStatsComponent {
 
         let streak = [];
         for (const q of this.questions) {
-            if (q.isValid !== q.userAnswer) {
+            if (isCorrect(q) !== true) {
                 if (streak.length > this.longestStreak.length) {
                     this.longestStreak = streak;
                     streak = [];

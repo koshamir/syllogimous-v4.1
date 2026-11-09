@@ -8,10 +8,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
     {
-        path: 'experimental',
-        loadChildren: () => import('./syllogimous/experimental/ui/experimental.module').then(m => m.ExperimentalModule)
-    },
-    {
         path: '',
         loadChildren: () => import('./syllogimous/syllogimous.module').then(m => m.SyllogimousModule)
     },

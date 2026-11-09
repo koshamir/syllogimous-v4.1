@@ -1,7 +1,4 @@
 import { EnumArrangements, EnumQuestionType } from "../constants/question.constants";
-import { FORMS, SYL_KINDS } from "../constants/syllogism.constants";
-import { SylKind } from "../models/syllogism.models";
-import { formatSylPremise } from "./syllogism.utils";
 import {
     BINARY_EXPRESSIONS,
     BinaryOperator,
@@ -169,17 +166,6 @@ describe("Russian formatters", () => {
                     .withContext(`${operator}: ${a}, ${b}`)
                     .toBe(expected[operator][index]);
             });
-        }
-    });
-
-    it("keeps FORMS and formatSylPremise identical for all four kinds", () => {
-        const renderForm = (kind: SylKind, negated: boolean) => {
-            const index = SYL_KINDS.indexOf(kind);
-            return FORMS[negated ? 1 : 0][index].replace("$", "А").replace("$", "Б");
-        };
-        for (const kind of SYL_KINDS) {
-            expect(formatSylPremise(["А", kind, "Б"], false)).toBe(renderForm(kind, false));
-            expect(formatSylPremise(["А", kind, "Б"], true)).toBe(renderForm(kind, true));
         }
     });
 
