@@ -1,6 +1,6 @@
 import { NOUNS, EnumQuestionType, getEmojis, getStrings } from "../constants/question.constants";
 import { LS_HISTORY, LS_TRAINING_UNIT } from "../constants/local-storage.constants";
-import { FAMILY_TYPE, LS_V5_LEVELS } from "../constants/v5.constants";
+import { FAMILY_TYPE, LS_V5_LEVELS, LS_V5_PREMISES } from "../constants/v5.constants";
 import { Question } from "../models/question.models";
 import { questionTypeLabel } from "../utils/russian.utils";
 import { correctLabel, isCorrect, isTimeout, userLabel } from "../utils/answer.utils";
@@ -32,7 +32,7 @@ describe("v5 items in the Angular layer", () => {
                 const names = html.flatMap(subjectsOf);
                 expect(names.length).toBeGreaterThan(1);
                 if (pool === "words") expect(names.every(n => NOUNS.includes(n))).withContext(family).toBeTrue();
-                if (pool === "latin") expect(names.every(n => /^[QRSTVWXZ][AEIOU][QRSTVWXZ]$/.test(n))).withContext(family).toBeTrue();
+                if (pool === "latin") expect(names.every(n => /^[A-Z]{3}$/.test(n))).withContext(family).toBeTrue();
                 if (pool === "emoji") expect(names.every(n => getEmojis().includes(n))).withContext(family).toBeTrue();
                 if (pool === "cyrillic") {
                     expect(names.every(n => /^[А-ЯЁ]{3}$/.test(n))).withContext(family).toBeTrue();
@@ -47,17 +47,19 @@ describe("v5 items in the Angular layer", () => {
 describe("migration of old keys", () => {
     beforeEach(() => localStorage.clear());
 
-    it("starts a family at clamp(premises − 1, 1, 10) from the old training unit, otherwise at 1", () => {
+    it("starts a family from its old premise count, a v5.0 level, or the family minimum", () => {
         localStorage.setItem(LS_TRAINING_UNIT + EnumQuestionType.ComparisonNumerical, JSON.stringify({ premises: 6, right: 3, timeout: 0, wrong: 1 }));
         localStorage.setItem(LS_TRAINING_UNIT + EnumQuestionType.Syllogism, JSON.stringify({ premises: 19, right: 0, timeout: 0, wrong: 0 }));
+        localStorage.setItem(LS_V5_LEVELS, JSON.stringify({ linear: { level: 12, count: 30, last20: [] } }));
         const engine = new EngineService();
-        expect(engine.levelOf("orderNum")).toBe(5);
-        expect(engine.levelOf("syllogism")).toBe(10);
-        expect(engine.levelOf("groups")).toBe(1);
+        expect(engine.premisesOf("orderNum")).toBe(6);
+        expect(engine.premisesOf("syllogism")).toBe(6);
+        expect(engine.premisesOf("linear")).toBe(4);
+        expect(engine.premisesOf("groups")).toBe(2);
         // stored once: later changes to the old key no longer matter
         localStorage.setItem(LS_TRAINING_UNIT + EnumQuestionType.ComparisonNumerical, JSON.stringify({ premises: 2 }));
-        expect(engine.levelOf("orderNum")).toBe(5);
-        expect(JSON.parse(localStorage.getItem(LS_V5_LEVELS)!)["orderNum"].level).toBe(5);
+        expect(engine.premisesOf("orderNum")).toBe(6);
+        expect(JSON.parse(localStorage.getItem(LS_V5_PREMISES)!)["orderNum"].level).toBe(6);
     });
 
     it("keeps old history records loadable", () => {

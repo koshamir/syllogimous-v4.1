@@ -403,7 +403,7 @@ function instructionsFor(ws: WorldSet, names: readonly string[], fixed?: { e: nu
     switch (ws.kind) {
         case 'line': out.push(`Ряд из ${ws.n} мест.`); break;
         case 'lineAttr': out.push(`Ряд из ${ws.n} мест. У каждого шапка: ${COLOR_NAMES.slice(0, ws.colors).map(c => c.short).join(' / ')}; каждый цвет есть хотя бы у одного.`); break;
-        case 'circle': out.push(`Круглый стол на ${ws.n} мест, все лицом к центру; «слева от X» — по левую руку X. Места идут по часовой стрелке, ${subj(names[fixed!.e])} — на месте 1. Людей «между» считают по короткой дуге.`); break;
+        case 'circle': out.push(`Круглый стол на ${ws.n} мест, все лицом к центру; «слева от Х» — по левую руку Х. Места идут по часовой стрелке, ${subj(names[fixed!.e])} — на месте 1. Людей «между» считают по короткой дуге.`); break;
         case 'groups': out.push(`Группы: ${ws.groups!.map((s, i) => `${GROUP_NAMES[i]} — ${s}`).join(', ')}.`); break;
         case 'grid': out.push('Поле 3×3; часть клеток пуста, в клетке не больше одного.'); break;
     }

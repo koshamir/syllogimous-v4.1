@@ -193,7 +193,7 @@ function render(d: DraftItem): ItemRender {
     const notes: string[] = [];
     if (d.premises.some(r => r.inverted) || d.query.params?.['inv']) notes.push(NOTE_INVERSION);
     return {
-        instructions: ['Все стоят в ряд перед тобой, лицом или спиной. «У X справа» — по правую руку самого X: у стоящего лицом к тебе право и лево зеркальны твоим.'],
+        instructions: ['Все стоят в ряд перед тобой, лицом или спиной. «У Х справа» — по правую руку самого Х: у стоящего лицом к тебе право и лево зеркальны твоим.'],
         notes,
         premises: d.displayOrder.map(i => sentence(d.premises[i], names)),
         conclusion: sentence(d.query, names),

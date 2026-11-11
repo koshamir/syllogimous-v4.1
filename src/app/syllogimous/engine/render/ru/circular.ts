@@ -53,8 +53,8 @@ export function renderCirc(d: DraftItem): ItemRender {
     if (d.premises.some(r => r.inverted) || d.query.params?.['inv']) notes.push(NOTE_INVERSION);
     return {
         instructions: [
-            `За круглым столом ${names.length} ${pluralRu(names.length, 'человек', 'человека', 'человек')}, все лицом к центру. «Слева от X» — по левую руку X. `
-            + 'Людей «между» считают по короткой дуге; «X между A и B» — A и B его соседи.',
+            `За круглым столом ${names.length} ${pluralRu(names.length, 'человек', 'человека', 'человек')}, все лицом к центру. «Слева от Х» — по левую руку Х. `
+            + 'Людей «между» считают по короткой дуге; «Х между А и Б» — А и Б его соседи.',
         ],
         notes,
         premises: d.displayOrder.map(i => sentence(d.premises[i], names)),
