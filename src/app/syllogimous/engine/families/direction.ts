@@ -75,11 +75,13 @@ function construct(mode: DirMode, rng: Rng, p: LevelParams, plan: Plan): Constru
     const axes = dirAxes(mode);
     const qtype = (plan.cue['qkind'] ?? 'qual1') as DirQType;
     const target = plan.target;
-    const surf = plan.lure === 'surface';
+    const surf = false;
     // convergence (two-axis claims only): one link is stated as two premises on the same pair, one per axis.
     // The structure is built for every class; "Follows" then has σ = k + 1, "Contradicts" σ = k (one axis).
-    const conv = (p.convergentStructure ?? p.requireConvergent) && (qtype === 'qual2' || qtype === 'strict') && p.sigmaMin >= 3 && p.sigmaMax > p.sigmaMin;
-    const k = conv ? p.sigmaMin : p.sigmaMin + rng.int(p.sigmaMax - p.sigmaMin + 1);
+    // v5.1: exactly P premises. A refutation of a two-axis claim needs one axis only, so the split link (two
+    // premises on one pair) is used for "Follows" / "Unknown" only.
+    const conv = p.requireConvergent && (qtype === 'qual2' || qtype === 'strict') && p.premises >= 3 && target !== 'contradicted';
+    const k = conv ? p.premises - 1 : p.premises;
     // requirements per axis
     const req: Partial<Record<Axis, Req>> = {};
     for (const ax of axes) req[ax] = 'free';
@@ -288,58 +290,8 @@ function construct(mode: DirMode, rng: Rng, p: LevelParams, plan: Plan): Constru
         prem.push(rng.chance(0.5) ? D(q0, q1, codes, 'qual') : D(q1, q0, Object.fromEntries(Object.entries(codes).map(([a, v]) => [a, v === 'g' ? 'l' : v === 'l' ? 'g' : v])) as Partial<Record<Axis, Code>>, 'qual'));
     }
 
-    // role-free profiles of both ends on every directional axis of the claim
-    const dirAxesOfClaim = axes.filter(ax => sgnOf(claimCodes[ax] ?? 'a') !== 0);
-    for (const ax of dirAxesOfClaim) {
-        const net = axisNet(prem, ax);
-        for (const e of [q0, q1]) {
-            const mv = profileMoves(rng, net.get(eid(e)) ?? 0);
-            if (!mv) return null;
-            for (let t = 0; t < mv.w; t++) { const x = fresh(); prem.push(rng.chance(0.5) ? D(e, x, { [ax]: 'g' }, 'qual') : D(x, e, { [ax]: 'l' }, 'qual')); }
-            for (let t = 0; t < mv.l; t++) { const x = fresh(); prem.push(rng.chance(0.5) ? D(e, x, { [ax]: 'l' }, 'qual') : D(x, e, { [ax]: 'g' }, 'qual')); }
-        }
-    }
-
-    // premise-type balancing and distractors: pendants on interior nodes, relations on free axes
-    const interior = c.slice(1, k);
-    const pendant = (type: 'qual' | 'exact'): Premise | null => {
-        if (!interior.length) return null;
-        const host = rng.pick(interior);
-        const x = fresh();
-        if (type === 'qual') return D(x, host, { [rng.pick(axes)]: rng.pick(['g', 'l'] as Code[]) }, 'qual');
-        const codes: Partial<Record<Axis, Code>> = {};
-        for (const ax of axes) codes[ax] = rng.pick([-2, -1, 0, 1, 2]);
-        if (axes.every(ax => codes[ax] === 0)) codes[axes[0]] = 1;
-        return D(x, host, codes, 'exact');
-    };
-    if (balance) {
-        const r = pendant(balance);
-        if (!r) return null;
-        prem.push(r);
-    }
-    const freeAxes = axes.filter(ax => req[ax] === 'free');
-    let added = 0;
-    for (let t = 0; t < p.distractors * 3 && added < p.distractors; t++) {
-        if (freeAxes.length && interior.length >= 2 && rng.chance(0.5)) {
-            const [u, v] = rng.shuffle(interior.slice()).slice(0, 2);
-            const ax = rng.pick(freeAxes);
-            // consistent with the chain on this axis: use the determined sign if any, else any sign
-            const d = closure(k + 1, dcsBounds([ax], chain)[0]);
-            if (!d) continue;
-            const [lo, hi] = range(d, k + 1, u, v);
-            const code: Code = lo > 0 ? 'g' : hi < 0 ? 'l' : lo === 0 && hi === 0 ? 0 : rng.pick(['g', 'l'] as Code[]);
-            prem.push(D(u, v, { [ax]: code }, 'qual'));
-            added++;
-        } else if (ent < MAX_ENTITIES) {
-            const r = pendant(rng.chance(0.5) ? 'qual' : 'exact');
-            if (r) { prem.push(r); added++; }
-        }
-    }
-    while (ent < Math.min(p.n, MAX_ENTITIES)) {
-        const r = pendant(rng.chance(0.5) ? 'qual' : 'exact');
-        if (!r) break;
-        prem.push(r);
-    }
+    // v5.1: the chain is the whole item — no profile pendants, no balancing premises, no distractors
+    void balance; void profileMoves;
     if (ent > MAX_ENTITIES + 4) return null;
     const n = ent;
     const world = dcsModel(axes, prem, [], n, rng);
@@ -460,8 +412,6 @@ function makeDirPlugin(mode: DirMode): FamilyPlugin<DirWorld> {
             const qk = plan.cue['qkind'];
             if (qk && qk !== 'qual2' && qk !== 'strict') { q.pConvergent = 0; q.requireConvergent = false; }
             // two-axis claims: a refutation needs one axis only, so only "Follows" can have a convergent support
-            q.convergentStructure = q.requireConvergent;
-            if (plan.target !== 'entailed') q.requireConvergent = false;
             q.sigmaMax = Math.min(q.sigmaMax, 6);
             q.sigmaMin = Math.min(q.sigmaMin, q.sigmaMax);
             return q;

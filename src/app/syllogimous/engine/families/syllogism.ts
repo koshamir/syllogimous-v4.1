@@ -142,57 +142,10 @@ function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<SylWorld>
         if (!found) return null;
         core = found;
     }
+    // v5.1: the derivation is the whole item (no atmosphere / matching premises with fresh terms)
     const prem = core.slice();
-    // surface lure: the conclusion terms in a particular premise that does not settle the conclusion
-    if (plan.lure === 'surface') {
-        prem.push(Q === 'all' || Q === 'some_not' ? R('some', t.a, t.b) : R('some_not', t.a, t.b));
-    }
-    // atmosphere target of the cell; flags can only be added by distractors
-    const goalQ = ATM_TARGET[`${Q}|${agr}`];
-    const flags = (x: Quant) => ({ neg: x === 'no' || x === 'some_not', part: x === 'some' || x === 'some_not' });
-    const goal = flags(goalQ);
-    const c0 = flags(atmosphere(prem));
-    if ((c0.neg && !goal.neg) || (c0.part && !goal.part)) return null;
-    const allowed = QUANTS.filter(x => { const f = flags(x); return (!f.neg || goal.neg) && (!f.part || goal.part); });
-    const needed: Quant[] = [];
-    if (goal.neg && !c0.neg && goal.part && !c0.part) needed.push('some_not');
-    else {
-        if (goal.neg && !c0.neg) needed.push(goal.part ? rng.pick(['no', 'some_not'] as Quant[]) : 'no');
-        if (goal.part && !c0.part) needed.push(goal.neg ? rng.pick(['some', 'some_not'] as Quant[]) : 'some');
-    }
-    // matching premise (conclusion quantifier on a conclusion term)
-    const ends = new Set([eid(t.a), eid(t.b)]);
-    const matches = (ps: Premise[]) => ps.some(r => r.kind === Q && r.args.some(a => ends.has(a)));
-    if (wantMatch === 'n' && matches(prem)) return null;
-    const coreTerms = Array.from({ length: ent }, (_, i) => i);
-    const interior = coreTerms.filter(x => x !== t.a && x !== t.b);
-    const distractor = (k: Quant, host?: number): Premise => {
-        const h = host ?? (interior.length && (k === Q || rng.chance(0.75)) ? rng.pick(interior) : rng.pick(coreTerms));
-        const f = fresh();
-        return rng.chance(0.5) ? R(k, f, h) : R(k, h, f);
-    };
-    if (wantMatch === 'y' && !matches(prem)) {
-        if (!allowed.includes(Q)) return null;
-        prem.push(distractor(Q, rng.pick([t.a, t.b])));
-        const i = needed.indexOf(Q);
-        if (i >= 0) needed.splice(i, 1);
-    }
-    for (const k of needed) prem.push(distractor(k));
-    const nD = Math.max(0, p.distractors - needed.length);
-    for (let i = 0; i < nD; i++) prem.push(distractor(rng.pick(allowed)));
-    // mention counts of the conclusion terms: each gets a target drawn from the same distribution
-    // (independent of the class), padded with fresh-term premises whose quantifier is not the conclusion's
-    const pad = allowed.filter(x => x !== Q);
-    for (const e of [t.a, t.b]) {
-        const deg = prem.filter(r => r.args.includes(eid(e))).length;
-        const want = 2 + rng.int(3);
-        for (let i = deg; i < want; i++) {
-            if (!pad.length) return null;
-            prem.push(distractor(rng.pick(pad), e));
-        }
-    }
+    void agr; void wantMatch; void ATM_TARGET; void atmosphere; void QUANTS;
     if (ent > MAX_TERMS) return null;
-    if (atmosphere(prem) !== goalQ || (wantMatch !== '*' && matches(prem) !== (wantMatch === 'y'))) return null;
     if (!catConsistent(prem)) return null;
     return { world: { model: catModel(prem, []) }, premises: rng.shuffle(prem), queries: [q], n: ent };
 }
@@ -257,13 +210,11 @@ export const syllogismPlugin: FamilyPlugin<SylWorld> = {
     compile: rel => (v: Vals) => holdsCat(rel, v),
     adjust: (p: LevelParams) => {
         const q = { ...p };
-        q.sigmaMax = Math.min(q.sigmaMax, 6);
-        q.sigmaMin = Math.min(q.sigmaMin, q.sigmaMax);
         q.pConvergent = 0;              // categorical supports are always simple term paths
         q.requireConvergent = false;
         return q;
     },
-    cueSpace: (p: LevelParams, _f: AnswerFormat) => ({ cell: sylCells(p.sigmaMin) }),
+    cueSpace: (_p: LevelParams, _f: AnswerFormat) => ({ cell: QUANTS.map(q => `${q}|*|*`) }),
     supportedLures: p => p.lureMix.filter(l => l !== 'reversal' && l !== 'nearMiss'),
     construct: (rng, p, plan) => construct(rng, p, plan),
     statedDirectly: (q, premises) => {

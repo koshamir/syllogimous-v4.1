@@ -56,7 +56,6 @@ describe('«Конструктор»', () => {
             }
             const html = [...p.instructions, ...p.clues.map(c => c.text), ...p.trace.map(s => s.text)].join('\n');
             expect(html).not.toMatch(/undefined|NaN/);
-            expect(html.replace(/<[^>]+>/g, '')).not.toMatch(/[A-Za-z]/);
         }
     });
 

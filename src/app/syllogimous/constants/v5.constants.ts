@@ -5,6 +5,9 @@ import { EnumQuestionType } from './question.constants';
 
 export const LS_V5_SETTINGS = 'SYL_V5_SETTINGS';
 export const LS_V5_LEVELS = 'SYL_V5_LEVELS';
+/** v5.1: levels are premise counts (new keys; the old ones are only read for migration). */
+export const LS_V5_PREMISES = 'SYL_V5_PREMISES';
+export const LS_V5_PREMISE_HISTORY = 'SYL_V5_PREMISE_HISTORY';
 export const LS_V5_SCHEDULER = 'SYL_V5_SCHEDULER';
 export const LS_V5_LEVEL_HISTORY = 'SYL_V5_LEVEL_HISTORY';
 export const LS_V5_PG_SETTINGS = 'SYL_V5_PG_SETTINGS';
@@ -38,8 +41,12 @@ export interface V5Settings {
     format: 'ternary' | 'binary';
     /** Target accuracy for three options (0.70–0.85). */
     targetAccuracy: number;
-    /** Staircase step after the first 15 items of a family. */
-    step: 0.25 | 0.5 | 1;
+    /** Staircase step: 0.25 = four correct answers in a row add one premise. */
+    step: 0.125 | 0.25 | 0.5;
+    /** The number of premises follows the answers (true) or stays where the user put it (false). */
+    auto: boolean;
+    /** Settings layout version (2 = v5.1). */
+    v?: number;
     explanation: ExplanationMode;
     namePool: NamePool;
     negations: boolean;
@@ -50,9 +57,11 @@ export interface V5Settings {
 export const DEFAULT_V5_SETTINGS: V5Settings = {
     format: 'ternary',
     targetAccuracy: 0.75,
-    step: 0.5,
+    step: 0.25,
+    auto: true,
+    v: 2,
     explanation: 'errors',
-    namePool: 'cyrillic',
+    namePool: 'latin',
     negations: true,
     metas: true,
     nameMode: 'byLevel',
@@ -81,8 +90,8 @@ export const LURE_LABELS: Record<LureType, string> = {
 };
 
 export const NAME_POOL_LABELS: Record<NamePool, string> = {
-    cyrillic: 'Кириллические псевдослова',
-    latin: 'Латинские псевдослова',
+    latin: 'Латинские три буквы (WCA)',
+    cyrillic: 'Кириллические слоги (ВОЛ)',
     words: 'Слова',
     emoji: 'Эмодзи',
 };
@@ -104,7 +113,7 @@ export const STRATEGY_CARDS: StrategyCard[] = [
     { id: 2, title: 'Начни с самой связующей посылки', text: 'Начинай с посылки, которая связывает больше участников или сразу троих.' },
     { id: 3, title: 'Ищи контрпример', text: 'Прежде чем ответить «Следует», попробуй построить мир, где вывод неверен.' },
     { id: 4, title: '«Неизвестно» — полноценный ответ', text: 'Отвечай «Неизвестно», если нашёл два мира, где ответ разный.' },
-    { id: 5, title: 'Отдели важное', text: 'Найди посылки, которые связывают слова вывода через другие слова; остальное отложи.' },
+    { id: 5, title: 'Каждая посылка нужна', text: 'Лишних посылок нет: пройди цепочку от одного слова вывода до другого и убедись, что она не рвётся и не поворачивает.' },
     { id: 6, title: 'Отпусти прошлое задание', text: 'Имена повторяются в новых ролях: не переноси старые связи.' },
     { id: 7, title: 'Красное слово — сразу перекодируй', text: 'Прежде чем строить модель, замени красное слово на противоположное.' },
 ];

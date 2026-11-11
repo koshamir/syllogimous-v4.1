@@ -35,8 +35,7 @@ function sentence(r: Rel, names: readonly string[]): string {
         const same = r.params?.['rel'] === 'same';
         const shown = I ? !same : same;
         const [p1, p2] = sw ? [[2, 3], [0, 1]] : [[0, 1], [2, 3]];
-        const rel = shown ? `${inv('такое же', I)}, как отношение` : `${inv('противоположно', I)} отношению`;
-        return `Отношение ${N(p1[0])} к ${N(p1[1])} ${rel} ${N(p2[0])} к ${N(p2[1])}`;
+        return `${N(p1[0])} к ${N(p1[1])} — ${inv(shown ? 'как' : 'не как', I)} ${N(p2[0])} к ${N(p2[1])}`;
     }
     throw new Error(`No Russian template for ${r.kind}`);
 }
@@ -46,7 +45,7 @@ export function renderGroups(d: DraftItem): ItemRender {
     const notes: string[] = [];
     if (d.premises.some(r => r.inverted) || d.query.params?.['inv']) notes.push(NOTE_INVERSION);
     return {
-        instructions: ['Каждый участник стоит на одной из двух сторон: «равен» — на той же стороне, «противоположен» — на другой.'],
+        instructions: ['Сторон две: «равен» — на той же стороне, «противоположен» — на другой.'],
         notes,
         premises: d.displayOrder.map(i => sentence(d.premises[i], names)),
         conclusion: sentence(d.query, names),

@@ -55,24 +55,27 @@ function implication(rng: Rng, u: Lit, v: Lit, w: number[], level: number, twoWa
     return evalCond(r, w) ? r : imp;
 }
 
+/**
+ * Construction (v5.1): P − 1 rules that form ONE chain plus one fact — nothing else.
+ *   live  — the fact starts the chain (modus ponens) or ends it negated (modus tollens): the conclusion is settled;
+ *   dead  — the fact is the denied start or the affirmed end, or one inner rule points the other way: "Unknown".
+ * The same kinds and counts in every class; every rule is needed to reach the other end of the chain.
+ */
 function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<null> | null {
-    const k = Math.max(2, p.sigmaMin + rng.int(p.sigmaMax - p.sigmaMin + 1) - 1);   // rules in the main chain
-    const extra = Math.min(p.distractors, MAX - k - 3);
-    const n = k + 1 + 2 + Math.max(0, extra);
+    const k = Math.max(1, p.premises - 1);            // rules in the chain
+    const n = k + 1;
     if (n > MAX) return null;
-    const ents = rng.shuffle(Array.from({ length: n }, (_, i) => i));
-    const chain = ents.slice(0, k + 1);
-    const [s0, s1] = ents.slice(k + 1, k + 3);
-    const free = ents.slice(k + 3);
+    const chain = rng.shuffle(Array.from({ length: n }, (_, i) => i));
     const target = plan.target;
     const live = target !== 'undetermined';
     const backward = rng.chance(0.5);
     const qpos = (plan.cue['qpol'] ?? 'pos') === 'pos' ? 1 : 0;
     const w = Array.from({ length: n }, () => rng.int(2));
-    // literals of the chain; the world makes every literal true when the chain is live (forward) …
     const lits: Lit[] = chain.map(x => ({ x, s: rng.int(2) }));
     const qLamp = backward ? chain[0] : chain[k];
-    // polarity of the query relative to the chain end it asks about
+    // "Unknown" by a turned inner rule (the facts stay those of a live chain) — only with ≥ 2 rules
+    const turned = !live && k >= 2 && rng.chance(0.5) ? rng.int(k) : -1;
+    const asLive = live || turned >= 0;
     if (live) {
         const qLit = backward ? { x: chain[0], s: 1 - lits[0].s } : lits[k];     // what the chain proves
         const wantS = target === 'entailed' ? qpos : 1 - qpos;
@@ -80,41 +83,23 @@ function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<null> | n
             if (backward) lits[0].s = 1 - lits[0].s; else lits[k].s = 1 - lits[k].s;
         }
     }
-    if (live && !backward) for (const l of lits) w[l.x] = l.s;                    // MP: all literals true
-    if (live && backward) for (const l of lits) w[l.x] = 1 - l.s;                 // MT: all literals false
-    if (!live && !backward) {                                                     // DA: ℓ0 false, the rest true
+    if (asLive && !backward) for (const l of lits) w[l.x] = l.s;                  // MP: all literals true
+    if (asLive && backward) for (const l of lits) w[l.x] = 1 - l.s;               // MT: all literals false
+    if (!asLive && !backward) {                                                   // DA: ℓ0 false, the rest true
         w[lits[0].x] = 1 - lits[0].s;
         for (const l of lits.slice(1)) w[l.x] = l.s;
     }
-    if (!live && backward) for (const l of lits) w[l.x] = l.s;                    // AC: ℓk true (so is the rest)
+    if (!asLive && backward) for (const l of lits) w[l.x] = l.s;                  // AC: ℓk true (so is the rest)
     const premises: Premise[] = [];
-    // one-directional kinds only on the main chain («ровно одна» / «тогда и только тогда» would validate the lures)
-    for (let i = 0; i < k; i++) premises.push(implication(rng, lits[i], lits[i + 1], w, p.level, false));
-    // the fact on the main chain
+    // one-directional kinds only («ровно одна» / «тогда и только тогда» would validate the dead directions)
+    for (let i = 0; i < k; i++) {
+        premises.push(i === turned
+            ? implication(rng, lits[i + 1], lits[i], w, p.level, false)
+            : implication(rng, lits[i], lits[i + 1], w, p.level, false));
+    }
     const factLamp = backward ? chain[k] : chain[0];
     premises.push({ kind: 'fact', args: [eid(factLamp)], params: { s: w[factLamp] } });
-    // the side pair: live when the main chain is dead and vice versa (same kinds in every class); its rule is
-    // «не s0 → s1», worded with or without «не» to make the parity of all «не» a coin (see negCount)
-    const a = { x: s0, s: 0 };
-    const b = { x: s1, s: 1 };
-    const sideBackward = rng.chance(0.5);
-    if (!live) {
-        if (sideBackward) { w[s0] = 1 - a.s; w[s1] = 1 - b.s; } else { w[s0] = a.s; w[s1] = b.s; }
-    } else if (sideBackward) { w[s0] = a.s; w[s1] = b.s; } else { w[s0] = 1 - a.s; w[s1] = b.s; }
-    const sideRule: Premise = { kind: 'imp', args: [eid(s0), eid(s1)], params: { pa: 0, pb: 1, form: 'if' } };
-    premises.push(sideRule);
-    premises.push({ kind: 'fact', args: [eid(sideBackward ? s1 : s0)], params: { s: w[sideBackward ? s1 : s0] } });
-    // distractor rules among the free lamps (true in the world)
-    for (const f of free) {
-        const other = rng.pick([...free.filter(x => x !== f), s0, s1]);
-        const u = { x: f, s: rng.int(2) };
-        const v = { x: other, s: w[other] };
-        premises.push(implication(rng, u, v, w, p.level));
-    }
     const query: Query = { kind: 'lit', args: [eid(qLamp)], params: { s: qpos } };
-    // parity of «не» over everything shown: a coin independent of the class («или» has no «не», «если не …» has one)
-    const parity = (premises.reduce((t, r) => t + negCount(r), 0) + negCount(query)) % 2;
-    if (parity !== rng.int(2)) { sideRule.kind = 'or'; sideRule.params = {}; }
     if (!premises.every(r => evalCond(r, w))) return null;
     return { world: null, premises: rng.shuffle(premises), queries: [query], n };
 }
@@ -134,7 +119,7 @@ export function negCount(r: Rel): number {
 
 // ---------------------------------------------------------------- Russian texts
 
-const L = (name: string, s: number) => `${s ? 'горит' : 'не горит'} ${subj(name)}`;
+const L = (name: string, s: number) => `${subj(name)} ${s ? 'горит' : 'не горит'}`;
 
 function sentence(r: Rel, names: readonly string[]): string {
     const N = (j: number) => names[idx(r.args[j])];
@@ -142,17 +127,17 @@ function sentence(r: Rel, names: readonly string[]): string {
     const pb = Number(r.params?.['pb'] ?? 1);
     const sw = Number(r.params?.['w'] ?? 0) === 1;
     switch (r.kind) {
-        case 'fact': return `Лампа ${subj(N(0))} ${Number(r.params?.['s']) ? 'горит' : 'не горит'}`;
-        case 'lit': return `Лампа ${subj(N(0))} ${Number(r.params?.['s']) ? 'горит' : 'не горит'}`;
+        case 'fact': return L(N(0), Number(r.params?.['s']));
+        case 'lit': return L(N(0), Number(r.params?.['s']));
         case 'imp': {
             const form = String(r.params?.['form'] ?? 'if');
-            if (form === 'onlyif') return `${subj(N(0))} ${pa ? 'горит' : 'не горит'}, только если ${L(N(1), pb)}`;
+            if (form === 'onlyif') return `${L(N(0), pa)}, только если ${L(N(1), pb)}`;
             if (form === 'contra') return `Если ${L(N(1), 1 - pb)}, то ${L(N(0), 1 - pa)}`;
             return `Если ${L(N(0), pa)}, то ${L(N(1), pb)}`;
         }
-        case 'or': return sw ? `Горит ${subj(N(1))} или ${subj(N(0))} (возможно, обе)` : `Горит ${subj(N(0))} или ${subj(N(1))} (возможно, обе)`;
-        case 'nand': return sw ? `${subj(N(1))} и ${subj(N(0))} не горят одновременно` : `${subj(N(0))} и ${subj(N(1))} не горят одновременно`;
-        case 'xor': return sw ? `Горит ровно одна из ${subj(N(1))} и ${subj(N(0))}` : `Горит ровно одна из ${subj(N(0))} и ${subj(N(1))}`;
+        case 'or': return sw ? `${subj(N(1))} или ${subj(N(0))} горит` : `${subj(N(0))} или ${subj(N(1))} горит`;
+        case 'nand': return sw ? `${subj(N(1))} и ${subj(N(0))} не горят вместе` : `${subj(N(0))} и ${subj(N(1))} не горят вместе`;
+        case 'xor': return sw ? `Горит ровно одна: ${subj(N(1))} или ${subj(N(0))}` : `Горит ровно одна: ${subj(N(0))} или ${subj(N(1))}`;
         case 'iff': return `${subj(N(0))} горит тогда и только тогда, когда горит ${subj(N(1))}`;
         default: throw new Error('No Russian template for ' + r.kind);
     }
@@ -161,7 +146,7 @@ function sentence(r: Rel, names: readonly string[]): string {
 function render(d: DraftItem): ItemRender {
     const names = d.entities.map(e => e.name);
     return {
-        instructions: ['Каждая лампа либо горит, либо не горит. «Если А, то Б» ничего не говорит о том, что будет, если А не выполнено. «Горит А или Б» допускает, что горят обе.'],
+        instructions: ['Лампы. «Если А, то Б» ничего не говорит о случае, когда А неверно. «Или» допускает обе.'],
         notes: [],
         premises: d.displayOrder.map(i => sentence(d.premises[i], names)),
         conclusion: sentence(d.query, names),
@@ -204,21 +189,21 @@ function lure(ctx: LureContext): LureType {
 export const conditionalPlugin: FamilyPlugin<null> = {
     id: 'conditional',
     formats: ['ternary', 'binary'],
-    limits: { minEntities: 5, maxEntities: MAX },
+    limits: { minEntities: 2, maxEntities: MAX },
     supportDomain: 'full',
     custom: kit.custom,
+    // a fact makes a rule it does not fire vacuously true: such a rule "follows" formally, yet it is the trap
+    skipRedundancyCheck: true,
     domain: () => ({ size: 0, allDiff: false }),
     compile: (rel, vars) => v => kit.holdsIn({ ...rel, args: vars.map(eid) }, v, v.length),
     adjust(p: LevelParams, _o: EngineOptions, _plan: Plan): LevelParams {
         const q = { ...p };
-        // a fact and at least two rules: with a single rule the item is one modus ponens (see V5_NOTES)
-        q.sigmaMin = Math.max(3, Math.min(q.sigmaMin, 6));
-        q.sigmaMax = Math.max(q.sigmaMin, Math.min(q.sigmaMax, 6));
         q.pConvergent = 0;
         q.requireConvergent = false;
         return q;
     },
     cueSpace: (_p: LevelParams, _f: AnswerFormat) => ({ qpol: ['pos', 'neg'] }),
+    uncontrolledLures: ['possible'],
     supportedLures: p => p.lureMix.filter(l => l === 'none' || l === 'possible'),
     construct: (rng, p, plan) => construct(rng, p, plan),
     statedDirectly: (q, premises) => premises.some(r => r.kind === 'fact' && r.args[0] === q.args[0]),

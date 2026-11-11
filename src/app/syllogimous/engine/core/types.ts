@@ -1,7 +1,7 @@
 // Core v5 engine types (spec §4.1). Pure data: no Angular, DOM or storage.
 
-export type EngineVersion = 'v5.0';
-export const ENGINE_VERSION: EngineVersion = 'v5.0';
+export type EngineVersion = 'v5.0' | 'v5.1';
+export const ENGINE_VERSION: EngineVersion = 'v5.1';
 
 export type FamilyId =
     | 'groups' | 'orderNum' | 'orderTime' | 'syllogism' | 'linear' | 'circular'
@@ -71,6 +71,7 @@ export interface ItemRender {
 export interface Item {
     engineVersion: EngineVersion;
     family: FamilyId;
+    /** Difficulty = number of premises requested (v5.1). */
     level: number;
     seed: string;
     entities: Entity[];
@@ -105,8 +106,10 @@ export type NameMode = 'byLevel' | 'distinct';
 
 /** Output of the ladder (§4.6) after family clamps. */
 export interface LevelParams {
-    /** Jittered level L' actually used. */
+    /** Feature level for the families' gates (constant since v5.1: everything unlocked). */
     level: number;
+    /** Number of premises of the item — the difficulty. */
+    premises: number;
     n: number;
     sigmaMin: number;
     sigmaMax: number;
@@ -164,12 +167,13 @@ export const BINARY_OPS: BinaryOp[] = ['and', 'nand', 'or', 'nor', 'xor', 'xnor'
 export const DEFAULT_ENGINE_OPTIONS: EngineOptions = {
     negations: true,
     metas: true,
-    namePool: 'cyrillic',
+    namePool: 'latin',
     nameMode: 'byLevel',
 };
 
 export interface GenerateSpec {
     family: FamilyId;
+    /** Number of premises (clamped to the family's range). */
     level: number;
     seed: string;
     format: AnswerFormat;

@@ -6,12 +6,12 @@ import {
     LevelParams, LureType, Plan, Premise, Query,
 } from './core/types';
 import { classify } from './core/solve';
-import { isConvergent, minimalSupport, myopicAnswer } from './core/support';
+import { minimalSupport } from './core/support';
 import { pickNames } from './core/names';
 import { displayOrder } from './core/presentation';
 import { computeMetrics } from './core/metrics';
 import { fingerprint } from './core/fingerprint';
-import { ladder } from './difficulty/ladder';
+import { clampPremises, ladderAt } from './difficulty/ladder';
 import { buildExplanation } from './explain/explain';
 import { AnyPlugin, ChoiceConstruction, Construction, idx } from './families/plugin';
 import { groupsPlugin } from './families/groups';
@@ -88,14 +88,13 @@ export function lureMatches(planned: LureType, actual: LureType, answer: Answer,
     return planned === actual;
 }
 
-interface Stage { lure: boolean; cue: 'full' | 'kind' | 'none'; conv: boolean; widen: number; attempts: number }
+interface Stage { lure: boolean; cue: 'full' | 'kind' | 'none'; attempts: number }
 
 const STAGES: Stage[] = [
-    { lure: true, cue: 'full', conv: true, widen: 0, attempts: MAX_ATTEMPTS / 2 },
-    { lure: false, cue: 'full', conv: true, widen: 0, attempts: MAX_ATTEMPTS / 4 },
-    { lure: false, cue: 'kind', conv: true, widen: 0, attempts: MAX_ATTEMPTS / 4 },
-    { lure: false, cue: 'none', conv: false, widen: 0, attempts: MAX_ATTEMPTS / 2 },
-    { lure: false, cue: 'none', conv: false, widen: 1, attempts: MAX_ATTEMPTS / 2 },
+    { lure: true, cue: 'full', attempts: MAX_ATTEMPTS / 2 },
+    { lure: false, cue: 'full', attempts: MAX_ATTEMPTS / 4 },
+    { lure: false, cue: 'kind', attempts: MAX_ATTEMPTS / 4 },
+    { lure: false, cue: 'none', attempts: MAX_ATTEMPTS },
 ];
 
 export function generate(spec: GenerateSpec): Item {
@@ -131,38 +130,87 @@ function cueFor(plan: Plan, mode: Stage['cue']): Plan {
     return { ...plan, cue };
 }
 
+export interface Tight { premises: Premise[]; query: Query; n: number }
+
+const without = <T>(xs: readonly T[], i: number): T[] => xs.filter((_, j) => j !== i);
+
+/** Is every premise necessary for the determined answer (removing any one leaves the conclusion open)? */
+export function irredundant(plugin: AnyPlugin, premises: readonly Premise[], q: Query, a: Answer, n: number): boolean {
+    for (let i = 0; i < premises.length; i++) {
+        let r: Answer;
+        try { r = classify(plugin, without(premises, i), q, n); } catch { return false; }
+        if (r === a) return false;
+    }
+    return true;
+}
+
+/**
+ * v5.1 rule "every premise matters". Determined answers: the premises are exactly a minimal support of size P
+ * (anything else a family emitted is dropped, entities are renumbered and the item is verified again in the
+ * smaller world). "Unknown": the family must have built exactly P premises (the same structure as a determined
+ * item with one link turned or missing), and no premise may follow from the others.
+ */
+export function tighten(plugin: AnyPlugin, premises: readonly Premise[], q: Query, a: Answer, n: number, P: number): Tight | null {
+    let kept: Premise[];
+    if (a === 'undetermined') {
+        if (premises.length !== P) return null;
+        kept = premises.slice();
+    } else if (premises.length === P) {
+        kept = premises.slice();
+    } else {
+        const sup = minimalSupport(plugin, premises, q, a, P, n);
+        if (!sup || sup.size !== P) return null;
+        kept = sup.idx.map(i => premises[i]);
+    }
+    const used = new Set<number>();
+    for (const r of [...kept, q]) for (const x of r.args) used.add(idx(x));
+    let query = q;
+    let nn = n;
+    if (used.size < n && !plugin.fixedWorld) {
+        const order = [...used].sort((x, y) => x - y);
+        const map = new Map(order.map((e, i) => ['e' + e, 'e' + i]));
+        const re = <T extends Premise | Query>(r: T): T => ({ ...r, args: r.args.map(x => map.get(x)!) });
+        kept = kept.map(re);
+        query = re(q);
+        nn = order.length;
+    }
+    try {
+        if (classify(plugin, kept, query, nn) !== a) return null;
+    } catch { return null; }
+    if (a !== 'undetermined') {
+        if (!irredundant(plugin, kept, query, a, nn)) return null;
+    } else if (!plugin.skipRedundancyCheck) {
+        for (let i = 0; i < kept.length; i++) {
+            try { if (classify(plugin, without(kept, i), kept[i], nn) === 'entailed') return null; } catch { /* not a queryable relation */ }
+        }
+    }
+    return { premises: kept, query, n: nn };
+}
+
 function tryGenerate(plugin: AnyPlugin, spec: GenerateSpec, seed: string, o: EngineOptions): Item | null {
     const rngs = streams(seed);
-    const base = ladder(spec.level, rngs.semantic.fork('ladder'), o);
+    const P = clampPremises(spec.family, spec.level);
+    const base = ladderAt(P, rngs.semantic.fork('ladder'), o);
     let attempt = 0;
     for (const st of STAGES) {
         for (let t = 0; t < st.attempts; t++, attempt++) {
             const plan = cueFor(spec.plan, st.cue);
-            const p0 = plugin.adjust(base, o, plan);
-            const p: LevelParams = st.widen
-                ? { ...p0, sigmaMin: Math.max(1, p0.sigmaMin - st.widen), sigmaMax: p0.sigmaMax + st.widen }
-                : p0;
+            const p = plugin.adjust(base, o, plan);
             const sem = rngs.semantic.fork(`a${attempt}`);
             let built: Construction<unknown> | null;
-            try { built = plugin.construct(sem, st.conv ? p : { ...p, requireConvergent: false }, plan, o); } catch { built = null; }
+            try { built = plugin.construct(sem, p, plan, o); } catch { built = null; }
             if (!built) continue;
-            const c = built;
-            for (const q of c.queries) {
-                if (plugin.statedDirectly(q, c.premises)) continue;
+            for (const q0 of built.queries) {
+                if (plugin.statedDirectly(q0, built.premises)) continue;
                 let a: Answer;
-                try { a = classify(plugin, c.premises, q, c.n); } catch { continue; }
+                try { a = classify(plugin, built.premises, q0, built.n); } catch { continue; }
                 if (a !== spec.plan.target) continue;
-                let S: number[] | null = null;
-                if (a !== 'undetermined') {
-                    const sup = minimalSupport(plugin, c.premises, q, a, p.sigmaMax, c.n);
-                    if (!sup || sup.size < p.sigmaMin) continue;
-                    if (p.requireNonLocal && myopicAnswer(plugin, c.premises, q, c.n) !== 'undetermined') continue;
-                    const conv = isConvergent(sup.idx.map(i => c.premises[i]), q);
-                    if (st.conv && p.requireConvergent && !conv) continue;
-                    S = sup.idx;
-                }
+                const c = tighten(plugin, built.premises, q0, a, built.n, P);
+                if (!c) continue;
+                const q = c.query;
+                const S = a === 'undetermined' ? null : c.premises.map((_, i) => i);
                 // display order first: the "first model that comes to mind" is built in reading order
-                const order = displayOrder(rngs.presentation.fork(`order:${attempt}`), c.premises, p0.order, S ?? []);
+                const order = displayOrder(rngs.presentation.fork(`order:${attempt}`), c.premises, p.order, S ?? []);
                 const lure = plugin.lureOf({ premises: order.map(i => c.premises[i]), query: q, answer: a, n: c.n });
                 const lureOk = lureMatches(spec.plan.lure, lure, a, plugin.uncontrolledLures);
                 if (st.lure && !lureOk) continue;
@@ -171,9 +219,7 @@ function tryGenerate(plugin: AnyPlugin, spec: GenerateSpec, seed: string, o: Eng
                 const relax: string[] = [];
                 if (!cueOk) relax.push('cue');
                 if (!lureOk) relax.push('lure');
-                if (S && p0.requireConvergent && !isConvergent(S.map(i => c.premises[i]), q)) relax.push('convergent');
-                if (S && (S.length < p0.sigmaMin || S.length > p0.sigmaMax)) relax.push('sigma');
-                return finalize(plugin, spec, o, p0, rngs.presentation, c.premises, q, a, lure, S, relax, c.n, undefined, order);
+                return finalize(plugin, spec, o, p, rngs.presentation, c.premises, q, a, lure, S, relax, c.n, undefined, order);
             }
         }
     }
@@ -192,7 +238,7 @@ function finalize(
     const d: DraftItem = {
         engineVersion: ENGINE_VERSION,
         family: spec.family,
-        level: spec.level,
+        level: p.premises,
         seed: spec.seed,
         entities: names.map((name, i) => ({ id: 'e' + i, name })),
         premises: premises.map(r => ({ ...r })),
@@ -220,7 +266,7 @@ function finalize(
         render: plugin.render(d, pres.fork('render')),
         explanation: buildExplanation(plugin, d, choicePos),
         fingerprint: fingerprint(spec.family, d.premises, d.query, answer),
-        target: { level: Math.floor(p.level * 100) / 100, sigmaMin: p.sigmaMin, sigmaMax: p.sigmaMax },
+        target: { level: p.premises, sigmaMin: p.sigmaMin, sigmaMax: p.sigmaMax },
     };
 }
 
@@ -232,7 +278,8 @@ export function choicePosition(family: FamilyId, k: number, n: number): number {
 function tryChoice(plugin: AnyPlugin, spec: GenerateSpec, seed: string, o: EngineOptions): Item | null {
     if (!plugin.constructChoice) throw new Error(`${spec.family} has no choice format`);
     const rngs = streams(seed);
-    const base = ladder(spec.level, rngs.semantic.fork('ladder'), o);
+    const P = clampPremises(spec.family, spec.level);
+    const base = ladderAt(P, rngs.semantic.fork('ladder'), o);
     const p = plugin.adjust(base, o, spec.plan);
     for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
         const strict = attempt < MAX_ATTEMPTS * 0.75;

@@ -60,7 +60,7 @@
                 <small class="d-grid" style="grid-template-columns: repeat(4, 1fr);">
                     <div class="bd-left">
                         <div class="fw-bold">Тип задания</div>
-                        {{ q.type | ruLabel }}<span *ngIf="q.level !== undefined">, ур. {{ q.level | number:'1.0-1' }}</span>
+                        {{ q.type | ruLabel }}<span *ngIf="q.level !== undefined && q.engineVersion === 'v5.1'">, посылок: {{ q.level }}</span>
                     </div>
     
                     <div class="bd-left">

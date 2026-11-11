@@ -17,7 +17,6 @@ import { Answer, AnswerFormat, Bot, DraftItem, EngineOptions, FamilyId, LevelPar
 import { describeAnalogy, renderAnalogy } from '../render/ru/analogy';
 import { Bound, closure, codeBound, codeOf, dcsConsistent, dcsLog2Models, dcsSample, range } from './dcs';
 import { preferredDir } from './direction';
-import { LADDER_CONFIG } from '../difficulty/ladder';
 import { groupsPlugin } from './groups';
 import { linearPlugin, orderNumPlugin, orderTimePlugin } from './order';
 import { circularPlugin } from './circular';
@@ -310,14 +309,9 @@ function looseLink(rng: Rng, w: AnaWorld, u: number, x: number): Premise {
     return { kind: 'left', args: [eid(l), eid(r)] };
 }
 
-/** Per-pair chain lengths (σ of each pair) at these params. */
-export function chainRange(base: AnaBase, p: LevelParams): [number, number] {
-    const hiCap = base === 'circular' ? 3 : base === 'linear' ? 3 : 4;
-    const sMin = LADDER_CONFIG.sigmaMin(p.level);
-    const sMax = sMin + LADDER_CONFIG.sigmaMaxExtra(p.level);
-    const lo = Math.min(hiCap, Math.max(2, sMin - 1));
-    const hi = Math.min(hiCap, Math.max(lo, sMax - 1));
-    return [lo, hi];
+/** Longest chain of one pair per base (packed worlds pin themselves with long rigid chains). */
+export function chainRange(base: AnaBase, _p?: LevelParams): [number, number] {
+    return [1, base === 'circular' ? 3 : base === 'linear' ? 3 : 4];
 }
 
 function sampleWorld(base: AnaBase, rng: Rng, n: number, A: number, B: number, C: number, D: number,
@@ -414,64 +408,28 @@ function sampleWorld(base: AnaBase, rng: Rng, n: number, A: number, B: number, C
 interface Link { prem: Premise; u: number; x: number; chain: number }
 
 /**
- * "Unknown": one chain link is removed and a link of the same kind is added between an endpoint of the cut
- * link and an entity that is not reachable from the other fragment (so the pair becomes disconnected).
- * A conclusion endpoint keeps its degree. In the packed table only seat neighbours can be linked exactly,
- * so there the cut is at a chain end next to a free seat.
+ * Construction (v5.1): two chains, A…B and C…D, with P links in total and nothing else; the conclusion compares
+ * the two derived relations. "Unknown" keeps the shape and spoils ONE link: an order chain turns (A > X, B > X),
+ * a row / map link becomes inexact («левее», «севернее»), a two-sides chain loses one inner link.
  */
-function cutAndReattach(base: AnaBase, rng: Rng, w: AnaWorld, n: number, links: readonly Link[], premises: readonly Premise[],
-    qset: Set<number>, chains: number[][]): { at: number; prem: Premise } | null {
-    const touchesQ = (l: Link) => qset.has(l.u) || qset.has(l.x);
-    let order = rng.shuffle(links.slice());
-    order = base === 'circular' ? [...order.filter(touchesQ), ...order.filter(l => !touchesQ(l))]
-        : [...order.filter(l => !touchesQ(l)), ...order.filter(touchesQ)];
-    for (const cut of order) {
-        const ch = chains[cut.chain];
-        const pos = Math.min(ch.indexOf(cut.u), ch.indexOf(cut.x));
-        const fragA = new Set(ch.slice(0, pos + 1));
-        const fragB = new Set(ch.slice(pos + 1));
-        const keeps = qset.has(cut.u) ? [cut.u] : qset.has(cut.x) ? [cut.x] : rng.shuffle([cut.u, cut.x]);
-        for (const keep of keeps) {
-            const reach = new Set<number>(fragA.has(keep) ? fragB : fragA);
-            let grown = true;
-            while (grown) {
-                grown = false;
-                for (const r of premises) {
-                    if (r === cut.prem) continue;
-                    const ids = r.args.map(idx);
-                    if (ids.some(x => reach.has(x)) && ids.some(x => !reach.has(x))) { ids.forEach(x => reach.add(x)); grown = true; }
-                }
-            }
-            const cand = rng.shuffle(Array.from({ length: n }, (_, i) => i).filter(e => e !== keep && !reach.has(e) && !qset.has(e)
-                && !premises.some(r => r !== cut.prem && r.args.includes(eid(e)) && r.args.includes(eid(keep)))));
-            let any: Premise | null = null;
-            for (const t of cand) {
-                const pr = exactLink(base, rng, w, n, keep, t);
-                if (!pr) continue;
-                if (pr.kind === cut.prem.kind) return { at: premises.indexOf(cut.prem), prem: pr };
-                any = any ?? pr;
-            }
-            if (any) return { at: premises.indexOf(cut.prem), prem: any };
-        }
-    }
-    return null;
-}
-
 function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<AnaWorld> | null {
     const base = (plan.cue['base'] ?? 'groups') as AnaBase;
     const w2 = (plan.cue['w2'] ?? 'same') as 'same' | 'diff';
     const target = plan.target;
-    const [lo, hi] = chainRange(base, p);
-    let k1 = lo + rng.int(hi - lo + 1);
-    let k2 = lo + rng.int(hi - lo + 1);
-    if (base === 'circular') k2 = k1;
-    if (p.requireNonLocal && Math.max(k1, k2) < 3) { if (base === 'circular') { k1 = 3; k2 = 3; } else if (rng.chance(0.5)) k1 = 3; else k2 = 3; }
-    const core = k1 + k2 + 2;
-    // packed worlds need a free person next to a chain end for the "Unknown" re-attachment (all classes alike)
-    const minPend = base === 'linear' ? 2 : base === 'circular' ? 1 : 0;
-    // (the row has a spare link between its first two pendants)
-    const pend = Math.max(minPend, Math.min(p.distractors, MAX_N[base] - core));
-    const n = core + pend;
+    const P = p.premises;
+    const [, hi] = chainRange(base);
+    const lo1 = Math.max(1, P - hi);
+    const hi1 = Math.min(hi, P - 1);
+    if (lo1 > hi1) return null;
+    let k1 = lo1 + rng.int(hi1 - lo1 + 1);
+    let k2 = P - k1;
+    // "Unknown" in the two-sides base: one chain has an extra member and one inner link is not stated
+    const gapChain = target === 'undetermined' && base === 'groups' ? (k1 >= 2 && (k2 < 2 || rng.chance(0.5)) ? 0 : k2 >= 2 ? 1 : -1) : -1;
+    if (target === 'undetermined' && base === 'groups' && gapChain < 0) return null;
+    if (gapChain === 0) k1++;
+    if (gapChain === 1) k2++;
+    // the row gets two unnamed people: a fully named packed row pins itself and makes premises redundant
+    const n = k1 + k2 + 2 + (base === 'linear' ? 2 : 0);
     if (n > MAX_N[base]) return null;
     const chainAB = Array.from({ length: k1 + 1 }, (_, i) => i);
     const chainCD = Array.from({ length: k2 + 1 }, (_, i) => k1 + 1 + i);
@@ -480,41 +438,36 @@ function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<AnaWorld>
     const cSub = (['rev', 'near', 'other'] as const)[rng.int(3)];
     const w = sampleWorld(base, rng, n, A, B, C, D, [chainAB, chainCD], wantSame, cSub);
     if (!w) return null;
+    const chains = [chainAB, chainCD];
+    if (target === 'undetermined' && (base === 'orderNum' || base === 'orderTime')) {
+        // one chain stops being monotone: its ranks are permuted until it turns somewhere
+        const cands = [0, 1].filter(j => chains[j].length >= 3);
+        if (!cands.length) return null;
+        const ch = chains[rng.pick(cands)];
+        const ranks = ch.map(e => w.v[e]);
+        let ok = false;
+        for (let t = 0; t < 20 && !ok; t++) {
+            const sh = rng.shuffle(ranks.slice());
+            const up = sh.every((x, i) => i === 0 || x > sh[i - 1]);
+            const down = sh.every((x, i) => i === 0 || x < sh[i - 1]);
+            if (up || down) continue;
+            ch.forEach((e, i) => (w.v[e] = sh[i]));
+            ok = true;
+        }
+        if (!ok) return null;
+    }
 
     const links: Link[] = [];
-    for (const [ci, ch] of [chainAB, chainCD].entries()) {
+    for (const [ci, ch] of chains.entries()) {
+        const missing = ci === gapChain ? 1 + rng.int(ch.length - 3) : -1;
         for (let i = 0; i < ch.length - 1; i++) {
+            if (i === missing) continue;
             const pr = exactLink(base, rng, w, n, ch[i], ch[i + 1]);
             if (!pr) return null;
             links.push({ prem: pr, u: ch[i], x: ch[i + 1], chain: ci });
         }
     }
-    const qset = new Set([A, B, C, D]);
     const premises: Premise[] = links.map(l => l.prem);
-    // pendant distractors: each new entity hangs on a non-conclusion entity (trees: no shortcuts)
-    const pendants = Array.from({ length: pend }, (_, i) => core + i);
-    const hosts = [...chainAB, ...chainCD].filter(e => !qset.has(e));
-    const attached: number[] = [];
-    const row = base === 'linear';
-    for (const e of pendants) {
-        const cand = [...hosts, ...attached];
-        let pr: Premise | null = null;
-        for (let t = 0; t < 8 && !pr; t++) {
-            const host = rng.pick(cand);
-            // the packed row: pendants stay loose (left / not adjacent), otherwise exact links pin the whole row
-            pr = row ? looseLink(rng, w, e, host) : rng.chance(0.5) ? weakLink(base, rng, w, n, e, host) : exactLink(base, rng, w, n, e, host);
-        }
-        if (!pr) return null;
-        premises.push(pr);
-        attached.push(e);
-    }
-    // the row: a spare link between the first two pendants — loose here, exact in "Unknown" (same kind counts)
-    let spareAt = -1;
-    if (row) {
-        if (pendants.length < 2) return null;
-        spareAt = premises.length;
-        premises.push(looseLink(rng, w, pendants[0], pendants[1]));
-    }
     const swap = rng.chance(0.5);
     const query: Query = {
         kind: 'analog',
@@ -524,31 +477,15 @@ function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<AnaWorld>
     const isU = (prem: Premise[]) => {
         try { return custom.classify(prem.map(r => tag(base, r)), query, n, true) === 'undetermined'; } catch { return false; }
     };
-    if (target === 'undetermined') {
+    if (target === 'undetermined' && (base === 'linear' || base === 'dir2d' || base === 'circular')) {
         let done = false;
-        if (row) {
-            // a cut fragment is pinned by the others in a packed row, so one chain link is loosened instead and the
-            // spare pendant link becomes exact (the pendant pair still floats as one block); the first candidate
-            // link that really leaves the analogy open is used
-            const exact = exactLink(base, rng, w, n, pendants[0], pendants[1]);
-            if (!exact) return null;
-            premises[spareAt] = exact;
-            for (const l of rng.shuffle(links.slice())) {
-                const at = premises.indexOf(l.prem);
-                premises[at] = looseLink(rng, w, l.u, l.x);
-                if (isU(premises)) { done = true; break; }
-                premises[at] = l.prem;
-            }
-        } else {
-            // cut one link of one chain; re-attach the same kind elsewhere (degrees of A, B, C, D unchanged)
-            for (let t = 0; t < 4 && !done; t++) {
-                const repl = cutAndReattach(base, rng, w, n, links, premises, qset, [chainAB, chainCD]);
-                if (!repl) break;
-                const old = premises[repl.at];
-                premises[repl.at] = repl.prem;
-                if (base !== 'circular' || isU(premises)) done = true;
-                else premises[repl.at] = old;
-            }
+        for (const l of rng.shuffle(links.slice())) {
+            const at = premises.indexOf(l.prem);
+            const weak = base === 'linear' ? looseLink(rng, w, l.u, l.x) : weakLink(base, rng, w, n, l.u, l.x);
+            if (!weak) continue;
+            premises[at] = weak;
+            if (isU(premises)) { done = true; break; }
+            premises[at] = l.prem;
         }
         if (!done) return null;
     }
@@ -627,13 +564,9 @@ const bots: Bot[] = [
     { id: 'chainLength', predict: chainLengthBot, gated: false },
 ];
 
-/**
- * Bases available at a (planning) level. The round table only below the non-locality levels: with ≤ 9 seats a
- * chain of seat neighbours is a run, and the orientation of its end links already decides "same / different".
- */
-export function analogyBases(o?: Partial<EngineOptions>, planningLevel = 1): AnaBase[] {
-    const circleOk = planningLevel + (LADDER_CONFIG.jitterHi - LADDER_CONFIG.jitterLo) < LADDER_CONFIG.nonLocalFrom;
-    const all = ANALOGY_BASES.filter(b => b !== 'circular' || circleOk);
+/** Bases offered: the round table is left out (a run of seat neighbours is decided by its end links alone). */
+export function analogyBases(o?: Partial<EngineOptions>, _planningLevel = 1): AnaBase[] {
+    const all = ANALOGY_BASES.filter(b => b !== 'circular');
     const en = o?.families?.filter((f): f is AnaBase => (all as FamilyId[]).includes(f)) ?? [];
     return en.length ? en : all;
 }
@@ -641,10 +574,11 @@ export function analogyBases(o?: Partial<EngineOptions>, planningLevel = 1): Ana
 export const analogyPlugin: FamilyPlugin<AnaWorld> = {
     id: 'analogy',
     formats: ['ternary', 'binary'],
-    limits: { minEntities: 6, maxEntities: 12 },
+    limits: { minEntities: 5, maxEntities: 12 },
     supportDomain: 'restricted',
     custom,
     packed: true,
+    fixedWorld: true,
     domain: () => ({ size: 0, allDiff: false }),
     compile: (rel, vars, size) => {
         if (rel.kind === 'analog') return compileAnalog(rel, vars, size);
@@ -653,22 +587,19 @@ export const analogyPlugin: FamilyPlugin<AnaWorld> = {
     adjust(p: LevelParams, _o: EngineOptions, plan: Plan): LevelParams {
         const q = { ...p };
         const base = (plan.cue['base'] ?? 'groups') as AnaBase;
-        const [, hi] = chainRange(base, p);
-        // two chains (σ ≥ 2 each): the total support of a determined analogy is 4 … 2·hi
-        q.sigmaMin = 4;
-        q.sigmaMax = Math.max(4, 2 * hi);
-        q.pConvergent = 0;            // two separate chains: isConvergent() holds by construction
-        q.requireConvergent = false;
-        q.n = Math.min(MAX_N[base], q.n);
+        void base;
         return q;
     },
-    cueSpace: (p: LevelParams, _f: AnswerFormat, o?: Partial<EngineOptions>) => ({ base: analogyBases(o, p.level), w2: ['same', 'diff'] }),
+    cueSpace: (p: LevelParams, _f: AnswerFormat, o?: Partial<EngineOptions>) => ({
+        base: analogyBases(o, p.level).filter((b, _i, all) => b !== 'linear' || p.premises <= 6 || all.length === 1), w2: ['same', 'diff'],
+    }),
     uncontrolledLures: ['possible'],
     supportedLures: p => p.lureMix.filter(l => l !== 'surface'),
     construct: (rng, p, plan) => construct(rng, p, plan),
     statedDirectly: (q, premises) => {
+        // one pair may be given outright (the other one is then derived); both outright = nothing to integrate
         const [a, b, c, d] = q.args;
-        return premises.some(r => (r.args.includes(a) && r.args.includes(b)) || (r.args.includes(c) && r.args.includes(d)));
+        return premises.some(r => r.args.includes(a) && r.args.includes(b)) && premises.some(r => r.args.includes(c) && r.args.includes(d));
     },
     lureOf: lure,
     preferredModel: preferred,

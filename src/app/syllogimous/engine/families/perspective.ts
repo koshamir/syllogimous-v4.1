@@ -59,47 +59,77 @@ function viewLink(rng: Rng, u: number, v: number, f: number[], avoid = -1): Prem
     return { kind: f[v] ? 'right' : 'left', args: [eid(v), eid(u)] };
 }
 
-export const chainLength = (level: number) => (level < 4 ? 2 : 3);
-
+/**
+ * Construction (v5.1): a chain a = c0 … ck = b of position links and exactly the facings those links need —
+ * P premises in total, nothing else. A link is told from somebody's viewpoint («для X справа стоит Y»: useless
+ * until X's facing is known) or from yours («для тебя X левее Y»). Facings are facts or «смотрят в одну / разные
+ * стороны» with someone whose facing is known. "Unknown": the same chain with one link turned back.
+ */
 function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<null> | null {
-    // the chain length depends on the level only (never on the class): an "Unknown" needs ≥ 2 links
-    const k = chainLength(p.level);
-    const n = Math.min(MAX, Math.max(k + 2, p.n));
-    const ents = rng.shuffle(Array.from({ length: n }, (_, i) => i));
-    const chain = ents.slice(0, k + 1);
-    const rest = ents.slice(k + 1);
-    const f = Array.from({ length: n }, () => rng.int(2));
+    const P = p.premises;
     const target = plan.target;
     const qkind = plan.cue['qkind'] ?? 'youLeft';
-    // positions: the chain is monotone left→right except one flipped link in "Unknown"
-    const flip = target === 'undetermined' ? rng.int(k) : -1;
-    const posOf = new Array(n).fill(-1);
-    // place the chain members with a random monotone order; the flipped link reverses one step
+    // links k and viewers: k + (people whose facing is needed) = P
+    let k = 0;
+    let viewer: number[] = [];                 // per link: index in the chain of its viewer, −1 = your view
+    let need: number[] = [];
+    for (let t = 0; t < 60 && !k; t++) {
+        const kk = 1 + rng.int(Math.min(MAX - 1, P));
+        const vw = Array.from({ length: kk }, (_, i) => (rng.chance(0.2) ? -1 : rng.chance(0.5) ? i : i + 1));
+        if (vw.every(x => x < 0)) continue;
+        const set = new Set(vw.filter(x => x >= 0));
+        if (qkind !== 'youLeft') set.add(0);
+        if (kk + set.size !== P) continue;
+        k = kk; viewer = vw; need = [...set];
+    }
+    if (!k) return null;
+    const n = k + 1;
+    const chain = rng.shuffle(Array.from({ length: n }, (_, i) => i));
+    const f = Array.from({ length: n }, () => rng.int(2));
+    // positions: the chain is monotone left→right except one turned link in "Unknown"
+    // "Unknown": one link turned back, or one viewer whose facing is given only relative to somebody whose own
+    // facing is never told (the viewpoint link then stays unusable)
+    let flip = -1;
+    let loose = -1;
+    let looseWith = -1;
+    if (target === 'undetermined') {
+        const cand: [number, number][] = [];
+        viewer.forEach((w, i) => {
+            if (w < 0) return;
+            const other = w === i ? i + 1 : i;
+            if (!need.includes(other)) cand.push([w, other]);
+        });
+        if (cand.length && (k < 2 || rng.chance(0.35))) [loose, looseWith] = rng.pick(cand);
+        else if (k >= 2) flip = rng.int(k);
+        else return null;
+    }
     const order: number[] = [chain[0]];
     for (let i = 1; i <= k; i++) {
         if (i - 1 === flip) order.splice(order.indexOf(chain[i - 1]), 0, chain[i]);
         else order.push(chain[i]);
     }
-    const all = [...order];
-    for (const e of rest) all.splice(rng.int(all.length + 1), 0, e);
-    all.forEach((e, i) => (posOf[e] = i));
+    if (rng.chance(0.5)) order.reverse();
+    const posOf = new Array(n).fill(-1);
+    order.forEach((e, i) => (posOf[e] = i));
     const premises: Premise[] = [];
-    // every link has its own viewer (a shared viewer would make the egocentric misreading consistent along the
-    // chain); a «для A …» conclusion: A is never the viewer of a premise (else A's facing would cancel out)
-    const split = qkind !== 'youLeft' ? 0 : rng.int(k + 1);
     for (let i = 0; i < k; i++) {
-        const viewer = i < split ? chain[i] : chain[i + 1];
-        const other = i < split ? chain[i + 1] : chain[i];
-        const [u, v] = posOf[viewer] < posOf[other] ? [viewer, other] : [other, viewer];
-        premises.push(viewLink(rng, u, v, f, viewer === u ? v : u));
+        const [x, y] = [chain[i], chain[i + 1]];
+        const [u, v] = posOf[x] < posOf[y] ? [x, y] : [y, x];
+        if (viewer[i] < 0) premises.push({ kind: 'youLeft', args: [eid(u), eid(v)] });
+        else {
+            const w = chain[viewer[i]];
+            premises.push(viewLink(rng, u, v, f, w === u ? v : u));
+        }
     }
-    // facings of every viewer: a fact or a same/different-direction link to someone already known
     const known: number[] = [];
-    const viewers = [...new Set(premises.map(r => idx(r.args[0])))];
-    // a «для A …» conclusion needs A's facing in every class
-    if (qkind !== 'youLeft' && !viewers.includes(chain[0])) viewers.push(chain[0]);
-    for (const x of rng.shuffle(viewers)) {
-        if (known.length && rng.chance(0.5)) {
+    for (const ci of rng.shuffle(need.slice())) {
+        const x = chain[ci];
+        if (ci === loose) {
+            const y = chain[looseWith];
+            premises.push({ kind: f[x] === f[y] ? 'sameDir' : 'diffDir', args: rng.chance(0.5) ? [eid(x), eid(y)] : [eid(y), eid(x)] });
+            continue;
+        }
+        if (known.length && rng.chance(0.4)) {
             const y = rng.pick(known);
             premises.push({ kind: f[x] === f[y] ? 'sameDir' : 'diffDir', args: rng.chance(0.5) ? [eid(x), eid(y)] : [eid(y), eid(x)] });
         } else {
@@ -107,28 +137,22 @@ function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<null> | n
         }
         known.push(x);
     }
-    // the rest: one "your view" fact each (distractors), so everybody is mentioned
-    for (const e of rest) {
-        const o = rng.pick(chain);
-        premises.push(posOf[e] < posOf[o] ? { kind: 'youLeft', args: [eid(e), eid(o)] } : { kind: 'youLeft', args: [eid(o), eid(e)] });
-    }
-    const v = Array.from({ length: n }, (_, e) => posOf[e] * 2 + f[e]);
-    if (!premises.every(r => evalPersp(r, v))) return null;
+    const val = Array.from({ length: n }, (_, e) => posOf[e] * 2 + f[e]);
+    if (!premises.every(r => evalPersp(r, val))) return null;
     const [a, b] = [chain[0], chain[k]];
-    // "true" relation: a left of b (for you) when the chain goes left→right
     const leftTrue = posOf[a] < posOf[b];
     const wantTrue = target === 'entailed';
     let query: Query;
     if (qkind === 'youLeft') {
         const [x, y] = (leftTrue === wantTrue) ? [a, b] : [b, a];
         query = { kind: 'youLeft', args: [eid(x), eid(y)] };
+        if (target === 'undetermined' && rng.chance(0.5)) query = { kind: 'youLeft', args: [query.args[1], query.args[0]] };
     } else {
         // from a's viewpoint: «для A справа стоит B»
         const rightForA = f[a] ? posOf[b] < posOf[a] : posOf[b] > posOf[a];
         query = { kind: rightForA === wantTrue ? 'right' : 'left', args: [eid(a), eid(b)] };
         if (target === 'undetermined') query = { kind: rng.chance(0.5) ? 'right' : 'left', args: [eid(a), eid(b)] };
     }
-    if (target === 'undetermined' && qkind === 'youLeft' && rng.chance(0.5)) query = { kind: 'youLeft', args: [query.args[1], query.args[0]] };
     return { world: null, premises: rng.shuffle(premises), queries: [query], n };
 }
 
@@ -151,15 +175,15 @@ function sentence(r: Rel & { inverted?: boolean }, names: readonly string[]): st
     const sw = Number(r.params?.['w'] ?? 0) === 1;
     const side = (right: boolean) => inv(right !== I ? 'справа' : 'слева', I);
     switch (r.kind) {
-        case 'right': return `Для ${N(0)} ${side(true)} стоит ${N(1)}`;
-        case 'left': return `Для ${N(0)} ${side(false)} стоит ${N(1)}`;
+        case 'right': return `У ${N(0)} ${side(true)} ${N(1)}`;
+        case 'left': return `У ${N(0)} ${side(false)} ${N(1)}`;
         case 'youLeft': return sw
-            ? `Для тебя ${N(1)} ${inv(I ? 'левее' : 'правее', I)}, чем ${N(0)}`
-            : `Для тебя ${N(0)} ${inv(I ? 'правее' : 'левее', I)}, чем ${N(1)}`;
+            ? `Для тебя ${N(1)} ${inv(I ? 'левее' : 'правее', I)} ${N(0)}`
+            : `Для тебя ${N(0)} ${inv(I ? 'правее' : 'левее', I)} ${N(1)}`;
         case 'sameDir': return `${N(0)} и ${N(1)} смотрят в одну сторону`;
         case 'diffDir': return `${N(0)} и ${N(1)} смотрят в разные стороны`;
-        case 'facing': return `${N(0)} стоит лицом к тебе`;
-        case 'back': return `${N(0)} стоит спиной к тебе`;
+        case 'facing': return `${N(0)} лицом к тебе`;
+        case 'back': return `${N(0)} спиной к тебе`;
         default: throw new Error('No Russian template for ' + r.kind);
     }
 }
@@ -169,10 +193,7 @@ function render(d: DraftItem): ItemRender {
     const notes: string[] = [];
     if (d.premises.some(r => r.inverted) || d.query.params?.['inv']) notes.push(NOTE_INVERSION);
     return {
-        instructions: [
-            `Участники: ${alphabetical(names).map(subj).join(', ')} (порядок в списке — алфавитный).`,
-            'Все стоят в один ряд перед тобой, каждый — лицом к тебе или спиной. «Для Х справа» — с точки зрения Х: если Х стоит спиной к тебе, его право совпадает с твоим, если лицом — его право это твоё лево. «Справа» — не обязательно рядом.',
-        ],
+        instructions: ['Все стоят в ряд перед тобой, лицом или спиной. «У X справа» — по правую руку самого X: у стоящего лицом к тебе право и лево зеркальны твоим.'],
         notes,
         premises: d.displayOrder.map(i => sentence(d.premises[i], names)),
         conclusion: sentence(d.query, names),
@@ -226,28 +247,25 @@ function lure(ctx: LureContext): LureType {
 export const perspectivePlugin: FamilyPlugin<null> = {
     id: 'perspective',
     formats: ['ternary', 'binary'],
-    limits: { minEntities: 3, maxEntities: MAX },
+    limits: { minEntities: 2, maxEntities: MAX },
     supportDomain: 'full',
     custom: kit.custom,
     domain: () => ({ size: 0, allDiff: false }),
     compile: (rel, vars) => v => kit.holdsIn({ ...rel, args: vars.map(eid) }, v, v.length),
     adjust(p: LevelParams, _o: EngineOptions, _plan: Plan): LevelParams {
         const q = { ...p };
-        q.n = Math.min(MAX, Math.max(4, q.n));
-        // σ = links + the facings of their viewers (k + 1 … 3k): set by the chain length, not by the ladder
-        const k = chainLength(p.level);
-        q.sigmaMin = 2;
-        q.sigmaMax = 3 * k + 1;
-        q.pConvergent = 0;              // a viewpoint link and the viewer's facing always converge (see V5_NOTES)
-        q.requireConvergent = false;
         return q;
     },
-    cueSpace: (_p: LevelParams, _f: AnswerFormat) => ({ qkind: ['youLeft', 'view'] }),
+    // with two premises a «для A …» conclusion would repeat the only link
+    cueSpace: (p: LevelParams, _f: AnswerFormat) => ({ qkind: p.premises >= 3 ? ['youLeft', 'view'] : ['youLeft'] }),
     supportedLures: p => p.lureMix.filter(l => l === 'none' || l === 'possible'),
     construct: (rng, p, plan) => construct(rng, p, plan),
     statedDirectly: (q, premises) => {
+        // stated = the same pair in the same frame (yours, or the same viewer's)
         const k = [...q.args].sort().join(',');
-        return premises.some(r => r.args.length === 2 && ['right', 'left', 'youLeft'].includes(r.kind) && [...r.args].sort().join(',') === k);
+        const you = q.kind === 'youLeft';
+        return premises.some(r => r.args.length === 2 && [...r.args].sort().join(',') === k
+            && (you ? r.kind === 'youLeft' : (r.kind === 'right' || r.kind === 'left') && r.args[0] === q.args[0]));
     },
     lureOf: lure,
     preferredModel: (premises, n) => kit.preferred(premises, n),

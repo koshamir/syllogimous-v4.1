@@ -12,7 +12,7 @@ import { Answer, AnswerFormat, Bot, DraftItem, EngineOptions, LevelParams, LureT
 import { decorateGroups, describeGroups, renderGroups } from '../render/ru/groups';
 import { Construction, DomainSpec, FamilyPlugin, LureContext, Rel, eid, idx } from './plugin';
 
-const MAX = 10;
+const MAX = 12;
 
 function compile(rel: Rel, vars: number[]): (v: Vals) => boolean {
     const [a, b, c, d] = vars;
@@ -62,132 +62,53 @@ export function groupsDegreeOpinion(premises: readonly Rel[], q: Rel): Answer {
 
 // ---------------------------------------------------------------- construction
 
-interface Edge { u: number; v: number; opp: boolean }
-
-function colours(n: number, edges: readonly Edge[]): Int32Array {
-    const col = new Int32Array(n).fill(-1);
-    const adj: [number, boolean][][] = Array.from({ length: n }, () => []);
-    for (const e of edges) { adj[e.u].push([e.v, e.opp]); adj[e.v].push([e.u, e.opp]); }
-    for (let s = 0; s < n; s++) {
-        if (col[s] >= 0) continue;
-        col[s] = 0;
-        const st = [s];
-        while (st.length) {
-            const x = st.pop()!;
-            for (const [y, o] of adj[x]) if (col[y] < 0) { col[y] = col[x] ^ (o ? 1 : 0); st.push(y); }
-        }
-    }
-    return col;
-}
-
-function randomTree(rng: Rng, nodes: number[]): [number, number][] {
-    const out: [number, number][] = [];
-    for (let i = 1; i < nodes.length; i++) out.push([nodes[i], nodes[rng.int(i)]]);
-    return out;
-}
-
 export interface GroupsWorld { colour: Int32Array }
 
+/**
+ * Construction (v5.1): ONE path from a to b, nothing else. A link of the path is a plain fact
+ * («равен» / «противоположен») or, with meta-relations on, a pair of facts: «u к v — как c к d» plus the c–d fact
+ * (two premises that have to be combined to get one link). Determined items: the whole path. "Unknown": the
+ * same path with one inner link missing, so the two halves never meet.
+ */
 function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<GroupsWorld> | null {
-    const d = p.sigmaMin + rng.int(p.sigmaMax - p.sigmaMin + 1);
-    const n = Math.min(MAX, Math.max(p.n, d + 5));
-    const ents = rng.shuffle(Array.from({ length: n }, (_, i) => i));
-    const path = ents.slice(0, d + 1);
-    const spares = ents.slice(d + 1, d + 3);
-    const comp2 = ents.slice(d + 3);
-    if (comp2.length < 2) return null;
-    const a = path[0];
-    const b = path[d];
+    const P = p.premises;
     const qkind = plan.cue['qkind'] ?? 'same';
     const target = plan.target;
-
-    const tree: [number, number][] = [];
-    for (let i = 0; i < d; i++) tree.push([path[i], path[i + 1]]);
-    tree.push(...randomTree(rng, rng.shuffle(comp2.slice())));
-    if (target === 'undetermined') {
-        const j = d >= 3 ? 1 + rng.int(d - 2) : 0;
-        tree.splice(j, 1);                                       // cut path edge (path[j], path[j+1])
-        const interior = path.slice(1, d);
-        const anchor = j === 0 && d <= 2 ? a : rng.pick(interior.length ? interior : [a]);
-        tree.push([rng.pick(comp2), anchor]);
-    }
-    const edges: Edge[] = tree.map(([u, v]) => ({ u, v, opp: rng.chance(0.5) }));
-    let col = colours(n, edges);
+    let metas = 0;
+    if (p.metaRate > 0 && P >= 2 && rng.chance(p.metaRate)) metas = P >= 5 && rng.chance(0.3) ? 2 : 1;
+    let links = P - metas;                       // links actually stated
+    if (target === 'undetermined' && links < 2) { metas = 0; links = P; }
+    const pathLinks = target === 'undetermined' ? links + 1 : links;
+    const n = pathLinks + 1 + 2 * metas;
+    if (n > MAX) return null;
+    const ents = rng.shuffle(Array.from({ length: n }, (_, i) => i));
+    const path = ents.slice(0, pathLinks + 1);
+    const extra = ents.slice(pathLinks + 1);
+    const a = path[0];
+    const b = path[pathLinks];
+    const col = new Int32Array(n);
+    for (let i = 0; i < n; i++) col[i] = rng.int(2);
     if (target !== 'undetermined') {
         const wantSame = (target === 'entailed') === (qkind === 'same');
-        // flip exactly one path edge (edges[0…d-1] are the path) if the a–b relation is wrong
-        if ((col[a] === col[b]) !== wantSame) {
-            const e = edges[rng.int(d)];
-            e.opp = !e.opp;
-            col = colours(n, edges);
-        }
+        col[b] = wantSame ? col[a] : 1 - col[a];
     }
-    // cycles inside the distractor tree
-    const extra: Edge[] = [];
-    if (p.level >= 4 && comp2.length >= 3) {
-        const cyc = rng.int(3);
-        const has = (u: number, v: number) => [...edges, ...extra].some(e => (e.u === u && e.v === v) || (e.u === v && e.v === u));
-        for (let t = 0; t < 10 && extra.length < cyc; t++) {
-            const [u, v] = rng.shuffle(comp2.slice()).slice(0, 2);
-            if (!has(u, v)) extra.push({ u, v, opp: col[u] !== col[v] });
-        }
-    }
-    // metas (stochastic rounding of metaRate × edges) and the surface lure
-    const metas: [number, number, number, number][] = [];
-    const mExpected = p.metaRate * (edges.length + extra.length);
-    const mCount = Math.floor(mExpected) + (rng.chance(mExpected - Math.floor(mExpected)) ? 1 : 0);
-    for (let t = 0; t < mCount; t++) metas.push(rng.shuffle(ents.slice()).slice(0, 4) as [number, number, number, number]);
-    if (plan.lure === 'surface') {
-        const others = rng.shuffle(ents.filter(e => e !== a && e !== b)).slice(0, 2);
-        metas.push(rng.chance(0.5) ? [a, b, others[0], others[1]] : [others[0], others[1], b, a]);
-    }
-    // degree steering with the two spare entities
-    const degOf = (e: number) =>
-        [...edges, ...extra].filter(x => x.u === e || x.v === e).length + metas.filter(m => m.includes(e)).length;
-    const wantDeg = plan.cue['deg'];
-    let da = degOf(a);
-    let db = degOf(b);
-    const spare = spares.slice();
-    const leaf = (host: number) => { const s = spare.pop()!; edges.push({ u: s, v: host, opp: rng.chance(0.5) }); return s; };
-    if (wantDeg) {
-        const wantEqual = (wantDeg === 'entailed') === (qkind === 'same');
-        if (wantEqual && da !== db) {
-            if (Math.abs(da - db) > spare.length) return null;
-            while (da < db) { leaf(a); da++; }
-            while (db < da) { leaf(b); db++; }
-        } else if (!wantEqual && da === db) {
-            if (rng.chance(0.5)) { leaf(a); da++; } else { leaf(b); db++; }
-        }
-    }
-    while (spare.length) leaf(rng.pick(comp2));
-    col = colours(n, edges);
-
-    // parity steering: flip the colour of a leaf outside {a, b} (exactly one binary edge changes)
-    const wantPar = plan.cue['parity'];
-    const binary = (): Edge[] => [...edges, ...extra.map(e => ({ ...e, opp: col[e.u] !== col[e.v] }))];
-    const oppOf = () => binary().filter(e => col[e.u] !== col[e.v]).length;
-    if (wantPar) {
-        const q: Rel = { kind: qkind, args: [eid(a), eid(b)] };
-        const opinion = ((oppOf() % 2 === 0) === (q.kind === 'same')) ? 'entailed' : 'contradicted';
-        if (opinion !== wantPar) {
-            const all = binary();
-            const deg = (x: number) => all.filter(e => e.u === x || e.v === x).length;
-            const leaves = ents.filter(x => x !== a && x !== b && deg(x) === 1);
-            if (!leaves.length) return null;
-            const L = rng.pick(leaves);
-            col[L] ^= 1;
-        }
-    }
+    const gap = target === 'undetermined' ? 1 + rng.int(pathLinks - 2) : -1;       // inner link that is not stated
+    const stated = Array.from({ length: pathLinks }, (_, i) => i).filter(i => i !== gap);
+    const metaAt = new Set(rng.shuffle(stated.slice()).slice(0, metas));
+    const pair = (u: number, v: number) => (rng.chance(0.5) ? [eid(u), eid(v)] : [eid(v), eid(u)]);
+    const fact = (u: number, v: number): Premise => ({ kind: col[u] === col[v] ? 'same' : 'opp', args: pair(u, v) });
     const premises: Premise[] = [];
-    for (const e of [...edges, ...extra]) {
-        const kind = col[e.u] === col[e.v] ? 'same' : 'opp';
-        premises.push({ kind, args: rng.chance(0.5) ? [eid(e.u), eid(e.v)] : [eid(e.v), eid(e.u)] });
+    let x = 0;
+    for (const i of stated) {
+        const [u, v] = [path[i], path[i + 1]];
+        if (!metaAt.has(i)) { premises.push(fact(u, v)); continue; }
+        const [c, d] = [extra[x++], extra[x++]];
+        const rel = (col[u] ^ col[v]) === (col[c] ^ col[d]) ? 'same' : 'opp';
+        const first = rng.chance(0.5);
+        premises.push({ kind: 'meta', args: [...(first ? pair(u, v) : pair(c, d)), ...(first ? pair(c, d) : pair(u, v))], params: { rel } });
+        premises.push(fact(c, d));
     }
-    for (const [u, v, w, z] of metas) {
-        const rel = (col[u] ^ col[v]) === (col[w] ^ col[z]) ? 'same' : 'opp';
-        premises.push({ kind: 'meta', args: [u, v, w, z].map(eid), params: { rel } });
-    }
-    const query: Query = { kind: qkind, args: rng.chance(0.5) ? [eid(a), eid(b)] : [eid(b), eid(a)] };
+    const query: Query = { kind: qkind, args: pair(a, b) };
     return { world: { colour: col }, premises: rng.shuffle(premises), queries: [query], n };
 }
 
@@ -211,7 +132,6 @@ function lure(ctx: LureContext): LureType {
     return 'none';
 }
 
-const ansVals = (format: AnswerFormat) => ['entailed', 'contradicted'];
 
 const shown = (d: DraftItem) => d.displayOrder.map(i => d.premises[i]);
 
@@ -234,14 +154,12 @@ export const groupsPlugin: FamilyPlugin<GroupsWorld> = {
     ...solver,
     adjust(p: LevelParams, _o: EngineOptions, _plan: Plan): LevelParams {
         const q = { ...p };
-        q.sigmaMax = Math.min(q.sigmaMax, MAX - 5);
-        q.sigmaMin = Math.min(q.sigmaMin, q.sigmaMax);
         q.pConvergent = 0;              // a parity support is always a simple path (convergence only via metas)
         q.requireConvergent = false;
         q.n = Math.min(MAX, q.n);
         return q;
     },
-    cueSpace: (_p, format) => ({ qkind: ['same', 'opp'], parity: ansVals(format), deg: ansVals(format) }),
+    cueSpace: () => ({ qkind: ['same', 'opp'] }),
     supportedLures: (p, o) => p.lureMix.filter(l => l !== 'reversal' && l !== 'nearMiss' && (l !== 'surface' || o.metas)),
     construct: (rng, p, plan) => construct(rng, p, plan),
     statedDirectly: (q, premises) => {

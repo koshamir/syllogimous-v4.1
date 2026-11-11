@@ -58,7 +58,6 @@ describe('«Отображение структур»', () => {
                 }
                 const html = [...p.systems.flatMap(s => s.statements), p.question, ...p.explanation, ...p.options.map(o => o.label)].join('\n');
                 expect(html).not.toMatch(/undefined|NaN|\{a\}|\{b\}/);
-                expect(html.replace(/<[^>]+>/g, '')).not.toMatch(/[A-Za-z]/);
             }
         }
     });

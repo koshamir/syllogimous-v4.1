@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import {
-    ENGINE_FAMILIES, EngineOptions, FamilyId, FamilyLevel, Item, Outcome, SchedulerState, emptySchedulerState, levelNotice,
-    migratedLevel, newFamilyLevel, nextItem, targetFor, updateLevel,
+    ENGINE_FAMILIES, EngineOptions, FamilyId, FamilyLevel, Item, Outcome, PREMISE_RANGE, SchedulerState, emptySchedulerState,
+    initialPremises, levelNotice, newFamilyLevel, nextItem, targetFor, updateLevel,
 } from "../engine";
 import { LS_TRAINING_UNIT } from "../constants/local-storage.constants";
 import {
-    DEFAULT_V5_SETTINGS, FAMILY_TYPE, LS_V5_LEVELS, LS_V5_LEVEL_HISTORY, LS_V5_SCHEDULER, LS_V5_SETTINGS, V5Settings,
+    DEFAULT_V5_SETTINGS, FAMILY_TYPE, LS_V5_LEVELS, LS_V5_PREMISES, LS_V5_PREMISE_HISTORY, LS_V5_SCHEDULER, LS_V5_SETTINGS, V5Settings,
 } from "../constants/v5.constants";
 
 export type LevelsState = Partial<Record<FamilyId, FamilyLevel>>;
@@ -40,7 +40,12 @@ export class EngineService {
     private prepared?: { key: string; item: Item; sched: SchedulerState; family: FamilyId };
 
     get settings(): V5Settings {
-        return readJson(LS_V5_SETTINGS, { ...DEFAULT_V5_SETTINGS });
+        const s = readJson<V5Settings>(LS_V5_SETTINGS, { ...DEFAULT_V5_SETTINGS, v: undefined });
+        if (s.v === 2) return s;
+        // settings saved by v5.0: the new defaults replace what the redesign changed (names, step)
+        const up: V5Settings = { ...s, v: 2, namePool: 'latin', step: 0.25, auto: true };
+        localStorage.setItem(LS_V5_SETTINGS, JSON.stringify(up));
+        return up;
     }
 
     saveSettings(s: Partial<V5Settings>) {
@@ -48,16 +53,22 @@ export class EngineService {
         this.prepared = undefined;
     }
 
-    /** Levels per family; families never played start from the migrated v4.1 training unit (§6.3). */
+    /**
+     * Premise count per family (the integer part of `level`). A family never played in v5.1 starts from its v5.0
+     * level or its v4.1 training unit, otherwise from the family's minimum.
+     */
     get levels(): LevelsState {
-        const stored = readJson<LevelsState>(LS_V5_LEVELS, {});
+        const stored = readJson<LevelsState>(LS_V5_PREMISES, {});
         let changed = false;
+        let old: LevelsState | null = null;
         for (const f of Object.keys(FAMILY_TYPE) as FamilyId[]) {
             if (stored[f]) continue;
-            stored[f] = newFamilyLevel(migratedLevel(this.oldPremises(f)));
+            old = old ?? readJson<LevelsState>(LS_V5_LEVELS, {});
+            const played = old[f]?.count ? old[f]!.level : null;
+            stored[f] = newFamilyLevel(initialPremises(PREMISE_RANGE[f], played, this.oldPremises(f)));
             changed = true;
         }
-        if (changed) localStorage.setItem(LS_V5_LEVELS, JSON.stringify(stored));
+        if (changed) localStorage.setItem(LS_V5_PREMISES, JSON.stringify(stored));
         return stored;
     }
 
@@ -71,7 +82,22 @@ export class EngineService {
     }
 
     levelOf(f: FamilyId): number {
-        return this.levels[f]?.level ?? 1;
+        return this.levels[f]?.level ?? PREMISE_RANGE[f][0];
+    }
+
+    /** Premises of the next item of this family. */
+    premisesOf(f: FamilyId): number {
+        return Math.floor(this.levelOf(f));
+    }
+
+    /** The user sets the premise count by hand (settings). */
+    setPremises(f: FamilyId, premises: number) {
+        const [lo, hi] = PREMISE_RANGE[f];
+        const levels = this.levels;
+        const p = Math.max(lo, Math.min(hi, Math.round(premises)));
+        levels[f] = { ...(levels[f] ?? newFamilyLevel(p)), level: p, notified: p };
+        localStorage.setItem(LS_V5_PREMISES, JSON.stringify(levels));
+        this.prepared = undefined;
     }
 
     get scheduler(): SchedulerState {
@@ -79,7 +105,7 @@ export class EngineService {
     }
 
     get levelHistory(): LevelHistory {
-        return readJson<LevelHistory>(LS_V5_LEVEL_HISTORY, {});
+        return readJson<LevelHistory>(LS_V5_PREMISE_HISTORY, {});
     }
 
     engineOptions(extra?: Partial<EngineOptions>): Partial<EngineOptions> {
@@ -99,7 +125,7 @@ export class EngineService {
         const enabled = EngineService.ported(req.enabled);
         const levels: Partial<Record<FamilyId, number>> = {};
         const st = this.levels;
-        for (const f of enabled) levels[f] = req.fixedLevels?.[f] ?? st[f]?.level ?? 1;
+        for (const f of enabled) levels[f] = req.fixedLevels?.[f] ?? st[f]?.level ?? PREMISE_RANGE[f][0];
         const r = nextItem({
             enabled,
             levels,
@@ -140,21 +166,24 @@ export class EngineService {
     }
 
     /**
-     * Staircase update (regular game only). Returns a notice when the integer level moved by ≥ 2 since the last
-     * notification.
+     * Staircase update (regular game only, automatic adjustment on). Returns a notice when the premise count of
+     * the family changed.
      */
     submit(family: FamilyId, outcome: Outcome, p: number): { from: number; to: number } | null {
         const levels = this.levels;
-        const before = levels[family] ?? newFamilyLevel(1);
-        let after = updateLevel(before, outcome, p, this.settings.step);
+        const before = levels[family] ?? newFamilyLevel(PREMISE_RANGE[family][0]);
+        const s = this.settings;
+        let after = s.auto
+            ? updateLevel(before, outcome, p, s.step, PREMISE_RANGE[family])
+            : { ...before, count: before.count + 1, last20: [...before.last20, outcome].slice(-20) };
         const notice = levelNotice(after);
         if (notice.notify) after = { ...after, notified: notice.to };
         levels[family] = after;
-        localStorage.setItem(LS_V5_LEVELS, JSON.stringify(levels));
+        localStorage.setItem(LS_V5_PREMISES, JSON.stringify(levels));
         const today = new Date().toISOString().slice(0, 10);
         const hist = this.levelHistory;
-        hist[today] = Object.fromEntries(Object.entries(levels).map(([f, s]) => [f, Math.round(s!.level * 100) / 100]));
-        localStorage.setItem(LS_V5_LEVEL_HISTORY, JSON.stringify(hist));
+        hist[today] = Object.fromEntries(Object.entries(levels).map(([f, st]) => [f, Math.round(st!.level * 100) / 100]));
+        localStorage.setItem(LS_V5_PREMISE_HISTORY, JSON.stringify(hist));
         this.prepared = undefined;
         return notice.notify ? { from: notice.from, to: notice.to } : null;
     }

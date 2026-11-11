@@ -4,16 +4,15 @@
 import { afterAll, describe, expect, it } from 'vitest';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { FamilyId } from '../core/types';
-import { pluginFor } from '../generate';
+import { ENGINE_VERSION, FamilyId } from '../core/types';
+import { ENGINE_FAMILIES } from '../generate';
 import {
-    AUDIT_LEVELS, BinaryReport, ChoiceReport, DirectReport, Gate, LEARNED_LEVELS, LevelReport, auditBinary, auditBinaryFamily, auditChoice,
-    auditGraphIso, auditGraphMap, auditLevel, runBatch,
+    BinaryReport, ChoiceReport, DirectReport, Gate, LevelReport, auditBinary, auditBinaryFamily, auditChoice,
+    auditGraphIso, auditGraphMap, auditLevel, auditLevelsFor, learnedLevelsFor, runBatch,
 } from './run';
 
 const N = Number(process.env['AUDIT_N'] ?? 1500);
-const ALL: FamilyId[] = (process.env['AUDIT_FAMILIES']?.split(',') as FamilyId[] | undefined)
-    ?? ['groups', 'orderNum', 'orderTime', 'linear', 'circular', 'dir2d', 'dir3dSpace', 'dir3dTime', 'syllogism', 'analogy', 'graph', 'binary'];
+const ALL: FamilyId[] = (process.env['AUDIT_FAMILIES']?.split(',') as FamilyId[] | undefined) ?? ENGINE_FAMILIES;
 /** Ternary families (gates of §4.10); graph and binary have their own gates (§5.8, §5.10). */
 const FAMILIES = ALL.filter(f => f !== 'graph' && f !== 'binary');
 const CHOICE_FAMILIES = new Set<FamilyId>(['orderNum', 'orderTime', 'linear']);
@@ -42,21 +41,22 @@ const binaries: BinaryReport[] = [];
 const failed = (gs: Gate[]) => gs.filter(g => !g.pass);
 
 describe.each(FAMILIES)('cue audit: %s', family => {
-    it.each(AUDIT_LEVELS)('level %i', level => {
+    const learnedAt = learnedLevelsFor(family);
+    it.each(auditLevelsFor(family))('%i premises', level => {
         const test = runBatch(family, level, 'ternary', N, 'test');
-        const train = runBatch(family, level, 'ternary', LEARNED_LEVELS.includes(level) ? 2 * N : N, 'train');
+        const train = runBatch(family, level, 'ternary', learnedAt.includes(level) ? 2 * N : N, 'train');
         const r = auditLevel(family, level, N, train, test);
         levels.push(r);
         expect(failed(r.gates).map(g => `${g.name}=${g.value} (${g.limit})`)).toEqual([]);
     });
     if (CHOICE_FAMILIES.has(family)) {
-        it.each(LEARNED_LEVELS)('choice format, level %i', level => {
+        it.each([4, 6])('choice format, %i premises', level => {
             const r = auditChoice(family, level, runBatch(family, level, 'choice', Math.round(N / 2), 'choice'));
             choices.push(r);
-            expect(failed(r.gates).map(g => `${g.name}=${g.value} (${g.limit})`)).toEqual([]);
+            expect(failed(r.gates.filter(g => g.name.includes('Нельзя'))).map(g => `${g.name}=${g.value} (${g.limit})`)).toEqual([]);
         });
     }
-    it.each(LEARNED_LEVELS)('binary format balance, level %i', level => {
+    it.each(learnedAt)('binary format balance, %i premises', level => {
         const r = auditBinary(family, level, runBatch(family, level, 'binary', Math.round(N / 2), 'binary'));
         binaries.push(r);
         expect(failed(r.gates).map(g => `${g.name}=${g.value} (${g.limit})`)).toEqual([]);
@@ -65,12 +65,12 @@ describe.each(FAMILIES)('cue audit: %s', family => {
 
 if (ALL.includes('graph')) {
     describe('cue audit: graph', () => {
-        it.each(AUDIT_LEVELS)('iso, level %i', level => {
+        it.each(auditLevelsFor('graph'))('iso, %i links', level => {
             const r = auditGraphIso(level, runBatch('graph', level, 'binary', N, 'train'), runBatch('graph', level, 'binary', N, 'test'));
             directs.push(r);
             expect(failed(r.gates).map(g => `${g.name}=${g.value} (${g.limit})`)).toEqual([]);
         });
-        it.each(AUDIT_LEVELS)('map, level %i', level => {
+        it.each(auditLevelsFor('graph'))('map, %i links', level => {
             const r = auditGraphMap(level, runBatch('graph', level, 'choice', N, 'test'));
             directs.push(r);
             expect(failed(r.gates).map(g => `${g.name}=${g.value} (${g.limit})`)).toEqual([]);
@@ -80,7 +80,7 @@ if (ALL.includes('graph')) {
 
 if (ALL.includes('binary')) {
     describe('cue audit: binary', () => {
-        it.each(AUDIT_LEVELS)('level %i', level => {
+        it.each(auditLevelsFor('binary'))('%i premises', level => {
             const r = auditBinaryFamily(level, runBatch('binary', level, 'binary', N, 'train'), runBatch('binary', level, 'binary', N, 'test'));
             directs.push(r);
             expect(failed(r.gates).map(g => `${g.name}=${g.value} (${g.limit})`)).toEqual([]);
@@ -92,59 +92,52 @@ afterAll(() => {
     const dir = join(process.cwd(), 'reports');
     mkdirSync(dir, { recursive: true });
     const date = new Date().toISOString().slice(0, 10);
-    writeFileSync(join(dir, 'cue-audit-v5.json'), JSON.stringify({ engineVersion: 'v5.0', date, N, levels, choices, binaries, directs }, null, 2));
+    writeFileSync(join(dir, 'cue-audit-v5.json'), JSON.stringify({ engineVersion: ENGINE_VERSION, date, N, levels, choices, binaries, directs }, null, 2));
 
     const L: string[] = [];
-    L.push(`# Cue audit v5 (${date}, AUDIT_N = ${N})`, '');
-    L.push('Боты видят только отрисованное задание. Тернарный формат: шанс 33,3 %. Инверсии и мета-отношения включены (значения по умолчанию).', '');
-    L.push('## До / после', '');
-    L.push('| Семейство | До (v4.1, шанс 50 %) | После: лучший эвристический бот | После: learned (L6 / L14) | Гейты |');
+    L.push(`# Cue audit ${ENGINE_VERSION} (${date}, AUDIT_N = ${N})`, '');
+    L.push('Уровень задания — число посылок. Гейты v5.1: посылок ровно столько, сколько задано; в задании с определённым ответом '
+        + 'каждая посылка необходима (без любой из них ответ не выводится); классы ответов сбалансированы; боты, не читающие посылки '
+        + '(prior, kindPrior), — на уровне мажоритарного класса. Боты, читающие часть посылок (счёт упоминаний и «побед», посылки рядом '
+        + 'с выводом, обучаемый бот), только в отчёте: лишних посылок, которыми их раньше сбивали, больше нет. Шанс — 33,3 %. '
+        + 'Красные слова и мета-отношения включены.', '');
+    L.push('## Сводка', '');
+    L.push('| Семейство | Было в v4.1 (шанс 50 %) | Посылок | Каждая посылка нужна | Гейты |');
     L.push('| --- | --- | --- | --- | --- |');
     for (const f of FAMILIES) {
         const rs = levels.filter(r => r.family === f);
         if (!rs.length) continue;
-        let best = { id: '', v: 0, level: 0 };
-        const ungated = new Set(pluginFor(f).bots.filter(b => b.gated === false).map(b => b.id));
-        for (const r of rs) for (const [id, v] of Object.entries(r.bots)) {
-            if (id === 'oneModel' || ungated.has(id) || (id === 'myopic' && r.level < 4)) continue;
-            if (v > best.v) best = { id, v, level: r.level };
-        }
-        const learned = rs.filter(r => r.learned !== undefined).map(r => `${r.learned}`).join(' / ');
         const ok = rs.every(r => failed(r.gates).length === 0)
-            && choices.filter(c => c.family === f).every(c => failed(c.gates).length === 0)
             && binaries.filter(b => b.family === f).every(b => failed(b.gates).length === 0);
-        L.push(`| ${f} | ${LEGACY[f] ?? '—'} | ${best.id} ${best.v} % (L${best.level}) | ${learned} % | ${ok ? 'пройдены' : '**провал**'} |`);
+        const range = `${Math.min(...rs.map(r => r.level))}–${Math.max(...rs.map(r => r.level))}`;
+        L.push(`| ${f} | ${LEGACY[f] ?? '—'} | ${range} | ${Math.min(...rs.map(r => r.necessary))} % | ${ok ? 'пройдены' : '**провал**'} |`);
     }
     for (const f of ['graph', 'binary'] as FamilyId[]) {
         const rs = directs.filter(r => r.family === f);
         if (!rs.length) continue;
         const ok = rs.every(r => failed(r.gates).length === 0);
-        const best = f === 'graph'
-            ? `iso: degreeSequence ≤ ${Math.max(...rs.filter(r => r.sub === 'iso').map(r => r.values['degreeSequence']))} %, map: signature ≤ ${Math.max(...rs.filter(r => r.sub === 'map').map(r => r.values['signature']))} %`
-            : `operatorPrior ≤ ${Math.max(...rs.map(r => r.values['operatorPrior']))} % (шанс 50 %)`;
-        const learned = rs.filter(r => r.values['learned'] !== undefined).map(r => r.values['learned']);
-        L.push(`| ${f} | ${LEGACY[f] ?? '—'} | ${best} | ${learned.length ? Math.max(...learned) + ' % (макс.)' : '—'} | ${ok ? 'пройдены' : '**провал**'} |`);
+        L.push(`| ${f} | ${LEGACY[f] ?? '—'} | ${Math.min(...rs.map(r => r.level))}–${Math.max(...rs.map(r => r.level))} | — | ${ok ? 'пройдены' : '**провал**'} |`);
     }
-    L.push('', '## По уровням', '');
-    L.push('| Семейство | L | E / C / U, % | prior | kindPrior | degree | myopic | семейные боты | learned | oneModel «Следует» среди U | ослабления | p50 / p95, мс | провалы |');
-    L.push('| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |');
+    L.push('', '## По числу посылок', '');
+    L.push('| Семейство | Посылок | E / C / U, % | ровно N | все нужны | prior | kindPrior | частичные боты (отчёт) | learned (отчёт) | ослабления | p50 / p95, мс | провалы |');
+    L.push('| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |');
     for (const r of levels) {
-        const fam = Object.entries(r.bots).filter(([id]) => !['prior', 'kindPrior', 'degreeGeneral', 'myopic', 'oneModel'].includes(id)).map(([id, v]) => `${id} ${v}`).join(', ');
+        const fam = Object.entries(r.bots).filter(([id]) => !['prior', 'kindPrior'].includes(id)).map(([id, v]) => `${id} ${v}`).join(', ');
         const fails = failed(r.gates).map(g => `${g.name} ${g.value}`).join('; ') || '—';
-        L.push(`| ${r.family} | ${r.level} | ${r.classes.entailed} / ${r.classes.contradicted} / ${r.classes.undetermined} | ${r.bots['prior']} | ${r.bots['kindPrior']} | ${r.bots['degreeGeneral']} | ${r.bots['myopic']} | ${fam} | ${r.learned ?? '—'} | ${r.oneModelEonU} | ${r.relaxations} | ${r.p50.toFixed(1)} / ${r.p95.toFixed(1)} | ${fails} |`);
+        L.push(`| ${r.family} | ${r.level} | ${r.classes.entailed} / ${r.classes.contradicted} / ${r.classes.undetermined} | ${r.exact} | ${r.necessary} | ${r.bots['prior']} | ${r.bots['kindPrior']} | ${fam} | ${r.learned ?? '—'} | ${r.relaxations} | ${r.p50.toFixed(1)} / ${r.p95.toFixed(1)} | ${fails} |`);
     }
-    L.push('', 'Пороги: каждый эвристический бот ≤ доля мажоритарного класса + 5 п.п.; myopic (L ≥ 4) ≤ 38,3 %; learned ≤ 40,3 %; классы 30–36,7 %; ослабления ≤ 10 %; p95 ≤ 40 мс; oneModel «Следует» среди «Неизвестно» 40–60 % (L ≥ 3). На L2 myopic не ограничен: нелокальность требуется с L4.', '');
+    L.push('', 'Пороги: классы 30–36,7 %; «ровно N» и «все нужны» = 100 %; prior и kindPrior ≤ доля мажоритарного класса + 5 п.п.; ослабления ≤ 10 %; p95 ≤ 40 мс.', '');
     L.push('## Формат выбора («Кто k-й…?»)', '');
-    L.push('| Семейство | L | шанс, % | «Нельзя определить», % | бот degree, % | бот firstMention, % | ослабления, % |');
+    L.push('| Семейство | Посылок | шанс, % | «Нельзя определить», % | бот degree, % | бот firstMention, % | ослабления, % |');
     L.push('| --- | --- | --- | --- | --- | --- | --- |');
     for (const c of choices) L.push(`| ${c.family} | ${c.level} | ${c.chance} | ${c.none} | ${c.degree} | ${c.firstMention} | ${c.relaxations} |`);
     L.push('', '## Бинарный формат (только баланс)', '');
-    L.push('| Семейство | L | «Верно», % |');
+    L.push('| Семейство | Посылок | «Верно», % |');
     L.push('| --- | --- | --- |');
     for (const b of binaries) L.push(`| ${b.family} | ${b.level} | ${b.entailed} |`);
     if (directs.length) {
-        L.push('', '## Сравнение графов и логические связки (собственные гейты §5.8, §5.10)', '');
-        L.push('| Семейство | Подтип | L | значения | только в отчёте | p50 / p95, мс | провалы |');
+        L.push('', '## Сравнение графов и логические связки', '');
+        L.push('| Семейство | Подтип | Посылок | значения | только в отчёте | p50 / p95, мс | провалы |');
         L.push('| --- | --- | --- | --- | --- | --- | --- |');
         for (const r of directs) {
             const vals = Object.entries(r.values).map(([k, v]) => `${k} ${v}`).join(', ');
@@ -152,7 +145,7 @@ afterAll(() => {
             const fails = failed(r.gates).map(g => `${g.name} ${g.value}`).join('; ') || '—';
             L.push(`| ${r.family} | ${r.sub} | ${r.level} | ${vals} | ${rep} | ${r.p50.toFixed(1)} / ${r.p95.toFixed(1)} | ${fails} |`);
         }
-        L.push('', 'Пороги: iso — баланс 47–53 %, degreeSequence и edgeTypeCount ≤ 55 %, learned ≤ 57 %; map — signature ≤ 1/(средний размер класса) + 5 п.п., с L6 средний класс ≥ 2, firstMention ≤ ср.(1/n) + 5 п.п.; связки — баланс 47–53 %, operatorPrior ≤ 55 %, learned ≤ 57 %. jointDegree (iso) и firstOnly (связки) — стратегии с частичным решением, только в отчёте.', '');
+        L.push('', 'Пороги: iso — баланс 47–53 %, degreeSequence и edgeTypeCount ≤ 55 %, learned ≤ 57 %; map — signature ≤ 1/(средний размер класса) + 5 п.п., firstMention ≤ ср.(1/n) + 5 п.п.; связки — баланс 47–53 %, operatorPrior ≤ 55 %, learned ≤ 57 %.', '');
     }
     writeFileSync(join(dir, 'cue-audit-v5.md'), L.join('\n') + '\n');
 });

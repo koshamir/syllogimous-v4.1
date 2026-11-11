@@ -3,6 +3,8 @@
 // circle — all seatings with e0 at seat 0.
 
 import { describe, expect, it } from 'vitest';
+import { irredundant } from '../generate';
+import { clampPremises } from '../difficulty/ladder';
 import { Answer, DEFAULT_ENGINE_OPTIONS, FamilyId, Item, Plan } from '../core/types';
 import { Rng } from '../core/rng';
 import { classify, consistent } from '../core/solve';
@@ -13,7 +15,8 @@ import { catClassify, catConsistent } from './categorical';
 import { dcsClassify } from './dcs';
 
 const FAMILIES: FamilyId[] = ['circular', 'dir2d', 'dir3dSpace', 'dir3dTime', 'syllogism'];
-const LEVELS = [1, 4, 8, 12, 16];
+/** Premise counts (clamped to each family's range). */
+const LEVELS = [2, 3, 4, 5, 6, 8];
 const PER_LEVEL = Number(process.env['ENGINE_TEST_N'] ?? 300);
 const ix = (id: string) => Number(id.slice(1));
 const mod = (x: number, n: number) => ((x % n) + n) % n;
@@ -168,14 +171,12 @@ describe.each(FAMILIES)('%s', family => {
             const n = it.entities.length;
             expect(consistent(plugin, it.premises, n)).toBe(true);
             expect(classify(plugin, it.premises, it.query, n)).toBe(it.answer);
-            const t = it.target!;
+            expect(it.premises.length).toBe(clampPremises(it.family, level));
             if (it.answer !== 'undetermined') {
                 expect(it.metrics.support).not.toBeNull();
-                if (!it.metrics.relaxations.includes('sigma')) {
-                    expect(it.metrics.support!).toBeGreaterThanOrEqual(t.sigmaMin);
-                    expect(it.metrics.support!).toBeLessThanOrEqual(t.sigmaMax);
-                }
-                if (t.level >= 4) expect(it.metrics.nonLocal).toBe(true);
+                // v5.1: every premise is necessary — the support is the whole item
+                expect(it.metrics.support).toBe(it.premises.length);
+                expect(irredundant(pluginFor(it.family), it.premises, it.query, it.answer, it.entities.length)).toBe(true);
             } else {
                 expect(it.metrics.support).toBeNull();
             }
@@ -183,9 +184,8 @@ describe.each(FAMILIES)('%s', family => {
             const html = [...it.render.instructions, ...it.render.notes, ...it.render.premises, String(it.render.conclusion)].join('\n');
             expect(html).not.toMatch(/undefined|NaN/);
             expect(spansBalanced(html)).toBe(true);
-            expect(visibleText(html)).not.toMatch(/[A-Za-z]/);
             const mentioned = new Set(it.premises.flatMap(r => r.args));
-            for (const e of it.entities) expect(mentioned.has(e.id)).toBe(true);
+            if (!pluginFor(it.family).fixedWorld) for (const e of it.entities) expect(mentioned.has(e.id)).toBe(true);
             if (oracleChecked < 40) {
                 const o = oracle(it);
                 if (o) { expect(o).toBe(it.answer); oracleChecked++; }

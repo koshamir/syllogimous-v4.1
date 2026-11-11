@@ -3,3 +3,50 @@
         max-width: 80%;
     }
 }
+.prem-list {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.prem-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+
+.prem-name {
+    font-size: 0.95rem;
+}
+
+.prem-ctl {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.prem-ctl .btn {
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    font-weight: 700;
+}
+
+.prem-val {
+    min-width: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.prem-bar {
+    grid-column: 1 / -1;
+    height: 3px;
+    background: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.prem-bar > div {
+    height: 100%;
+    background: #2a6fdb;
+}

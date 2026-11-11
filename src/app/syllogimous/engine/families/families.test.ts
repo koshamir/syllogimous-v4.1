@@ -1,6 +1,8 @@
 // Correctness tests (spec §4.11) for the families ported in phase 1A.
 
 import { describe, expect, it } from 'vitest';
+import { irredundant } from '../generate';
+import { clampPremises } from '../difficulty/ladder';
 import { Answer, FamilyId, Item, Plan } from '../core/types';
 import { Rng } from '../core/rng';
 import { classify, consistent } from '../core/solve';
@@ -10,7 +12,8 @@ import { emptySchedulerState, nextPlan } from '../difficulty/scheduler';
 import { DEFAULT_ENGINE_OPTIONS } from '../core/types';
 
 const FAMILIES: FamilyId[] = ['groups', 'orderNum', 'orderTime', 'linear'];
-const LEVELS = [1, 4, 8, 12, 16];
+/** Premise counts (clamped to each family's range). */
+const LEVELS = [2, 3, 4, 5, 6, 8];
 const PER_LEVEL = Number(process.env['ENGINE_TEST_N'] ?? 300);
 
 // ------------------------------------------------------------------ independent oracle (maximally simple)
@@ -112,14 +115,12 @@ describe.each(FAMILIES)('%s', family => {
             expect(consistent(plugin, it.premises, n)).toBe(true);
             expect(classify(plugin, it.premises, it.query, n)).toBe(it.answer);
             // 2. σ within the target range unless a relaxation is recorded
-            const t = it.target!;
+            expect(it.premises.length).toBe(clampPremises(it.family, level));
             if (it.answer !== 'undetermined') {
                 expect(it.metrics.support).not.toBeNull();
-                if (!it.metrics.relaxations.includes('sigma')) {
-                    expect(it.metrics.support!).toBeGreaterThanOrEqual(t.sigmaMin);
-                    expect(it.metrics.support!).toBeLessThanOrEqual(t.sigmaMax);
-                }
-                if (t.level >= 4) expect(it.metrics.nonLocal).toBe(true);
+                // v5.1: every premise is necessary — the support is the whole item
+                expect(it.metrics.support).toBe(it.premises.length);
+                expect(irredundant(pluginFor(it.family), it.premises, it.query, it.answer, it.entities.length)).toBe(true);
                 expect(it.explanation.supportDisplayIdx.length).toBe(it.metrics.support);
             } else {
                 expect(it.metrics.support).toBeNull();
@@ -132,11 +133,10 @@ describe.each(FAMILIES)('%s', family => {
             const html = [...it.render.instructions, ...it.render.notes, ...it.render.premises, String(it.render.conclusion)].join('\n');
             expect(html).not.toMatch(/undefined|NaN/);
             expect(spansBalanced(html)).toBe(true);
-            expect(visibleText(html)).not.toMatch(/[A-Za-z]/);
             expect(it.render.premises.length).toBe(it.premises.length);
             // every entity is mentioned somewhere
             const mentioned = new Set(it.premises.flatMap(r => r.args));
-            for (const e of it.entities) expect(mentioned.has(e.id)).toBe(true);
+            if (!pluginFor(it.family).fixedWorld) for (const e of it.entities) expect(mentioned.has(e.id)).toBe(true);
             // 6. independent brute-force oracle for small sizes
             if (n <= (family === 'groups' ? 12 : 8) && checkedOracle < 40) {
                 expect(oracleClassify(it)).toBe(it.answer);

@@ -4,7 +4,12 @@
         
         <ul class="list-group mb-4">
             <li class="list-group-item flex-between">
-                <b>Уровень</b>
+                <b>Посылок в задаче</b>
+                <div>{{ premiseSummary }} <a href="javascript:void(0)" class="small ms-1" (click)="router.navigate([EnumScreens.Settings])">изменить</a></div>
+            </li>
+
+            <li class="list-group-item flex-between">
+                <b>Ранг</b>
                 <div>{{ game.tier | ruLabel }} · {{ game.score }} баллов <small class="text-muted">(следующий: {{ nextTier | ruLabel }}<i [ngbTooltip]="'Осталось баллов: ' + pointsRemaining" class="bi bi-info-circle ms-1"></i>)</small></div>
             </li>
     
@@ -55,7 +60,7 @@
         <p *ngIf="probeDue" class="text-center small mt-3 mb-0">
             <a href="javascript:void(0)" (click)="router.navigate([EnumScreens.Probes])">Пора пройти «Контроль переноса»</a> — раз в 14 дней.
         </p>
-        <p class="honest-note text-center mt-3 mb-0">Уровень в тренажёре — не IQ.</p>
+        <p class="honest-note text-center mt-3 mb-0">Результат в тренажёре — не IQ.</p>
     </div>
 
     <div footer class="start-actions">

@@ -6,7 +6,9 @@ import { DEFAULT_DAILY_GOAL, DEFAULT_WEEKLY_GOAL } from '../../services/progress
 import { LS_COLOR_BLINDNESS_MODE, LS_DAILY_GOAL, LS_WEEKLY_GOAL } from '../../constants/local-storage.constants';
 import { GameService } from '../../services/game.service';
 import { EngineService } from '../../services/engine.service';
-import { NAME_POOL_LABELS, V5Settings } from '../../constants/v5.constants';
+import { FAMILY_TYPE, NAME_POOL_LABELS, V5Settings } from '../../constants/v5.constants';
+import { ENGINE_FAMILIES, FamilyId, PREMISE_RANGE } from '../../engine';
+import { questionTypeLabel } from '../../utils/russian.utils';
 import { DailyPlanService, PLAN_LABELS, PLAN_SEGMENTS, PlanSegment } from '../../services/daily-plan.service';
 import { Subscription } from 'rxjs';
 
@@ -35,24 +37,25 @@ export class SettingsComponent {
         { text: '3 варианта: Следует / Неизвестно / Противоречит', value: 'ternary' },
         { text: '2 варианта: Верно / Неверно', value: 'binary' },
     ];
-    stepChoices = [{ text: '0,25', value: 0.25 }, { text: '0,5', value: 0.5 }, { text: '1', value: 1 }];
+    stepChoices = [
+        { text: 'Медленно: +1 посылка за 8 верных подряд', value: 0.125 },
+        { text: 'Обычно: +1 посылка за 4 верных подряд', value: 0.25 },
+        { text: 'Быстро: +1 посылка за 2 верных подряд', value: 0.5 },
+    ];
     explanationChoices = [
         { text: 'Только после ошибок', value: 'errors' },
         { text: 'Всегда', value: 'always' },
         { text: 'Никогда', value: 'never' },
     ];
     poolChoices = Object.entries(NAME_POOL_LABELS).map(([value, text]) => ({ text, value }));
-    nameModeChoices = [
-        { text: 'По уровню (похожие и повторяющиеся имена)', value: 'byLevel' },
-        { text: 'Всегда разные', value: 'distinct' },
-    ];
 
     format: FormControl;
     targetAccuracy: FormControl;
     step: FormControl;
     explanation: FormControl;
     namePool: FormControl;
-    nameMode: FormControl;
+    auto: FormControl;
+    families: FamilyId[] = ENGINE_FAMILIES;
     negations: FormControl;
     metas: FormControl;
 
@@ -76,7 +79,7 @@ export class SettingsComponent {
     constructor(
         public router: Router,
         public game: GameService,
-        engine: EngineService,
+        private engine: EngineService,
         plan: DailyPlanService,
     ) {
         const ps = plan.settings;
@@ -108,7 +111,7 @@ export class SettingsComponent {
         this.step = bind('step', s.step, v => Number(v) as V5Settings['step']);
         this.explanation = bind('explanation', s.explanation, v => v);
         this.namePool = bind('namePool', s.namePool, v => v);
-        this.nameMode = bind('nameMode', s.nameMode, v => v);
+        this.auto = bind('auto', s.auto, v => !!v);
         this.negations = bind('negations', s.negations, v => !!v);
         this.metas = bind('metas', s.metas, v => !!v);
 
@@ -119,6 +122,32 @@ export class SettingsComponent {
             localStorage.setItem(LS_COLOR_BLINDNESS_MODE, text + ";" + value);
             loadColorBlindnessMode();
         }));
+    }
+
+    label(f: FamilyId): string {
+        return questionTypeLabel(FAMILY_TYPE[f]);
+    }
+
+    range(f: FamilyId): [number, number] {
+        return PREMISE_RANGE[f];
+    }
+
+    premises(f: FamilyId): number {
+        return this.engine.premisesOf(f);
+    }
+
+    /** Progress (%) towards the next premise. */
+    progress(f: FamilyId): number {
+        const l = this.engine.levelOf(f);
+        return Math.round((l - Math.floor(l)) * 100);
+    }
+
+    bump(f: FamilyId, d: number) {
+        this.engine.setPremises(f, this.premises(f) + d);
+    }
+
+    bumpAll(d: number) {
+        for (const f of this.families) this.bump(f, d);
     }
 
     ngOnDestroy() {

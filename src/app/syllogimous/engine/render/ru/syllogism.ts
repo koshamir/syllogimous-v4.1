@@ -33,17 +33,17 @@ export function sylSentence(r: Rel & { inverted?: boolean }, names: readonly str
     const Pn = subj(names[idx(p)]);
     const I = !!(r.inverted || r.params?.['inv']);
     switch (r.kind) {
-        case 'all': return I ? `${inv('Ни один', true)} ${S} не относится к категории ${Pn}` : `Все ${S} относятся к категории ${Pn}`;
-        case 'no': return I ? `${inv('Все', true)} ${S} относятся к категории ${Pn}` : `Ни один ${S} не относится к категории ${Pn}`;
-        case 'some': return I ? `Некоторые ${S} ${inv('не относятся', true)} к категории ${Pn}` : `Некоторые ${S} относятся к категории ${Pn}`;
-        case 'some_not': return I ? `Некоторые ${S} ${inv('относятся', true)} к категории ${Pn}` : `Некоторые ${S} не относятся к категории ${Pn}`;
+        case 'all': return I ? `${inv('Ни один', true)} ${S} — не ${Pn}` : `Все ${S} — это ${Pn}`;
+        case 'no': return I ? `${inv('Все', true)} ${S} — это ${Pn}` : `Ни один ${S} — не ${Pn}`;
+        case 'some': return I ? `Некоторые ${S} — ${inv('не', true)} ${Pn}` : `Некоторые ${S} — это ${Pn}`;
+        case 'some_not': return I ? `Некоторые ${S} — ${inv('это', true)} ${Pn}` : `Некоторые ${S} — не ${Pn}`;
         default: throw new Error('No Russian template for ' + r.kind);
     }
 }
 
 export function renderSyl(d: DraftItem): ItemRender {
     const names = d.entities.map(e => e.name);
-    const notes = ['Каждая названная категория непуста: в ней есть хотя бы один объект.'];
+    const notes = ['Пустых категорий нет.'];
     if (d.premises.some(r => r.inverted) || d.query.params?.['inv']) notes.push(NOTE_INVERSION);
     return {
         instructions: [],

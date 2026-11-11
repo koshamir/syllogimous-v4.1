@@ -17,7 +17,7 @@
             </div>
             <div class="mt-2">
                 Правильный ответ: <b [innerHTML]="correctText"></b>
-                <span *ngIf="!timeout && !correct"> · ваш ответ: <span [innerHTML]="userText"></span></span>
+                <span *ngIf="!timeout && !correct"> · твой ответ: <span [innerHTML]="userText"></span></span>
             </div>
         </div>
 
@@ -28,9 +28,9 @@
         <div class="explanation card mt-3" *ngIf="showExplanation && game.question.explanation as ex">
             <div class="card-body d-grid gap-3">
                 <div>
-                    <div class="small text-muted mb-1">Посылки <span *ngIf="support.size">(решающие выделены)</span></div>
+                    <div class="small text-muted mb-1">Посылки<span *ngIf="!undetermined && game.question.engineVersion === 'v5.1'"> — для ответа нужна каждая</span></div>
                     <div class="premises">
-                        <div *ngFor="let p of game.question.premises; let i = index" [class.is-support]="support.has(i)" [innerHTML]="p"></div>
+                        <div *ngFor="let p of game.question.premises; let i = index" [class.is-support]="support.size < game.question.premises.length && support.has(i)" [innerHTML]="p"></div>
                     </div>
                 </div>
                 <div *ngIf="ex.model">

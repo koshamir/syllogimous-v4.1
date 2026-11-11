@@ -52,11 +52,11 @@ export class GameComponent {
         }
     }
 
-    /** T = clamp(median RT of the last 10 items of the family at level ±2 × (1 + 0.15·(σ − σ̄)) + 2·negations, 15, 180). */
+    /** T = clamp(median RT of the last 10 items of the family with ±1 premise × (1 + 0.15·(σ − σ̄)) + 2·negations, 15, 180). */
     adaptiveTime(): number {
         const q = this.game.question;
         const ref = this.game.questions
-            .filter(h => h.family === q.family && h.level !== undefined && Math.abs(h.level - (q.level ?? 1)) <= 2 && !isTimeout(h))
+            .filter(h => h.family === q.family && h.engineVersion === q.engineVersion && h.level !== undefined && Math.abs(h.level - (q.level ?? 2)) <= 1 && !isTimeout(h))
             .slice(0, 10);
         return adaptiveSeconds(
             ref.map(h => responseTime(h) / 1000),

@@ -76,7 +76,7 @@ export function dirSentence(mode: DirMode, r: Rel, names: readonly string[]): st
             const I = (sy ? isInv('y') : false) || (sx ? isInv('x') : false);
             const ds = (s: 'g' | 'l') => (I ? flip(s) : s);
             const dir = sy && sx ? DIAG_DAT[ds(sy) + ds(sx)] : sy ? DAT.y[ds(sy) === 'g' ? 0 : 1] : DAT.x[ds(sx!) === 'g' ? 0 : 1];
-            return `${A} в соседней клетке ${inv(dir, I)} от ${B}`;
+            return `${A} вплотную ${inv(dir, I)} от ${B}`;
         }
         // mixed inversion on a diagonal: two components
     }
@@ -89,7 +89,7 @@ export function dirSentence(mode: DirMode, r: Rel, names: readonly string[]): st
             const v = ax === 'y' ? dy : dx;
             if (v === 0) continue;
             const s = v > 0 ? 'g' : 'l';
-            parts.push(`на ${Math.abs(v)} ${unit(mode, ax, Math.abs(v))} ${strict ? 'строго ' : ''}${word(mode, ax, s, isInv(ax))}`);
+            parts.push(`на ${Math.abs(v)} ${strict ? 'строго ' : ''}${word(mode, ax, s, isInv(ax))}`);
         }
         let dz = 0;
         if (has3) {
@@ -100,7 +100,7 @@ export function dirSentence(mode: DirMode, r: Rel, names: readonly string[]): st
             return mode === 'dir3dTime' ? `${A} в том же месте и в то же время, что и ${B}`
                 : mode === 'dir3dSpace' ? `${A} в той же точке, что и ${B}` : `${A} в той же клетке, что и ${B}`;
         }
-        let s = `${A} ${listAnd(parts)}, чем ${B}`;
+        let s = `${A} ${listAnd(parts)} ${B}`;
         if (has3 && dx === 0 && dy === 0) s += ', в той же клетке на карте';
         if (has3 && dz === 0) s += mode === 'dir3dTime' ? ', в то же время' : ', на том же уровне';
         return s;
@@ -126,7 +126,7 @@ export function dirSentence(mode: DirMode, r: Rel, names: readonly string[]): st
     }
     const sz = sgn(cz);
     if (sz) comps.push(word(mode, 'z', sz, isInv('z')));
-    if (comps.length) return `${A} ${comps.join(' и ')}, чем ${B}`;
+    if (comps.length) return `${A} ${comps.join(' и ')} ${B}`;
     // equalities only («на одной вертикали / горизонтали / на одном уровне / одновременно»)
     if (cx === 0) return `${A} и ${B} на одной вертикали`;
     if (cy === 0) return `${A} и ${B} на одной горизонтали`;
@@ -136,13 +136,7 @@ export function dirSentence(mode: DirMode, r: Rel, names: readonly string[]): st
 
 export function renderDir(mode: DirMode, d: DraftItem): ItemRender {
     const names = d.entities.map(e => e.name);
-    const notes = ['«Строго севернее» — на той же вертикали. «Севернее» — выше по карте, по горизонтали где угодно.'];
-    if (mode !== 'dir2d') {
-        notes.push(mode === 'dir3dTime'
-            ? 'Третье измерение — время: «позже на 2 часа», «одновременно».'
-            : 'Третье измерение — высота: «выше на 1 уровень», «на одном уровне».');
-    }
-    notes.push('Точки могут совпадать, если это не запрещено посылками.');
+    const notes = ['«Строго севернее» — точно над (та же вертикаль); просто «севернее» — выше по карте, левее или правее — неважно. Числа — шаги по клеткам.'];
     if (d.premises.some(r => r.inverted) || AXES.some(ax => d.query.params?.['i' + ax])) notes.push(NOTE_INVERSION);
     return {
         instructions: [],

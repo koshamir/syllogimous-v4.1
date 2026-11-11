@@ -116,7 +116,7 @@ function link(cfg: LineCfg, rng: Rng, p: LevelParams, u: number, v: number): Pre
 }
 
 export function lineQueryKinds(cfg: LineCfg, p: LevelParams): string[] {
-    const between = p.level >= 6 && p.sigmaMax >= 5 && p.requireNonLocal;
+    const between = p.premises >= 5;
     if (cfg.id !== 'linear') return between ? ['gt', 'gt', 'gt', 'between'] : ['gt'];
     // Exact-distance conclusions (steps / dist / adj / notAdj) are not offered yet: in a packed row a wrong
     // distance is refuted by counting places from 2–3 premises, so "Contradicts" items with an honest σ are
@@ -131,16 +131,14 @@ const queryClass = (qkind: string) =>
 
 export const isOrientedQuery = (qkind: string) => qkind === 'gt' || qkind === 'left' || qkind === 'steps';
 
-/** Free entities reserved for profile pendants (2-entity conclusions) or fillers. */
-export const freeBudget = (qkind: string) => (qkind === 'between' ? 1 : 4);
+/** v5.1: no free entities — every entity is a node of the chain. */
+export const freeBudget = (_qkind: string) => 0;
 
 export function lineAdjust(p: LevelParams, plan: Plan, format: AnswerFormat): LevelParams {
     const q = { ...p };
     const qkind = plan.cue['qkind'] ?? 'gt';
-    const surf = plan.lure === 'surface' ? 1 : 0;
-    const kCap = LINE_MAX_ENTITIES - 1 - freeBudget(qkind) - surf;
-    q.sigmaMax = Math.min(q.sigmaMax, kCap);
-    if (qkind === 'between' && format !== 'choice') q.sigmaMin = Math.max(q.sigmaMin, 5);
+    void qkind; void format;
+    q.sigmaMax = Math.min(q.sigmaMax, LINE_MAX_ENTITIES - 1);
     q.sigmaMin = Math.min(q.sigmaMin, q.sigmaMax);
     q.n = Math.min(LINE_MAX_ENTITIES, Math.max(3, q.n));
     return q;
@@ -344,7 +342,7 @@ export interface LineWorld { pos: Vals }
 export function constructLine(cfg: LineCfg, solver: LineSolver, rng: Rng, p: LevelParams, plan: Plan): Construction<LineWorld> | null {
     const qkind = plan.cue['qkind'] ?? (cfg.id === 'linear' ? 'left' : 'gt');
     const cls = queryClass(qkind);
-    const surf = plan.lure === 'surface';
+    const surf = false;
     const sigmaT = p.sigmaMin + rng.int(p.sigmaMax - p.sigmaMin + 1);
     // exact chains realise convergence with one two-premise link, so they need one link fewer
     const exactConv = cls === 'exact' && p.requireConvergent && sigmaT >= 3;
@@ -451,65 +449,10 @@ export function constructLine(cfg: LineCfg, solver: LineSolver, rng: Rng, p: Lev
         }
     }
 
+    // v5.1: the chain is the whole item — no pendants, fillers or distractors
     const prem: Premise[] = chain.slice();
     const qa = query.args.map(idx);
-
-    // lure: surface — two conclusion entities in one premise of another type
-    if (surf) {
-        if (cls === 'between') {
-            // the outer pair inside another «между» with a fresh middle: no orientation, so it cannot shorten
-            // the refutation of a folded chain
-            prem.push(P('between', [surfEnt, ...(rng.chance(0.5) ? [c[0], c[k]] : [c[k], c[0]])]));
-        } else {
-            const [x, y] = rng.chance(0.5) ? [qa[0], qa[1]] : [qa[1], qa[0]];
-            prem.push(rng.chance(0.5) ? P('between', [x, y, surfEnt]) : P('between', [x, surfEnt, y]));
-        }
-    }
-
-    // profile pendants (2-entity conclusions): free entities are local extrema, so they never create shortcuts;
-    // one "below" entity may be beaten by both conclusion entities (and one "above" may beat both)
-    const roles = new Map<number, Role>();
-    const winRole: Role = cfg.winsHigh ? 'low' : 'high';     // role of x when the conclusion entity beats x
-    const loseRole: Role = winRole === 'low' ? 'high' : 'low';
-    if (qa.length === 2) {
-        const net = winScores(prem);
-        const deg = mentionCounts(prem);
-        const mv = qa.map(e => profileMoves(rng, net.get(eid(e)) ?? 0, deg.get(eid(e)) ?? 0));
-        if (mv.some(m => !m)) return null;
-        const [m0, m1] = mv as { w: number; l: number }[];
-        const nLow = Math.max(m0.w, m1.w);
-        const nHigh = Math.max(m0.l, m1.l);
-        if (nLow + nHigh > free.length) return null;
-        const pool = rng.shuffle(free.slice());
-        const lows = pool.slice(0, nLow);
-        const highs = pool.slice(nLow, nLow + nHigh);
-        lows.forEach(x => roles.set(x, winRole));
-        highs.forEach(x => roles.set(x, loseRole));
-        [m0, m1].forEach((m, qi) => {
-            const e = qa[qi];
-            const ls = rng.shuffle(lows.slice()).slice(0, m.w);
-            const hs = rng.shuffle(highs.slice()).slice(0, m.l);
-            for (const x of ls) prem.push(beat(cfg, e, x));
-            for (const x of hs) prem.push(beat(cfg, x, e));
-        });
-    }
-
-    // «X — самый большой / маленький» (order families, L ≥ 8): asserted about a free entity before the world
-    // is drawn. A free entity is a local extremum, so the fact never shortens a support, and its availability
-    // does not depend on the class (choosing the world's actual extreme afterwards would).
-    let preFillers = 0;
-    if (cfg.id !== 'linear' && p.level >= 8) {
-        for (const [side, role] of [['max', 'high'], ['min', 'low']] as const) {
-            if (preFillers >= p.distractors || !rng.chance(0.3)) continue;
-            const cands = free.filter(x => (roles.get(x) ?? role) === role && !prem.some(r => r.kind === 'extreme' && r.args[0] === eid(x)));
-            if (!cands.length) continue;
-            const x = rng.pick(cands);
-            roles.set(x, role);
-            prem.push(P('extreme', [x], { side }));
-            preFillers++;
-        }
-    }
-
+    void surfEnt; void free; void balance; void profileMoves;
     const world = modelWith(solver, prem, [], n, { rng });
     if (!world) return null;
     const pos = (e: number) => world[e];
@@ -521,98 +464,7 @@ export function constructLine(cfg: LineCfg, solver: LineSolver, rng: Rng, p: Lev
             : P('dist', [qa[0], qa[1]], { k: Math.abs(d) - 1 });
         if (query.kind === 'dist' && num(query, 'k') < 1) return null;
     }
-
-    // fillers (never touch conclusion entities)
-    const qset = new Set(query.args.map(idx));
-    const interior = c.filter(e => !qset.has(e));
-    const used = new Set<string>();
-    const key = (r: Premise) => `${r.kind}:${[...r.args].sort().join(',')}`;
-    prem.forEach(r => used.add(key(r)));
     const fillers: Premise[] = [];
-    const tryAdd = (r: Premise) => {
-        const kk = key(r);
-        if (used.has(kk)) return false;
-        used.add(kk);
-        fillers.push(r);
-        return true;
-    };
-    const pendant = (x: number): Premise | null => {
-        const role = roles.get(x);
-        const cands = interior.filter(e => role === undefined || (role === 'low' ? pos(x) < pos(e) : pos(x) > pos(e)));
-        if (!cands.length) return null;
-        const e = rng.pick(cands);
-        if (!roles.has(x)) roles.set(x, pos(x) < pos(e) ? 'low' : 'high');
-        return pos(x) < pos(e) ? O(cfg, x, e) : O(cfg, e, x);
-    };
-    // every free entity must appear in some premise
-    for (const x of free) {
-        if (prem.some(r => r.args.includes(eid(x)))) continue;
-        const r = pendant(x);
-        if (!r) return null;
-        tryAdd(r);
-    }
-    // kind balancing for exact chains (E/C: one more «левее» as a pendant; U: one more exact step, derivable)
-    if (balance === 'left') {
-        let done = false;
-        for (const x of rng.shuffle(free.slice())) {
-            const r = pendant(x);
-            if (r && tryAdd(r)) { done = true; break; }
-        }
-        if (!done) return null;
-    } else if (balance === 'exact') {
-        const pairs: [number, number][] = [];
-        for (const a of interior) for (const b of interior) if (a !== b && pos(a) < pos(b)) pairs.push([a, b]);
-        let done = false;
-        for (const [a, b] of rng.shuffle(pairs)) {
-            // derivable only if a and b lie on the same exact sub-path: check by solver on the chain
-            const d = pos(b) - pos(a);
-            const r = d === 1 ? P('immLeft', [a, b]) : P('steps', [a, b], { k: d });
-            if (classifySubset(solver, chain, r, n) === 'entailed' && tryAdd(r)) { done = true; break; }
-        }
-        if (!done) return null;
-    }
-    // distractors. Exact chains only get pendants and facts about free entities: anything tied to the chain
-    // would let a partial chain refute a wrong distance, so such fillers would be filtered out of
-    // "Contradicts" items more often — a selection bias the learned bot would see.
-    const D = p.distractors;
-    const exact = cls === 'exact';
-    const cands: (() => Premise | null)[] = [];
-    if (!exact) {
-        for (let j = 1; j + 1 < c.length; j++) {
-            const [a, m, b] = [c[j - 1], c[j], c[j + 1]];
-            if (qset.has(a) || qset.has(m) || qset.has(b)) continue;
-            if ((pos(a) < pos(m) && pos(m) < pos(b)) || (pos(b) < pos(m) && pos(m) < pos(a))) cands.push(() => P('between', [m, a, b]));
-        }
-    }
-    for (const x of free) cands.push(() => pendant(x));
-    const others = Array.from({ length: n }, (_, i) => i).filter(e => !qset.has(e) && !free.includes(e));
-    const nonQ = Array.from({ length: n }, (_, i) => i).filter(e => !qset.has(e) && (!exact || free.includes(e)));
-    if (cfg.id === 'orderTime' && p.level >= 8) {
-        for (const a of others) for (const b of others) if (a < b && Math.abs(pos(a) - pos(b)) >= 2) cands.push(() => P('gap', [a, b], { k: Math.abs(pos(a) - pos(b)) - 1 }));
-    }
-    if (cfg.id === 'linear') {
-        for (const a of nonQ) for (const b of nonQ) {
-            if (a >= b) continue;
-            const d = Math.abs(pos(a) - pos(b));
-            if (p.level >= 4 && d >= 2 && rng.chance(0.3)) cands.push(() => P('notAdj', [a, b]));
-            if (p.level >= 5 && d >= 2 && rng.chance(0.15)) cands.push(() => P('dist', [a, b], { k: d - 1 }));
-        }
-        if (p.level >= 6) for (const a of nonQ) {
-            if (rng.chance(0.3)) cands.push(() => (pos(a) === 0 || pos(a) === n - 1 ? P('end', [a]) : P('notEnd', [a])));
-        }
-        if (p.level <= 9 && rng.chance(0.15)) {
-            const a = rng.pick(nonQ);
-            cands.push(() => P('pos', [a], { k: pos(a) + 1 }));
-        }
-    }
-    rng.shuffle(cands);
-    let added = preFillers;
-    for (const mk of cands) {
-        if (added >= D) break;
-        const r = mk();
-        if (r && tryAdd(r)) added++;
-    }
-
     const all = rng.shuffle([...prem, ...fillers]);
     return { world: { pos: world }, premises: all, queries: [query, ...altQueries], n };
 }
@@ -620,7 +472,7 @@ export function constructLine(cfg: LineCfg, solver: LineSolver, rng: Rng, p: Lev
 // ---------------------------------------------------------------- choice («Кто k-й…?»)
 
 export function constructLineChoice(cfg: LineCfg, solver: LineSolver, rng: Rng, p: LevelParams, plan: Plan): ChoiceConstruction | null {
-    const n = Math.max(4, Math.min(8, p.n));
+    const n = Math.max(3, Math.min(8, p.premises + 1));
     const c = rng.shuffle(Array.from({ length: n }, (_, i) => i));
     const built = ordChain(cfg, rng, p, c, p.requireConvergent && n >= 3);
     if (!built) return null;

@@ -20,6 +20,7 @@
 
 <app-card>
     <div body class="battlefield" [ngStyle]="{ width: (gameMode === '1' || gameMode === '2') ? '100%' : 'auto' }">
+        <div class="item-head small text-muted">{{ game.question.type | ruLabel }} · {{ game.question.family === 'graph' ? 'связей в сети' : 'посылок' }}: {{ game.question.premises.length }}</div>
         <div class="timerbar-wrap">
             <ngb-progressbar *ngIf="timerType !== '0'" class="timerbar" type="success" [value]="100 * gameTimerService.remainingSeconds / timerTimeSeconds">
                 <span class="me-2">{{gameTimerService.remainingSeconds}} с</span>

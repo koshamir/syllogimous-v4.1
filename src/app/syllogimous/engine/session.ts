@@ -4,13 +4,13 @@
 import { Rng } from './core/rng';
 import { AnswerFormat, DEFAULT_ENGINE_OPTIONS, EngineOptions, FamilyId, Item } from './core/types';
 import { DIRECT, generate, pluginFor } from './generate';
-import { planningParams } from './difficulty/ladder';
+import { clampPremises, planningParams } from './difficulty/ladder';
 import { SchedulerState, nextPlan, pickFamily, pushHistory, seenFingerprint } from './difficulty/scheduler';
 
 export interface SessionRequest {
     /** Enabled ported families (≥ 1). */
     enabled: FamilyId[];
-    /** Current (real) level per family. */
+    /** Current level per family: its integer part is the number of premises. */
     levels: Partial<Record<FamilyId, number>>;
     /** Answer format from the settings. */
     format: 'ternary' | 'binary';
@@ -49,7 +49,7 @@ export function nextItem(req: SessionRequest): SessionResult {
     const o: EngineOptions = { ...DEFAULT_ENGINE_OPTIONS, ...req.options };
     const rng = new Rng(`${req.seed}:session`);
     const family = pickFamily(req.levels, req.enabled, req.sched.history, rng);
-    const level = Math.max(1, Math.min(20, req.levels[family] ?? 1));
+    const level = clampPremises(family, req.levels[family] ?? 2);
     const f = formatFor(family, req, level, req.sched, rng);
     let sched = f.sched;
     const pp = planningParams(level, o);

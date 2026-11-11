@@ -3,7 +3,7 @@
 import { Rng } from '../../core/rng';
 import { DraftItem, ItemRender, LevelParams, Premise, Query } from '../../core/types';
 import { Rel, idx } from '../../families/plugin';
-import { NOTE_INVERSION, alphabetical, inv, pluralRu, subj } from './common';
+import { NOTE_INVERSION, inv, pluralRu, subj } from './common';
 
 const WORDED = new Set(['immLeft', 'immRight']);
 
@@ -28,20 +28,20 @@ function sentence(r: Rel & { inverted?: boolean }, names: readonly string[]): st
     const side = (left: boolean) => inv(left !== I ? 'слева' : 'справа', I);
     switch (r.kind) {
         case 'immLeft':   // a = b + 1 (a is b's left neighbour)
-            return sw ? `${N(1)} сидит сразу ${side(false)} от ${N(0)}` : `${N(0)} сидит сразу ${side(true)} от ${N(1)}`;
+            return sw ? `${N(1)} сразу ${side(false)} от ${N(0)}` : `${N(0)} сразу ${side(true)} от ${N(1)}`;
         case 'immRight':
-            return sw ? `${N(1)} сидит сразу ${side(true)} от ${N(0)}` : `${N(0)} сидит сразу ${side(false)} от ${N(1)}`;
-        case 'adj': return sw ? `${N(1)} и ${N(0)} сидят рядом` : `${N(0)} и ${N(1)} сидят рядом`;
-        case 'notAdj': return sw ? `${N(1)} и ${N(0)} сидят не рядом` : `${N(0)} и ${N(1)} сидят не рядом`;
-        case 'opposite': return sw ? `${N(1)} сидит напротив ${N(0)}` : `${N(0)} сидит напротив ${N(1)}`;
+            return sw ? `${N(1)} сразу ${side(true)} от ${N(0)}` : `${N(0)} сразу ${side(false)} от ${N(1)}`;
+        case 'adj': return sw ? `${N(1)} и ${N(0)} рядом` : `${N(0)} и ${N(1)} рядом`;
+        case 'notAdj': return sw ? `${N(1)} и ${N(0)} не рядом` : `${N(0)} и ${N(1)} не рядом`;
+        case 'opposite': return sw ? `${N(1)} напротив ${N(0)}` : `${N(0)} напротив ${N(1)}`;
         case 'gap': {
             const k = Number(r.params?.['k'] ?? 0);
             const [x, y] = sw ? [1, 0] : [0, 1];
-            return `Между ${N(x)} и ${N(y)} по короткой дуге ровно ${k} ${pluralRu(k, 'человек', 'человека', 'человек')}`;
+            return `Между ${N(x)} и ${N(y)} — ${k} ${pluralRu(k, 'человек', 'человека', 'человек')}`;
         }
         case 'between': {
             const [x, y] = sw ? [2, 1] : [1, 2];
-            return `${N(0)} сидит между ${N(x)} и ${N(y)}`;
+            return `${N(0)} между ${N(x)} и ${N(y)}`;
         }
         default: throw new Error('No Russian template for ' + r.kind);
     }
@@ -53,8 +53,8 @@ export function renderCirc(d: DraftItem): ItemRender {
     if (d.premises.some(r => r.inverted) || d.query.params?.['inv']) notes.push(NOTE_INVERSION);
     return {
         instructions: [
-            `Участники: ${alphabetical(names).map(subj).join(', ')} (порядок в списке — алфавитный).`,
-            'Все сидят за круглым столом лицом к центру. «Слева от Х» — с точки зрения Х, сидящего лицом к центру. «Х сидит между У и Ф» — У и Ф его соседи.',
+            `За круглым столом ${names.length} ${pluralRu(names.length, 'человек', 'человека', 'человек')}, все лицом к центру. «Слева от X» — по левую руку X. `
+            + 'Людей «между» считают по короткой дуге; «X между A и B» — A и B его соседи.',
         ],
         notes,
         premises: d.displayOrder.map(i => sentence(d.premises[i], names)),

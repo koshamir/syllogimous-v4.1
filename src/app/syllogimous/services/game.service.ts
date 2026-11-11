@@ -15,7 +15,7 @@ import { ToastService } from "src/app/services/toast.service";
 import { Logger } from "../utils/logger";
 import { isCorrect } from "../utils/answer.utils";
 import { questionTypeLabel } from "../utils/russian.utils";
-import { BinaryOp, ENGINE_FAMILIES, FamilyId, Item, Outcome } from "../engine";
+import { BinaryOp, ENGINE_FAMILIES, FamilyId, Item, Outcome, PREMISE_RANGE } from "../engine";
 
 @Injectable({
     providedIn: "root"
@@ -105,7 +105,7 @@ export class GameService {
         if (!this.playgroundSettings) return { enabled, prevNames: this.lastNames };
         const pg = this.playgroundSettings;
         const fixedLevels: Partial<Record<FamilyId, number>> = {};
-        for (const f of enabled) fixedLevels[f] = pg.families[f]?.level ?? 1;
+        for (const f of enabled) fixedLevels[f] = pg.families[f]?.level ?? PREMISE_RANGE[f][0];
         const ops = (Object.entries(pg.ops) as [BinaryOp, boolean][]).filter(([, v]) => v).map(([k]) => k);
         return {
             enabled,
@@ -124,7 +124,7 @@ export class GameService {
         q.format = item.format;
         q.answerClass = item.answer;
         q.correct = item.format === "ternary" ? item.answer : item.correctOptionId;
-        q.level = Math.round(item.level * 100) / 100;
+        q.level = item.premises.length;
         q.seed = item.seed;
         q.metrics = item.metrics;
         q.lure = item.lure;
@@ -206,7 +206,7 @@ export class GameService {
             if (notice) {
                 const up = notice.to > notice.from;
                 this.toaster.show(
-                    `${questionTypeLabel(q.type)}: уровень ${up ? "вырос" : "снизился"} до ${notice.to}`,
+                    `${questionTypeLabel(q.type)}: посылок ${up ? "больше" : "меньше"} — теперь ${notice.to}`,
                     { classname: up ? "bg-success text-light" : "bg-secondary text-light" },
                 );
             }
@@ -241,9 +241,20 @@ export class GameService {
         this.router.navigate([EnumScreens.Feedback]);
     }
 
-    /** Level of a family (regular game) or its fixed level (free mode). */
+    get autoAdjust(): boolean {
+        return this.engine.settings.auto;
+    }
+
+    /** Level of a family (regular game) or its fixed level (free mode); the integer part is the premise count. */
     familyLevel(f: FamilyId): number {
         return this.playgroundSettings?.families[f]?.level ?? this.engine.levelOf(f);
+    }
+
+    /** Correct answers in a row needed for one more premise; null when the family is at its maximum. */
+    correctToNext(f: FamilyId): number | null {
+        const l = this.engine.levelOf(f);
+        if (Math.floor(l) >= PREMISE_RANGE[f][1]) return null;
+        return Math.max(1, Math.ceil((Math.floor(l) + 1 - l) / this.engine.settings.step - 1e-9));
     }
 
     typeOf(f: FamilyId): EnumQuestionType {

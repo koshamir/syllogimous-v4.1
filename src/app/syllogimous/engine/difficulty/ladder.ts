@@ -1,81 +1,79 @@
-// Default difficulty ladder (spec §4.6). All numbers live in LADDER_CONFIG so they can be edited in one place.
+// Difficulty (v5.1): the level of an item IS its number of premises. Every premise is part of the reasoning
+// (no distractors, no pendants), and everything else that loads relational integration is always on:
+// ternary relations, convergent structures, mixed wording, scattered premise order, lures.
 
 import { Rng } from '../core/rng';
-import { EngineOptions, LevelParams, LureType, PremiseOrderMode } from '../core/types';
+import { EngineOptions, FamilyId, LevelParams } from '../core/types';
 
 const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
 
-export const LADDER_CONFIG = {
-    levelMin: 1,
-    levelMax: 20,
-    /** L' = L + U(jitterLo, jitterHi) */
-    jitterLo: -1,
-    jitterHi: 0.5,
-    n: (L: number) => 3 + Math.floor((L + 1) / 3),
-    sigmaMin: (L: number) => (L < 3 ? 2 : L < 10 ? 3 : L < 15 ? 4 : 5),
-    sigmaMaxExtra: (L: number) => (L < 3 ? 0 : 1),
-    nonLocalFrom: 4,
-    pTernary: (L: number) => clamp(0.05 * (L - 2), 0, 0.5),
-    pConvergent: (L: number) => clamp(0.1 * (L - 1), 0, 0.8),
-    distractors: (L: number) => (L < 3 ? 0 : L < 6 ? 1 : L < 10 ? 2 : 3),
-    lureMix: (L: number): LureType[] => {
-        const mix: LureType[] = ['none'];
-        if (L >= 2) mix.push('reversal');
-        if (L >= 3) mix.push('possible');
-        if (L >= 5) mix.push('nearMiss');
-        if (L >= 8) mix.push('surface');
-        return mix;
-    },
-    /** [p(discontinuous), p(adversarial)] */
-    order: (L: number): [number, number] => (L < 6 ? [0, 0] : L < 10 ? [0.5, 0] : [0.7, 0.3]),
-    negationRate: (L: number) => (L < 7 ? 0 : Math.min(0.3, 0.05 * (L - 6))),
-    metaRate: (L: number) => (L < 10 ? 0 : Math.min(0.3, 0.05 * (L - 9))),
-    confusableNames: (L: number) => (L < 8 ? 0 : Math.min(0.5, 0.1 * (L - 7))),
-    carryOverNames: (L: number) => (L < 10 ? 0 : Math.min(0.3, 0.1 * (L - 9))),
+export const DIFFICULTY = {
+    /** Premise counts supported by the engine overall; families narrow the range (PREMISE_RANGE). */
+    min: 2,
+    max: 8,
+    /** Feature level passed to the families: everything a family can do is unlocked. */
+    features: 12,
+    pTernary: 0.4,
+    pConvergent: 0.5,
+    negationRate: 0.25,
+    metaRate: 0.3,
 };
 
-export function jitterLevel(level: number, rng: Rng): number {
-    const c = LADDER_CONFIG;
-    return clamp(level + c.jitterLo + rng.float() * (c.jitterHi - c.jitterLo), c.levelMin, c.levelMax);
+/** Premise counts [min, max] each family can build with every premise necessary. */
+export const PREMISE_RANGE: Record<FamilyId, [number, number]> = {
+    groups: [2, 8],
+    groups3: [2, 7],
+    orderNum: [2, 8],
+    orderTime: [2, 8],
+    linear: [2, 7],
+    circular: [2, 5],
+    dir2d: [2, 6],
+    dir3dSpace: [2, 6],
+    dir3dTime: [2, 6],
+    syllogism: [2, 6],
+    conditional: [2, 6],
+    hierarchy: [2, 5],
+    perspective: [2, 6],
+    analogy: [3, 8],
+    // links per network (each network is stated with that many arrows)
+    graph: [5, 8],
+    binary: [4, 12],
+};
+
+export function clampPremises(family: FamilyId, level: number): number {
+    const [lo, hi] = PREMISE_RANGE[family];
+    return clamp(Math.floor(level), lo, hi);
 }
 
-/** Ladder parameters at the (already jittered) level L'. Families clamp them afterwards. */
-export function ladderAt(L: number, rng: Rng, o: EngineOptions): LevelParams {
-    const c = LADDER_CONFIG;
-    const sigmaMin = c.sigmaMin(L);
-    const pConvergent = c.pConvergent(L);
-    const [pDisc, pAdv] = c.order(L);
-    const u = rng.float();
-    const order: PremiseOrderMode = u < pAdv ? 'adversarial' : u < pAdv + pDisc ? 'discontinuous' : 'random';
+/** Parameters for an item with exactly P premises. Families clamp them afterwards. */
+export function ladderAt(P: number, rng: Rng, o: EngineOptions): LevelParams {
+    const c = DIFFICULTY;
     return {
-        level: L,
-        n: c.n(L),
-        sigmaMin,
-        sigmaMax: sigmaMin + c.sigmaMaxExtra(L),
-        requireNonLocal: L >= c.nonLocalFrom,
-        pTernary: c.pTernary(L),
-        pConvergent,
-        requireConvergent: rng.chance(pConvergent),
-        distractors: c.distractors(L),
-        lureMix: c.lureMix(L),
-        order,
-        negationRate: o.negations ? c.negationRate(L) : 0,
-        metaRate: o.metas ? c.metaRate(L) : 0,
-        confusableNames: c.confusableNames(L),
-        carryOverNames: c.carryOverNames(L),
+        level: c.features,
+        premises: P,
+        n: P + 1,
+        sigmaMin: P,
+        sigmaMax: P,
+        requireNonLocal: false,
+        pTernary: c.pTernary,
+        pConvergent: c.pConvergent,
+        requireConvergent: P >= 3 && rng.chance(c.pConvergent),
+        distractors: 0,
+        lureMix: ['none', 'reversal', 'possible', 'nearMiss'],
+        order: 'discontinuous',
+        negationRate: o.negations ? c.negationRate : 0,
+        metaRate: o.metas ? c.metaRate : 0,
+        confusableNames: 0,
+        carryOverNames: 0,
     };
 }
 
-/**
- * Parameters the scheduler uses to choose a plan (query kinds, lures): the most conservative level of the
- * jitter range, so that every plan is feasible whatever jitter the generator draws.
- */
+/** Parameters the scheduler uses to choose a plan (query kinds, lures). */
 export function planningParams(level: number, o: EngineOptions): LevelParams {
-    const c = LADDER_CONFIG;
-    return ladderAt(clamp(level + c.jitterLo, c.levelMin, c.levelMax), new Rng('planning'), o);
+    return ladderAt(clamp(Math.floor(level), c0.min, c0.max), new Rng('planning'), o);
 }
+const c0 = DIFFICULTY;
 
-/** Jitter + ladder in one call. */
 export function ladder(level: number, rng: Rng, o: EngineOptions): LevelParams {
-    return ladderAt(jitterLevel(level, rng), rng, o);
+    return ladderAt(clamp(Math.floor(level), c0.min, c0.max), rng, o);
 }

@@ -76,9 +76,9 @@ export function builderTarget(level: number): LevelTarget {
     const L = Math.floor(level);
     if (L <= 3) return { kinds: ['line'], n: [4, 5], classes: ['binary'], minTernary: 0, minConditional: 0, distractors: [0, 0], maxK: [1, 2], entryKMin: 1, hypothesis: false, noPinning: false };
     if (L <= 6) return { kinds: ['line'], n: [5, 6], classes: ['binary', 'ternary'], minTernary: 1, minConditional: 0, distractors: [0, 0], maxK: [2, 3], entryKMin: L >= 5 ? 2 : 1, hypothesis: false, noPinning: L >= 5 };
-    if (L <= 10) return { kinds: ['line', 'circle', 'groups'], n: [6, 7], classes: ['binary', 'ternary', 'conditional', 'quant'], minTernary: 0, minConditional: 1, distractors: [1, 1], maxK: [3, 3], entryKMin: 1, hypothesis: false, noPinning: true };
-    if (L <= 14) return { kinds: ['lineAttr', 'grid'], n: [4, 5], classes: ['binary', 'ternary', 'conditional', 'quant'], minTernary: 0, minConditional: 0, distractors: [1, 2], maxK: [3, 4], entryKMin: 2, hypothesis: false, noPinning: true };
-    return { kinds: ['line', 'circle', 'groups', 'lineAttr', 'grid'], n: [5, 7], classes: ['binary', 'ternary', 'conditional', 'quant'], minTernary: 1, minConditional: 0, distractors: [1, 2], maxK: [3, 4], entryKMin: 2, hypothesis: true, noPinning: true };
+    if (L <= 10) return { kinds: ['line', 'circle', 'groups'], n: [6, 7], classes: ['binary', 'ternary', 'conditional', 'quant'], minTernary: 0, minConditional: 1, distractors: [0, 0], maxK: [3, 3], entryKMin: 1, hypothesis: false, noPinning: true };
+    if (L <= 14) return { kinds: ['lineAttr', 'grid'], n: [4, 5], classes: ['binary', 'ternary', 'conditional', 'quant'], minTernary: 0, minConditional: 0, distractors: [0, 0], maxK: [3, 4], entryKMin: 2, hypothesis: false, noPinning: true };
+    return { kinds: ['line', 'circle', 'groups', 'lineAttr', 'grid'], n: [5, 7], classes: ['binary', 'ternary', 'conditional', 'quant'], minTernary: 1, minConditional: 0, distractors: [0, 0], maxK: [3, 4], entryKMin: 2, hypothesis: true, noPinning: true };
 }
 
 const WEIGHT: Record<ClueClass, number> = { binary: 1, ternary: 1.4, conditional: 1.2, quant: 1.1 };
@@ -265,7 +265,7 @@ export function generateBuilder(level: number, seed: string, opts: { variant?: B
     let fallback: BuilderPuzzle | null = null;
     for (let attempt = 0; attempt < 30; attempt++) {
         const rng = rng0.fork(`a${attempt}`);
-        const p = attemptPuzzle(level, seed, variant, t, rng, opts.namePool ?? 'cyrillic');
+        const p = attemptPuzzle(level, seed, variant, t, rng, opts.namePool ?? 'latin');
         if (!p) continue;
         const ok = accept(p, t);
         if (ok.length === 0) return p;
@@ -274,7 +274,7 @@ export function generateBuilder(level: number, seed: string, opts: { variant?: B
     if (fallback) return fallback;
     // last resort: the simplest target
     for (let attempt = 0; attempt < 30; attempt++) {
-        const p = attemptPuzzle(level, seed, variant, builderTarget(1), rng0.fork(`r${attempt}`), opts.namePool ?? 'cyrillic');
+        const p = attemptPuzzle(level, seed, variant, builderTarget(1), rng0.fork(`r${attempt}`), opts.namePool ?? 'latin');
         if (p) return { ...p, relaxations: ['target'] };
     }
     throw new Error('builder generator failed ' + seed);
@@ -399,14 +399,13 @@ function mustBeOptions(ws: WorldSet, rng: Rng, pool: Clue[], poolBits: Bits[], M
 
 function instructionsFor(ws: WorldSet, names: readonly string[], fixed?: { e: number; v: number }): string[] {
     const subj = (s: string) => `<span class="subject">${s}</span>`;
-    const list = names.slice().sort((a, b) => a.localeCompare(b, 'ru')).map(subj).join(', ');
-    const out = [`Участники: ${list} (порядок в списке — алфавитный).`];
+    const out: string[] = [];
     switch (ws.kind) {
-        case 'line': out.push(`Все стоят в один ряд из ${ws.n} мест; «левее» — с точки зрения наблюдателя.`); break;
-        case 'lineAttr': out.push(`Все стоят в один ряд из ${ws.n} мест, у каждого шапка одного из цветов: ${COLOR_NAMES.slice(0, ws.colors).map(c => c.short).join(', ')} (каждый цвет есть хотя бы у одного).`); break;
-        case 'circle': out.push(`Все сидят за круглым столом на ${ws.n} местах лицом к центру; «слева от Х» — с точки зрения Х. Места пронумерованы по часовой стрелке, ${subj(names[fixed!.e])} сидит на месте 1.`); break;
-        case 'groups': out.push(`Участники разделены на группы: ${ws.groups!.map((s, i) => `${GROUP_NAMES[i]} — ${s}`).join(', ')}.`); break;
-        case 'grid': out.push('Поле 3×3: ряды сверху вниз, столбцы слева направо; часть клеток пуста, в клетке не больше одного участника.'); break;
+        case 'line': out.push(`Ряд из ${ws.n} мест.`); break;
+        case 'lineAttr': out.push(`Ряд из ${ws.n} мест. У каждого шапка: ${COLOR_NAMES.slice(0, ws.colors).map(c => c.short).join(' / ')}; каждый цвет есть хотя бы у одного.`); break;
+        case 'circle': out.push(`Круглый стол на ${ws.n} мест, все лицом к центру; «слева от X» — по левую руку X. Места идут по часовой стрелке, ${subj(names[fixed!.e])} — на месте 1. Людей «между» считают по короткой дуге.`); break;
+        case 'groups': out.push(`Группы: ${ws.groups!.map((s, i) => `${GROUP_NAMES[i]} — ${s}`).join(', ')}.`); break;
+        case 'grid': out.push('Поле 3×3; часть клеток пуста, в клетке не больше одного.'); break;
     }
     return out;
 }

@@ -34,6 +34,10 @@ export interface SolverPlugin {
      * minimal support may be disconnected — the support search must not restrict itself to the query component.
      */
     packed?: boolean;
+    /** The world has a fixed size: entities that no premise mentions still exist (no renumbering). */
+    fixedWorld?: boolean;
+    /** Premises of this family are not queryable relations: skip the "follows from the others" check. */
+    skipRedundancyCheck?: boolean;
     /** Domain for a constraint set over `nLocal` entities of an item with `nFull` entities. */
     domain(rels: readonly Rel[], nLocal: number, nFull: number, full: boolean): DomainSpec;
     /** Test of one relation; `vars[i]` is the local variable of `rel.args[i]`; `size` — domain size. */

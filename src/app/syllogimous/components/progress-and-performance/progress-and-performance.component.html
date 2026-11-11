@@ -42,8 +42,8 @@
             </div>
         </ng-container>
 
-        <div *ngIf="feedbackPage && familyLevel !== null" class="text-center small text-muted mt-1">
-            {{ game.question.type | ruLabel }}: уровень {{ familyLevel }}{{ playgroundMode ? ' (свободный режим)' : '' }}
+        <div *ngIf="feedbackPage && familyPremises !== null" class="text-center small text-muted mt-1">
+            {{ game.question.type | ruLabel }}: посылок — {{ familyPremises }}<ng-container *ngIf="!playgroundMode && auto && toNext !== null"> · ещё {{ toNext }} верных подряд до +1</ng-container>{{ playgroundMode ? ' (свободный режим)' : '' }}
         </div>
     </div>
 </div>

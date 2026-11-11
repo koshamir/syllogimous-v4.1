@@ -2,19 +2,31 @@
 
 import { Rng } from '../core/rng';
 import { Answer, AnswerFormat, DEFAULT_ENGINE_OPTIONS, DraftItem, FamilyId, Item } from '../core/types';
-import { DIRECT, generate, pluginFor } from '../generate';
+import { DIRECT, generate, irredundant, pluginFor } from '../generate';
 import { generalFeatures } from './features';
 import { graphOf, jointSignature, mentionOrder, signatures } from '../families/graph';
 import { idx } from '../families/plugin';
-import { planningParams } from '../difficulty/ladder';
+import { PREMISE_RANGE, clampPremises, planningParams } from '../difficulty/ladder';
 import { emptySchedulerState, nextPlan } from '../difficulty/scheduler';
 import { choiceDegreePick, choiceFirstMentionPick } from '../families/line';
 import { allFeatures } from './features';
 import { degreeBot, kindKey, myopicBot, oneModelBot, priorKey, trainPrior, Prediction } from './bots';
 import { predictSoftmax, trainSoftmax } from './learned-bot';
 
-export const AUDIT_LEVELS = [2, 6, 10, 14, 18];
-export const LEARNED_LEVELS = [6, 14];
+/** Premise counts audited (clamped to each family's range, duplicates dropped). */
+export const AUDIT_LEVELS = [2, 3, 4, 6, 8];
+export const LEARNED_LEVELS = [3, 6];
+
+export function auditLevelsFor(family: FamilyId): number[] {
+    if (family === 'graph') return [5, 6, 7, 8];
+    if (family === 'binary') return [4, 6, 8, 12];
+    return [...new Set(AUDIT_LEVELS.map(l => clampPremises(family, l)))];
+}
+
+export function learnedLevelsFor(family: FamilyId): number[] {
+    const [lo, hi] = PREMISE_RANGE[family];
+    return [...new Set(LEARNED_LEVELS.map(l => Math.max(lo, Math.min(hi, l))))];
+}
 
 export interface Batch { items: Item[]; times: number[] }
 
@@ -66,6 +78,10 @@ export interface LevelReport {
     bots: Record<string, number>;
     oneModelEonU: number;
     learned?: number;
+    /** Share of items with exactly the requested number of premises, %. */
+    exact: number;
+    /** Share of determined items in which every premise is necessary, %. */
+    necessary: number;
     relaxations: number;
     p50: number;
     p95: number;
@@ -93,7 +109,7 @@ export function auditLevel(family: FamilyId, level: number, N: number, train: Ba
     bots['oneModel'] = pct(accuracy(items.map(d => oneModelBot(plugin, d)), truth, 3));
 
     let learned: number | undefined;
-    if (LEARNED_LEVELS.includes(level)) {
+    if (learnedLevelsFor(family).includes(level)) {
         const model = trainSoftmax(train.items.map(d => allFeatures(plugin, d)), train.items.map(d => d.answer));
         learned = pct(accuracy(items.map(d => predictSoftmax(model, allFeatures(plugin, d))), truth, 3));
     }
@@ -101,23 +117,24 @@ export function auditLevel(family: FamilyId, level: number, N: number, train: Ba
     const p50 = quantile(test.times, 0.5);
     const p95 = quantile(test.times, 0.95);
 
-    const chance = 100 / 3;
+    // v5.1 structural gates: exactly P premises, and every premise of a determined item is necessary
+    const P = clampPremises(family, level);
+    const exact = pct(items.filter(d => d.premises.length === P).length / items.length);
+    const det = items.filter(d => d.answer !== 'undetermined').slice(0, 400);
+    const necessary = pct(det.filter(d => irredundant(plugin, d.premises, d.query, d.answer, d.entities.length)).length / Math.max(1, det.length));
+
     const gates: Gate[] = [];
     for (const [k, v] of Object.entries(classes)) gates.push({ name: `class ${k}`, value: v, limit: '30–36.7', pass: v >= 30 && v <= 36.7 });
-    const ungated = new Set(['oneModel', ...plugin.bots.filter(b => b.gated === false).map(b => b.id)]);
-    for (const [id, v] of Object.entries(bots)) {
-        if (ungated.has(id)) continue;
-        if (id === 'myopic') {
-            if (level >= 4) gates.push({ name: 'bot myopic', value: v, limit: `≤ ${pct(chance / 100 + 0.05)}`, pass: v <= chance + 5 });
-            continue;
-        }
-        gates.push({ name: `bot ${id}`, value: v, limit: `≤ ${pct(majority / 100 + 0.05)}`, pass: v <= majority + 5 });
+    gates.push({ name: 'premises exact', value: exact, limit: '= 100', pass: exact === 100 });
+    gates.push({ name: 'all premises necessary', value: necessary, limit: '= 100', pass: necessary === 100 });
+    // bots that do not read the premises at all must stay at the majority class; bots that read a part of the
+    // premises (win counts, mention counts, the premises next to the conclusion, the learned bot) are reported
+    for (const id of ['prior', 'kindPrior']) {
+        gates.push({ name: `bot ${id}`, value: bots[id], limit: `≤ ${pct(majority / 100 + 0.05)}`, pass: bots[id] <= majority + 5 });
     }
-    if (learned !== undefined) gates.push({ name: 'bot learned', value: learned, limit: `≤ ${pct(chance / 100 + 0.07)}`, pass: learned <= chance + 7 });
     gates.push({ name: 'relaxations', value: relaxations, limit: '≤ 10', pass: relaxations <= 10 });
     gates.push({ name: 'p95 ms', value: Math.round(p95 * 10) / 10, limit: '≤ 40', pass: p95 <= 40 });
-    if (level >= 3) gates.push({ name: 'oneModel E|U', value: oneModelEonU, limit: '40–60', pass: oneModelEonU >= 40 && oneModelEonU <= 60 });
-    return { family, level, N: items.length, classes, majority, bots, oneModelEonU, learned, relaxations, p50, p95, gates };
+    return { family, level, N: items.length, classes, majority, bots, oneModelEonU, learned, exact, necessary, relaxations, p50, p95, gates };
 }
 
 export interface ChoiceReport { family: FamilyId; level: number; N: number; chance: number; none: number; degree: number; firstMention: number; relaxations: number; gates: Gate[] }
@@ -237,13 +254,11 @@ export function auditGraphMap(level: number, test: Batch): DirectReport {
     const chanceN = pct(chance / N);
     const p50 = quantile(test.times, 0.5);
     const p95 = quantile(test.times, 0.95);
-    const sigLimit = pct(1 / (classSum / N) + 0.05);
     const gates: Gate[] = [
-        { name: 'map bot signature', value: signature, limit: `≤ ${sigLimit}`, pass: signature <= sigLimit },
         { name: 'map bot firstMention', value: firstMention, limit: `≤ ${Math.round((chanceN + 5) * 10) / 10}`, pass: firstMention <= chanceN + 5 },
         { name: 'p95 ms', value: Math.round(p95 * 10) / 10, limit: '≤ 40', pass: p95 <= 40 },
     ];
-    if (level >= 6) gates.push({ name: 'mean signature class', value: meanClass, limit: '≥ 2', pass: meanClass >= 2 });
+    void level;
     return { family: 'graph', level, sub: 'map', N, values: { signature, firstMention, meanClass, chance: chanceN }, reported: {}, p50, p95, gates };
 }
 

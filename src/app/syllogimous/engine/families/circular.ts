@@ -41,14 +41,9 @@ const solver = { supportDomain: 'restricted' as const, packed: true, domain, com
 
 const TYPE: Record<string, string> = { immLeft: 'imm', immRight: 'imm', adj: 'adj', notAdj: 'adj', opposite: 'opp', gap: 'gap', between: 'between' };
 
-/**
- * Conclusion kinds. «Сразу слева» and «рядом» are premises only: an adjacency is never the end of a long
- * non-local chain (it is stated or follows from one or two facts), so such conclusions cannot reach σ ≥ 3.
- */
+/** Conclusion kinds (the scheduler's `qkind`): a count on the short arc, a neighbour side, «рядом», «напротив». */
 export function circQueryKinds(_p: LevelParams): string[] {
-    // «напротив» as a conclusion is never "Unknown" on a cut arc of half the table (≤ 8 seats), and
-    // «между» follows locally from two neighbour facts; both stay premises.
-    return ['gap'];
+    return ['gap', 'gap', 'imm', 'adj'];
 }
 
 function stated(q: Rel, premises: readonly Rel[]): boolean {
@@ -62,83 +57,87 @@ const key = (r: Rel) => `${TYPE[r.kind]}:${[...r.args].sort().join(',')}:${r.par
 export interface CircWorld { seats: number[] }
 
 /**
- * Construction. All classes share one shape: the conclusion ends c0…ck are joined by k links and the claim is
- * «по короткой дуге ровно k − 1 человек». The classes differ in ONE link:
- *   E — all links «сразу слева / справа» (the arc is contiguous: the claim is true);
- *   C — one link is «между X и Y по короткой дуге ровно 1 человек» (the arc is one seat longer; the
- *       direction of that link follows from the packed table);
- *   U — one link is «X и Y сидят не рядом» (the two pieces of the arc float).
- * Premise kinds are re-balanced inside the free group (each class ends with the same multiset), and each
- * member of the free group gets exactly one weak fact, so counts never depend on the class.
+ * Construction (v5.1): a random seating and ONE chain of P facts from the first conclusion person to the
+ * second — nothing else. Links are neighbour sides (directed), «рядом» / «между ними k человек» (undirected:
+ * the reasoner has to keep both branches until the packed table or a later fact closes one) and «между»
+ * (three people in one fact). The conclusion is a true or a false claim about the two ends; the pipeline
+ * keeps the item only if the class is the planned one and every premise is necessary.
  */
 function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<CircWorld> | null {
-    const target = plan.target;
-    const k = p.sigmaMin + rng.int(p.sigmaMax - p.sigmaMin + 1);
-    const n = Math.max(5, Math.min(MAX, Math.max(p.n + 2, 2 * k + 2)));
-    if (k < 2 || 2 * (k + 1) > n) return null;
-    const cut = k >= 3 ? 1 + rng.int(k - 2) : rng.int(k);               // link index (0-based) that differs
-    const ents = rng.shuffle(Array.from({ length: n }, (_, i) => i));
-    const arc = ents.slice(0, k + 1);
-    const rest = ents.slice(k + 1);
-    // seats: E — contiguous arc; C — one extra seat (a rest member) inside link `cut`;
-    // U — the arc split after c_cut by g ≥ 1 rest members
-    const order: number[] = [];
-    if (target === 'entailed') order.push(...arc, ...rest);
-    else {
-        const g = target === 'contradicted' ? 1 : 1 + rng.int(Math.max(1, rest.length - 1));
-        if (rest.length < g + 1) return null;
-        order.push(...arc.slice(0, cut + 1), ...rest.slice(0, g), ...arc.slice(cut + 1), ...rest.slice(g));
-    }
-    const seatOf = new Int32Array(n);
-    order.forEach((e, s0) => (seatOf[e] = s0));
-    const dir = rng.chance(0.5) ? 1 : -1;
-    const world = Array.from(seatOf, x => mod(dir * (x - seatOf[0]), n));
+    const P = p.premises;
+    const qkind = plan.cue['qkind'] ?? 'gap';
+    // chain nodes: P + 1, plus one per «между» fact; unnamed people fill the rest of the table
+    const nb = P >= 2 && rng.chance(p.pTernary) ? 1 : 0;
+    const nodes = P + 1 + nb;
+    const n = Math.max(4, Math.min(MAX, nodes + rng.int(3)));
+    if (nodes > n) return null;
+    const seat = rng.shuffle(Array.from({ length: n }, (_, i) => i));          // seat[e]
+    const world = seat.map(x => mod(x - seat[0], n));
+    const at = new Map(world.map((x, e) => [x, e]));
     const dist = (a: number, b: number) => { const d = mod(world[a] - world[b], n); return Math.min(d, n - d); };
-    // «v сразу слева от u» ≡ «u сразу справа от v»: the kind is drawn at random so that kind counts do not
-    // reveal whether all neighbour links run the same way
     const imm = (v: number, u: number): Premise => {
         const [l, r] = mod(world[v] - world[u], n) === 1 ? [v, u] : [u, v];   // l is r's left neighbour
         return rng.chance(0.5) ? { kind: 'immLeft', args: [eid(l), eid(r)] } : { kind: 'immRight', args: [eid(r), eid(l)] };
     };
-    const gapOf = (a: number, b: number): Premise => ({ kind: 'gap', args: [eid(a), eid(b)], params: { k: dist(a, b) - 1 } });
-    const notAdj = (a: number, b: number): Premise => ({ kind: 'notAdj', args: [eid(a), eid(b)] });
-
+    const used = new Set<number>();
+    let cur = rng.int(n);
+    used.add(cur);
+    const c0 = cur;
     const prem: Premise[] = [];
-    for (let j = 1; j <= k; j++) {
-        const [u, v] = [arc[j - 1], arc[j]];
-        if (j - 1 === cut && target === 'contradicted') prem.push(gapOf(v, u));
-        else if (j - 1 === cut && target === 'undetermined') prem.push(notAdj(v, u));
-        else prem.push(imm(v, u));
+    let betweenLeft = nb;
+    while (prem.length < P) {
+        const left = P - prem.length;
+        // «между»: cur's neighbour m and m's other neighbour x — "m sits between cur and x"
+        if (betweenLeft && (left === 1 || rng.chance(0.4))) {
+            const s = rng.chance(0.5) ? 1 : -1;
+            const m = at.get(mod(world[cur] + s, n))!;
+            const x = at.get(mod(world[cur] + 2 * s, n))!;
+            if (!used.has(m) && !used.has(x) && m !== x) {
+                prem.push({ kind: 'between', args: rng.chance(0.5) ? [eid(m), eid(cur), eid(x)] : [eid(m), eid(x), eid(cur)] });
+                used.add(m); used.add(x);
+                cur = x;
+                betweenLeft--;
+                continue;
+            }
+        }
+        const cands = Array.from({ length: n }, (_, e) => e).filter(e => !used.has(e));
+        if (!cands.length) return null;
+        // near people first: long undirected jumps are loose and rarely leave a determined conclusion
+        const w = cands.map(e => { const d = dist(e, cur); return d === 1 ? 5 : d === 2 ? 3 : 1; });
+        let u = rng.float() * w.reduce((x, y) => x + y, 0);
+        let nx = cands[cands.length - 1];
+        for (let i = 0; i < cands.length; i++) { if ((u -= w[i]) < 0) { nx = cands[i]; break; } }
+        const d = dist(nx, cur);
+        const pair = rng.chance(0.5) ? [eid(nx), eid(cur)] : [eid(cur), eid(nx)];
+        if (d === 1) prem.push(rng.chance(0.7) ? imm(nx, cur) : { kind: 'adj', args: pair });
+        else if (2 * d === n && rng.chance(0.5)) prem.push({ kind: 'opposite', args: pair });
+        else prem.push({ kind: 'gap', args: pair, params: { k: d - 1 } });
+        used.add(nx);
+        cur = nx;
     }
-    const [c0, ck] = [arc[0], arc[k]];
-    const query: Query = { kind: 'gap', args: rng.chance(0.5) ? [eid(c0), eid(ck)] : [eid(ck), eid(c0)], params: { k: k - 1 } };
-    // kind balancing inside the free group: every class ends with the multiset {imm × k, gap × 1, notAdj × 1}
-    // on top of the arc's shared part (E adds gap + notAdj, C adds imm + notAdj, U adds imm + gap)
-    const need: string[] = target === 'entailed' ? ['gap', 'notAdj'] : target === 'contradicted' ? ['imm', 'notAdj'] : ['imm', 'gap'];
-    const inner = arc.slice(1, k);
-    const pool = [...rest, ...inner];
-    const keys = new Set(prem.map(key));
-    const push = (r: Premise) => { if (keys.has(key(r))) return false; keys.add(key(r)); prem.push(r); return true; };
-    for (const kd of need) {
-        const cands: [number, number][] = [];
-        for (const a of rest) for (const b of pool) if (a !== b && (kd === 'imm' ? dist(a, b) === 1 : dist(a, b) >= 2)) cands.push([a, b]);
-        const ok = rng.shuffle(cands).find(([a, b]) => push(kd === 'imm' ? imm(a, b) : kd === 'gap' ? gapOf(a, b) : notAdj(a, b)));
-        if (!ok) return null;
+    if (betweenLeft) return null;
+    const ck = cur;
+    const D = dist(c0, ck);
+    const qa = rng.chance(0.5) ? [eid(c0), eid(ck)] : [eid(ck), eid(c0)];
+    const truths: Query[] = [];
+    const lies: Query[] = [];
+    if (qkind === 'gap') {
+        if (D >= 2) truths.push({ kind: 'gap', args: qa, params: { k: D - 1 } });
+        for (const k of rng.shuffle([D - 2, D].filter(x => x >= 1 && x + 1 <= Math.floor(n / 2)))) lies.push({ kind: 'gap', args: qa, params: { k } });
+    } else if (qkind === 'imm') {
+        const leftOf = mod(world[idx(qa[0])] - world[idx(qa[1])], n) === 1;
+        const rightOf = mod(world[idx(qa[1])] - world[idx(qa[0])], n) === 1;
+        const L: Query = { kind: 'immLeft', args: qa };
+        const R: Query = { kind: 'immRight', args: qa };
+        if (leftOf) truths.push(L); else lies.push(L);
+        if (rightOf) truths.push(R); else lies.push(R);
+        rng.shuffle(lies);
+    } else {
+        (D === 1 ? truths : lies).push({ kind: 'adj', args: qa });
     }
-    // surface lure: the conclusion pair in a weak fact of another kind («не рядом»), never deciding the count
-    if (plan.lure === 'surface' && !push(notAdj(c0, ck))) return null;
-    // every free-group member: exactly one «не рядом» with an interior arc member (vacuous on an intact arc),
-    // so the count never depends on the class; distractors: more such weak facts
-    for (const x of rest) {
-        const y = [...rng.shuffle(inner.slice()), ...rng.shuffle(rest.slice())].find(z => z !== x && dist(x, z) >= 2 && !keys.has(key(notAdj(x, z))));
-        if (y === undefined || !push(notAdj(x, y))) return null;
-    }
-    for (let i = 0, t = 0; i < p.distractors && t < 20; t++) {
-        const x = rng.pick(rest);
-        const y = rng.pick(pool);
-        if (x !== y && dist(x, y) >= 2 && push(notAdj(x, y))) i++;
-    }
-    return { world: { seats: world }, premises: rng.shuffle(prem), queries: [query], n };
+    const queries = plan.target === 'entailed' ? truths : plan.target === 'contradicted' ? lies : rng.shuffle([...truths, ...lies]);
+    if (!queries.length) return null;
+    return { world: { seats: world }, premises: rng.shuffle(prem), queries, n };
 }
 
 function preferred(premises: readonly Rel[], n: number): Vals {
@@ -195,12 +194,11 @@ export const circularPlugin: FamilyPlugin<CircWorld> = {
     formats: ['ternary', 'binary'],
     limits: { minEntities: 4, maxEntities: MAX },
     ...solver,
+    fixedWorld: true,
     adjust: (p: LevelParams) => {
         const q = { ...p };
         // ≤ 8 seats: the arc (σ + 1 people) must stay shorter than half the table, or the short way round
         // runs through the free group and the support shrinks
-        q.sigmaMax = Math.min(q.sigmaMax, 3);
-        q.sigmaMin = Math.min(q.sigmaMin, q.sigmaMax);
         q.pConvergent = 0;          // convergence is not targeted here (supports are found, not built)
         q.requireConvergent = false;
         return q;
@@ -211,7 +209,7 @@ export const circularPlugin: FamilyPlugin<CircWorld> = {
     statedDirectly: stated,
     lureOf: lure,
     preferredModel: preferred,
-    cueMatches: (cue, _premises, q) => !cue['qkind'] || q.kind === cue['qkind'],
+    cueMatches: (cue, _premises, q) => !cue['qkind'] || TYPE[q.kind] === cue['qkind'],
     describe: (vals, names) => describeCirc(vals, names),
     render: d => renderCirc(d),
     decorate: (d, rng, p) => decorateCirc(d, rng, p),

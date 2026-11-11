@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
 
-// Lessons for the phase 5 frames (spec §9): «Три группы», «Условия», «Иерархия», «Точка зрения».
+// Lessons for «Три группы», «Условия», «Иерархия», «Точка зрения».
 
 @Component({
     selector: 'app-tutorial-groups3',
     template: `
 <h2>Три группы</h2>
-<p>Есть три группы, каждый участник ровно в одной из них.</p>
+<p>Групп три, каждый ровно в одной.</p>
 <ul>
-    <li><span class="subject">ВОЛ</span> и <span class="subject">ДЕК</span> в разных группах</li>
-    <li><span class="subject">ДЕК</span> и <span class="subject">ЗУМ</span> в разных группах</li>
+    <li><span class="subject">WCA</span> и <span class="subject">BWA</span> в разных группах</li>
+    <li><span class="subject">BWA</span> и <span class="subject">KLO</span> в разных группах</li>
 </ul>
-<p><strong>Вывод:</strong> <span class="subject">ВОЛ</span> и <span class="subject">ЗУМ</span> в одной группе — <strong>Неизвестно</strong>: групп три, ЗУМ может быть и в группе ВОЛ, и в третьей.</p>
-<p>«В одной группе» переносится по цепочке, «в разных» — нет.</p>
-<h3>Инверсия</h3>
-<p>Красное слово означает противоположное: в <span class="is-negated">разных группах</span> читается как «в одной группе».</p>`,
+<p><span class="subject">WCA</span> и <span class="subject">KLO</span> в одной группе — <strong>Неизвестно</strong>: KLO может быть и с WCA, и в третьей группе.</p>
+<p>«В одной» переносится по цепочке, «в разных» — нет. Но если трое попарно в разных группах, все три группы заняты: четвёртый, кто не с двумя из них, — с третьим.</p>
+<p class="small text-muted mb-0">Красное слово читай наоборот: в <span class="is-negated">разных группах</span> = в одной группе.</p>`,
 })
 export class TutorialGroups3Component { }
 
@@ -22,19 +21,18 @@ export class TutorialGroups3Component { }
     selector: 'app-tutorial-conditional',
     template: `
 <h2>Условия</h2>
-<p>Каждая лампа либо горит, либо не горит.</p>
+<p>Лампы горят или не горят.</p>
 <ul>
-    <li>Если горит <span class="subject">ВОЛ</span>, то не горит <span class="subject">ДЕК</span></li>
-    <li><span class="subject">ЗУМ</span> горит, только если горит <span class="subject">ДЕК</span></li>
-    <li>Лампа <span class="subject">ВОЛ</span> горит</li>
+    <li>Если <span class="subject">WCA</span> горит, то <span class="subject">BWA</span> не горит</li>
+    <li><span class="subject">KLO</span> горит, только если <span class="subject">BWA</span> горит</li>
+    <li><span class="subject">WCA</span> горит</li>
 </ul>
-<p><strong>Вывод:</strong> лампа <span class="subject">ЗУМ</span> не горит — <strong>Следует</strong>: ВОЛ горит ⇒ ДЕК не горит ⇒ ЗУМ не может гореть.</p>
-<p>Ловушки: из «если А, то Б» и «Б» не следует «А»; из «если А, то Б» и «не А» не следует «не Б».</p>
-<ul>
+<p><span class="subject">KLO</span> не горит — <strong>Следует</strong>: WCA горит ⇒ BWA не горит ⇒ KLO гореть не может.</p>
+<p>Ловушки: из «если А, то Б» и «Б» не следует «А»; из «если А, то Б» и «не А» не следует «не Б» — это <strong>Неизвестно</strong>.</p>
+<ul class="small mb-0">
     <li>«А, только если Б» — то же, что «если А, то Б».</li>
-    <li>«Горит А или Б» — горит хотя бы одна, возможно обе.</li>
-    <li>«А и Б не горят одновременно» — хотя бы одна не горит.</li>
-    <li>«Горит ровно одна из А и Б».</li>
+    <li>«А или Б горит» — хотя бы одна, возможно обе.</li>
+    <li>«А и Б не горят вместе» — хотя бы одна не горит.</li>
 </ul>`,
 })
 export class TutorialConditionalComponent { }
@@ -43,15 +41,14 @@ export class TutorialConditionalComponent { }
     selector: 'app-tutorial-hierarchy',
     template: `
 <h2>Иерархия</h2>
-<p>Части и целые: каждая часть непосредственно входит не больше чем в одно целое. «Часть» — на любой глубине.</p>
+<p>Части и целые. «Часть» — на любой глубине: часть части — тоже часть. «Прямая часть» — без промежуточных; прямое целое у каждого одно.</p>
 <ul>
-    <li><span class="subject">ВОЛ</span> — часть <span class="subject">ДЕК</span></li>
-    <li><span class="subject">ДЕК</span> — часть <span class="subject">ЗУМ</span></li>
-    <li><span class="subject">ПАЙ</span> — часть <span class="subject">ЗУМ</span></li>
+    <li><span class="subject">WCA</span> — часть <span class="subject">BWA</span></li>
+    <li><span class="subject">BWA</span> — часть <span class="subject">KLO</span></li>
 </ul>
-<p><strong>Вывод:</strong> <span class="subject">ВОЛ</span> — часть <span class="subject">ЗУМ</span> — <strong>Следует</strong>.</p>
-<p><strong>Вывод:</strong> <span class="subject">ВОЛ</span> — часть <span class="subject">ПАЙ</span> — <strong>Неизвестно</strong>: ПАЙ может лежать между ВОЛ и ЗУМ, а может и в стороне.</p>
-<p>Важное свойство: если А — часть Б и А — часть В, то Б и В вложены друг в друга (одно — часть другого).</p>`,
+<p><span class="subject">WCA</span> — часть <span class="subject">KLO</span> — <strong>Следует</strong>.</p>
+<p>А из «<span class="subject">WCA</span> — часть <span class="subject">BWA</span>» и «<span class="subject">WCA</span> — часть <span class="subject">KLO</span>» про <span class="subject">BWA</span> и <span class="subject">KLO</span> — <strong>Неизвестно</strong>: одно вложено в другое, но какое в какое — не сказано. Если же <span class="subject">WCA</span> — <em>прямая</em> часть <span class="subject">BWA</span>, то <span class="subject">BWA</span> — часть <span class="subject">KLO</span>.</p>
+<p class="small text-muted mb-0">Красное слово читай наоборот: <span class="is-negated">часть</span> = не часть.</p>`,
 })
 export class TutorialHierarchyComponent { }
 
@@ -59,13 +56,14 @@ export class TutorialHierarchyComponent { }
     selector: 'app-tutorial-perspective',
     template: `
 <h2>Точка зрения</h2>
-<p>Все стоят в ряд перед тобой, каждый — лицом к тебе или спиной.</p>
+<p>Все стоят в ряд перед тобой, лицом или спиной.</p>
 <ul>
-    <li><span class="subject">ВОЛ</span> стоит лицом к тебе</li>
-    <li>Для <span class="subject">ВОЛ</span> справа стоит <span class="subject">ДЕК</span></li>
+    <li><span class="subject">WCA</span> лицом к тебе</li>
+    <li>У <span class="subject">WCA</span> справа <span class="subject">BWA</span></li>
 </ul>
-<p>ВОЛ смотрит на тебя, поэтому его право — это твоё лево: для тебя ДЕК левее, чем ВОЛ.</p>
-<p><strong>Вывод:</strong> Для тебя <span class="subject">ДЕК</span> левее, чем <span class="subject">ВОЛ</span> — <strong>Следует</strong>.</p>
-<p>Если человек стоит спиной к тебе, его право совпадает с твоим. «Справа» — не обязательно рядом.</p>`,
+<p>WCA смотрит на тебя, его право — твоё лево.</p>
+<p>Для тебя <span class="subject">BWA</span> левее <span class="subject">WCA</span> — <strong>Следует</strong>.</p>
+<p>У стоящего спиной право совпадает с твоим. Пока не знаешь, куда человек смотрит, его «справа» ничего не даёт. «Справа» — не обязательно рядом.</p>
+<p class="small text-muted mb-0">Красное слово читай наоборот: <span class="is-negated">справа</span> = слева.</p>`,
 })
 export class TutorialPerspectiveComponent { }

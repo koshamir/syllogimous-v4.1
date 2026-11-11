@@ -137,7 +137,7 @@ export const COLOR_NAMES = [
     { adj: 'красная', plural: 'красных', short: 'красный' },
     { adj: 'зелёная', plural: 'зелёных', short: 'зелёный' },
 ];
-const ORD = ['первым', 'вторым', 'третьим', 'четвёртым', 'пятым', 'шестым', 'седьмым', 'восьмым'];
+const ORD_NOM = ['первый', 'второй', 'третий', 'четвёртый', 'пятый', 'шестой', 'седьмой', 'восьмой'];
 const subj = (s: string) => `<span class="subject">${s}</span>`;
 
 function people(k: number): string {
@@ -151,24 +151,21 @@ function people(k: number): string {
 
 export function clueText(ws: WorldSet, c: Clue, names: readonly string[]): string {
     const N = (i: number) => subj(names[c.args[i]]);
-    const sit = ws.kind === 'circle' ? 'сидит' : 'стоит';
-    const sitPl = ws.kind === 'circle' ? 'сидят' : 'стоят';
+    void ws;
     switch (c.kind) {
-        case 'left': return `${N(0)} стоит левее, чем ${N(1)}`;
-        case 'immLeft': return `${N(0)} ${sit} сразу слева от ${N(1)}`;
-        case 'adj': return `${N(0)} и ${N(1)} ${sitPl} рядом`;
-        case 'notAdj': return `${N(0)} и ${N(1)} ${sitPl} не рядом`;
-        case 'end': return `${N(0)} стоит с краю`;
-        case 'notEnd': return `${N(0)} стоит не с краю`;
-        case 'pos': return `${N(0)} стоит ${ORD[c.p!]} слева`;
-        case 'between': return `Из ${N(1)}, ${N(0)} и ${N(2)} посередине стоит ${N(0)}`;
-        case 'closer': return `${N(0)} ${sit} ближе к ${N(1)}, чем к ${N(2)}`;
-        case 'sides': return `${N(0)} и ${N(1)} стоят по разные стороны от ${N(2)}`;
-        case 'oneNext': return `Рядом с ${N(0)} ${sit} ровно один из ${N(1)} и ${N(2)}`;
-        case 'gap': return ws.kind === 'circle'
-            ? `Между ${N(0)} и ${N(1)} по короткой дуге ровно ${people(c.p!)}`
-            : `Между ${N(0)} и ${N(1)} ровно ${people(c.p!)}`;
-        case 'ifEndThenAdj': return `Если ${N(0)} стоит с краю, то ${N(1)} стоит рядом с ${N(2)}`;
+        case 'left': return `${N(0)} левее ${N(1)}`;
+        case 'immLeft': return `${N(0)} сразу слева от ${N(1)}`;
+        case 'adj': return `${N(0)} и ${N(1)} рядом`;
+        case 'notAdj': return `${N(0)} и ${N(1)} не рядом`;
+        case 'end': return `${N(0)} с краю`;
+        case 'notEnd': return `${N(0)} не с краю`;
+        case 'pos': return `${N(0)} — ${ORD_NOM[c.p!]} слева`;
+        case 'between': return `${N(0)} между ${N(1)} и ${N(2)}`;
+        case 'closer': return `${N(0)} ближе к ${N(1)}, чем к ${N(2)}`;
+        case 'sides': return `${N(0)} и ${N(1)} по разные стороны от ${N(2)}`;
+        case 'oneNext': return `Рядом с ${N(0)} ровно один из ${N(1)} и ${N(2)}`;
+        case 'gap': return `Между ${N(0)} и ${N(1)} — ${people(c.p!)}`;
+        case 'ifEndThenAdj': return `Если ${N(0)} с краю, то ${N(1)} рядом с ${N(2)}`;
         case 'same': return `${N(0)} и ${N(1)} в одной группе`;
         case 'diff': return `${N(0)} и ${N(1)} в разных группах`;
         case 'in': return `${N(0)} в группе ${GROUP_NAMES[c.p!]}`;
@@ -186,8 +183,8 @@ export function clueText(ws: WorldSet, c: Clue, names: readonly string[]): strin
         }
         case 'sameRow': return `${N(0)} и ${N(1)} в одном ряду`;
         case 'sameCol': return `${N(0)} и ${N(1)} в одном столбце`;
-        case 'above': return `${N(0)} выше, чем ${N(1)} (в любом столбце)`;
-        case 'leftRow': return `${N(0)} левее, чем ${N(1)}, в том же ряду`;
+        case 'above': return `${N(0)} выше ${N(1)} (столбец любой)`;
+        case 'leftRow': return `${N(0)} левее ${N(1)} в том же ряду`;
         default: throw new Error('No Russian text for ' + c.kind);
     }
 }
@@ -198,8 +195,8 @@ export function factText(ws: WorldSet, e: number, a: number, v: number, names: r
     if (a === 1) return `у ${N} ${COLOR_NAMES[v].adj} шапка`;
     switch (ws.kind) {
         case 'line':
-        case 'lineAttr': return `${N} стоит ${ORD[v]} слева`;
-        case 'circle': return `${N} сидит на месте ${v + 1}`;
+        case 'lineAttr': return `${N} — ${ORD_NOM[v]} слева`;
+        case 'circle': return `${N} на месте ${v + 1}`;
         case 'groups': return `${N} в группе ${GROUP_NAMES[v]}`;
         case 'grid': return `${N} в клетке: ряд ${Math.floor(v / 3) + 1}, столбец ${(v % 3) + 1}`;
     }

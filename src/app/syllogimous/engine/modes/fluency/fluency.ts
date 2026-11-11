@@ -73,10 +73,10 @@ function phrase(family: FluencyFamily, a: string, b: string, forward: boolean, w
     if (words) return `${subj(a)} ${words[forward ? 0 : 1]} ${subj(b)}`;
     const w = RELATION_WORDS[family][forward ? 0 : 1];
     switch (family) {
-        case 'orderNum': return `${subj(a)} ${w}, чем ${subj(b)}`;
-        case 'orderTime': return `${subj(a)} произошло ${w}, чем ${subj(b)}`;
-        case 'linear': return `${subj(a)} стоит ${w}, чем ${subj(b)}`;
-        case 'dir2d': return `${subj(a)} ${w}, чем ${subj(b)}`;
+        case 'orderNum': return `${subj(a)} ${w} ${subj(b)}`;
+        case 'orderTime': return `${subj(a)} ${w} ${subj(b)}`;
+        case 'linear': return `${subj(a)} ${w} ${subj(b)}`;
+        case 'dir2d': return `${subj(a)} ${w} ${subj(b)}`;
         case 'groups': return `${subj(a)} ${w} ${subj(b)}`;
     }
 }

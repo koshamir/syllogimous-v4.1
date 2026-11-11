@@ -27,7 +27,7 @@ export const alphabetical = (names: readonly string[]) => names.slice().sort((a,
 export const listRu = (items: readonly string[]) =>
     items.length <= 1 ? items.join('') : `${items.slice(0, -1).join(', ')} и ${items[items.length - 1]}`;
 
-export const NOTE_INVERSION = 'Слово, выделенное красным, означает противоположное.';
+export const NOTE_INVERSION = 'Красное слово читай наоборот.';
 
 export const LURE_NOTES = {
     possible: 'Это верно в одном из возможных миров, но не во всех.',

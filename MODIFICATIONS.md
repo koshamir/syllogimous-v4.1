@@ -21,5 +21,14 @@ This modified version keeps that license and its noncommercial restriction.
   from the old training unit.
 - Russian UI throughout; the default names are Cyrillic pseudo-words (the old pools remain as options).
 
+## v5.1 changes (November 2026)
+
+- **Difficulty is the number of premises** (per task type, automatic or set by hand); the 1–20 level scale is gone.
+- **Every premise is necessary**: distractors, pendants and balancing premises were removed from all 16 task
+  types; the exact solver verifies it for every generated item.
+- **Short wording** of premises and instructions; default names are meaningless three-letter Latin strings.
+- The audit gates changed accordingly (exact premise count, necessity of every premise, class balance); bots that
+  read only a part of the premises are reported, not gated — see `docs/V5_NOTES.md`, section «v5.1».
+
 These modifications are not represented as proof that the software increases intelligence, fluid intelligence, or
 neural capacity. The trainer level is not IQ.

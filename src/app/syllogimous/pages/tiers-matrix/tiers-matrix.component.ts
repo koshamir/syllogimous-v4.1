@@ -13,8 +13,8 @@ export class TiersMatrixComponent {
     entriesOfMatrix = Object.entries(TIERS_MATRIX);
     userTierIdx = 0;
 
-    tier = "Нажмите на ячейку";
-    questionType = "Нажмите на ячейку";
+    tier = "Нажми на ячейку";
+    questionType = "Нажми на ячейку";
     cellSelI = -1;
     cellSelJ = -1;
 

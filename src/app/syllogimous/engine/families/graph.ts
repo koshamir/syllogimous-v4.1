@@ -8,7 +8,6 @@
 
 import { Rng, streams } from '../core/rng';
 import { Answer, DEFAULT_ENGINE_OPTIONS, EngineOptions, ENGINE_VERSION, GenerateSpec, Item, Premise } from '../core/types';
-import { jitterLevel } from '../difficulty/ladder';
 import { pickNames } from '../core/names';
 import { discontinuity } from '../core/presentation';
 import { describeGraphMap, graphQuestion, graphSentence, GRAPH_INSTRUCTIONS } from '../render/ru/graph';
@@ -138,6 +137,21 @@ function rewireOnce(rng: Rng, g: Graph, joint: boolean): Graph | null {
     return null;
 }
 
+/** Last-resort negative: one link turned round or moved to another member (connected, not isomorphic to g). */
+function simpleNegative(rng: Rng, g: Graph): Graph | null {
+    const cands: Graph[] = [];
+    g.edges.forEach((e, i) => {
+        const rest = g.edges.filter((_, k) => k !== i);
+        if (!e.mut) cands.push({ n: g.n, edges: [...rest, { u: e.v, v: e.u, mut: false }] });
+        for (let w = 0; w < g.n; w++) {
+            if (w === e.u || w === e.v || linked(g, e.u, w)) continue;
+            cands.push({ n: g.n, edges: [...rest, e.mut ? { u: Math.min(e.u, w), v: Math.max(e.u, w), mut: true } : { u: e.u, v: w, mut: false }] });
+        }
+    });
+    for (const c of rng.shuffle(cands)) if (weaklyConnected(c) && !isomorphic(g, c)) return c;
+    return null;
+}
+
 export function permute(g: Graph, pi: readonly number[]): Graph {
     return {
         n: g.n,
@@ -153,13 +167,14 @@ export function rigidVertices(g: Graph): boolean[] {
 
 export interface GraphParams { level: number; n: number; m: number; pMut: number; jointRewire: boolean; indirect: boolean }
 
+/**
+ * v5.1: the level is the number of links in each network; the number of members follows from it.
+ * Mutual links and joint rewiring are always on.
+ */
 export function graphParams(L: number, rng: Rng): GraphParams {
-    const n = clamp(3 + Math.floor((L + 1) / 3), 4, 8);
-    const lo = n - 1;
-    const hi = Math.floor(1.8 * n);
-    const t = clamp((L - 1) / 15, 0, 1);
-    const m = clamp(lo + Math.round((hi - lo) * t) + rng.int(3) - 1, lo, hi);
-    return { level: L, n, m, pMut: L >= 6 ? 0.25 : 0, jointRewire: L >= 6, indirect: L >= 6 };
+    const m = clamp(Math.floor(L), 5, 8);
+    const n = clamp(m + rng.int(2) - (m >= 6 ? 1 : 0), 4, 8);
+    return { level: L, n, m, pMut: 0.25, jointRewire: true, indirect: true };
 }
 
 /** Order in which entities are first mentioned in the rendered sentences (wording `w` puts args[1] first). */
@@ -199,7 +214,7 @@ export function graphOf(item: Pick<Item, 'premises' | 'entities'>, net: 1 | 2): 
 export function generateGraph(spec: GenerateSpec, seed: string, oIn?: EngineOptions): Item | null {
     const o = oIn ?? DEFAULT_ENGINE_OPTIONS;
     const rngs = streams(seed);
-    const L = jitterLevel(spec.level, rngs.semantic.fork('ladder'));
+    const L = spec.level;
     const sub: 'iso' | 'map' = spec.format === 'choice' ? 'map' : 'iso';
     for (let attempt = 0; attempt < 60; attempt++) {
         const rng = rngs.semantic.fork(`a${attempt}`);
@@ -207,7 +222,7 @@ export function generateGraph(spec: GenerateSpec, seed: string, oIn?: EngineOpti
         const g1 = randomGraph(rng, gp.n, gp.m, gp.pMut);
         if (!g1) continue;
         // at least one mutual link whenever they are enabled, and at least one one-way link
-        if (gp.pMut > 0 && !g1.edges.some(e => e.mut)) continue;
+        if (gp.pMut > 0 && gp.m >= 4 && attempt < 30 && !g1.edges.some(e => e.mut)) continue;
         if (!g1.edges.some(e => !e.mut)) continue;
         const pi = rng.shuffle(Array.from({ length: gp.n }, (_, i) => i));
         let g2: Graph;
@@ -216,10 +231,17 @@ export function generateGraph(spec: GenerateSpec, seed: string, oIn?: EngineOpti
         if (sub === 'iso') {
             // a negative must exist for EVERY first network (both classes): otherwise sizes that cannot be rewired
             // would only ever appear as "same structure"
-            let g: Graph | null = g1;
-            const swaps = 1 + rng.int(3);
-            for (let s = 0; s < swaps && g; s++) g = rewireOnce(rng, g, gp.jointRewire && attempt < 40) ?? null;
-            if (!g || !weaklyConnected(g) || isomorphic(g1, g)) continue;
+            let g: Graph | null = null;
+            // several rewiring tries per network: small networks have few degree-preserving swaps
+            for (let t = 0; t < 10 && !g; t++) {
+                let h: Graph | null = g1;
+                const swaps = 1 + rng.int(3);
+                for (let s = 0; s < swaps && h; s++) h = rewireOnce(rng, h, gp.jointRewire && attempt < 25 && t < 5) ?? null;
+                if (h && weaklyConnected(h) && !isomorphic(g1, h)) g = h;
+            }
+            // last resort (never seen in the audit samples): one link is moved or turned
+            if (!g && attempt >= 55) g = simpleNegative(rng, g1);
+            if (!g) continue;
             answer = spec.plan.target === 'contradicted' ? 'contradicted' : 'entailed';
             g2 = answer === 'entailed' ? permute(g1, pi) : permute(g, pi);
         } else {
@@ -228,7 +250,10 @@ export function generateGraph(spec: GenerateSpec, seed: string, oIn?: EngineOpti
             const classSize = (v: number) => sig.filter(s => s === sig[v]).length;
             const rigidV = Array.from({ length: gp.n }, (_, v) => v).filter(v => rigid[v]);
             // below L6 a "direct" target (unique degree signature); from L6 an "indirect" one (exactly one twin)
-            const cands = spec.level >= 6 ? rigidV.filter(v => classSize(v) === 2) : rigidV.filter(v => classSize(v) === 1);
+            // an "indirect" target (one twin with the same link counts) when the network has one, else a "direct" one
+            const twin = rigidV.filter(v => classSize(v) === 2);
+            const solo = rigidV.filter(v => classSize(v) === 1);
+            const cands = twin.length && (rng.chance(0.6) || !solo.length) ? twin : solo.length ? solo : attempt >= 40 ? rigidV : [];
             if (!cands.length) continue;
             target = rng.pick(cands);
             g2 = permute(g1, pi);

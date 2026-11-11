@@ -3,12 +3,12 @@
 import { describe, expect, it } from 'vitest';
 import { Rng } from '../core/rng';
 import { FamilyId } from '../core/types';
-import { STAIRCASE, adaptiveSeconds, levelNotice, migratedLevel, newFamilyLevel, targetFor, updateLevel } from './staircase';
+import { STAIRCASE, adaptiveSeconds, initialPremises, levelNotice, newFamilyLevel, targetFor, updateLevel } from './staircase';
 import { emptySchedulerState, familyWeights, pickFamily } from './scheduler';
 import { nextItem } from '../session';
 
 describe('staircase', () => {
-    it('a simulated learner P(correct | L) = chance + (1 − chance)/(1 + e^(L − θ)) converges to 75 % ± 3 % within 300 items', () => {
+    it('a simulated learner P(correct | L) = chance + (1 − chance)/(1 + e^(2(L − θ))) converges to 75 % ± 3 % within 300 items', () => {
         const rng = new Rng('learners');
         const chance = 1 / 3;
         const p = targetFor('ternary', 3);
@@ -17,45 +17,48 @@ describe('staircase', () => {
         let n = 0;
         const learners = 400;
         for (let k = 0; k < learners; k++) {
-            const theta = 3 + rng.float() * 14;
-            let s = newFamilyLevel(1);
+            const theta = 3.5 + rng.float() * 3;          // the learner's limit, in premises
+            let s = newFamilyLevel(2);
             for (let i = 0; i < 300; i++) {
-                const pc = chance + (1 - chance) / (1 + Math.exp(s.level - theta));
+                const pc = chance + (1 - chance) / (1 + Math.exp(2 * (s.level - theta)));
                 const correct = rng.chance(pc);
                 if (i >= 100) { n++; if (correct) ok++; }
-                s = updateLevel(s, correct ? 'ok' : 'err', p);
+                s = updateLevel(s, correct ? 'ok' : 'err', p, STAIRCASE.defaultStep, [2, 9]);
             }
         }
         expect(Math.abs(ok / n - 0.75)).toBeLessThanOrEqual(0.03);
     });
 
     it('steps, bounds and targets', () => {
-        let s = newFamilyLevel(1);
+        let s = newFamilyLevel(2);
         s = updateLevel(s, 'ok', 0.75);
-        expect(s.level).toBe(2);                       // warm-up step 1
-        for (let i = 0; i < 30; i++) s = updateLevel(s, 'ok', 0.75);
-        expect(s.level).toBe(STAIRCASE.max);           // 2 + 13·1 + 17·0.5 > 20: clamped
+        expect(s.level).toBe(2.5);                     // warm-up step 0.5
+        for (let i = 0; i < 40; i++) s = updateLevel(s, 'ok', 0.75);
+        expect(Math.floor(s.level)).toBe(STAIRCASE.max);   // clamped: the premise count never exceeds the range
         const before = s.level;
         s = updateLevel(s, 'timeout', 0.75, 0.5);
         expect(before - s.level).toBeCloseTo(1.5);     // s·p/(1−p)
+        for (let i = 0; i < 40; i++) s = updateLevel(s, 'err', 0.75, 0.25, [3, 6]);
+        expect(s.level).toBe(3);
         expect(s.last20.length).toBe(20);
         expect(targetFor('binary', 2)).toBeCloseTo(0.8);
         expect(targetFor('choice', 6)).toBeCloseTo(0.7);
         expect(targetFor('ternary', 3, 0.8)).toBeCloseTo(0.8);
     });
 
-    it('level notices only after a change of 2 integer levels', () => {
-        const s = { ...newFamilyLevel(4), level: 5.9 };
+    it('a notice whenever the premise count changes', () => {
+        const s = { ...newFamilyLevel(4), level: 4.9 };
         expect(levelNotice(s).notify).toBe(false);
-        expect(levelNotice({ ...s, level: 6.1 }).notify).toBe(true);
-        expect(levelNotice({ ...s, level: 2.0 }).notify).toBe(true);
+        expect(levelNotice({ ...s, level: 5.1 })).toEqual({ notify: true, from: 4, to: 5 });
+        expect(levelNotice({ ...s, level: 3.9 }).notify).toBe(true);
     });
 
-    it('migration of old training units', () => {
-        expect(migratedLevel(undefined)).toBe(1);
-        expect(migratedLevel(2)).toBe(1);
-        expect(migratedLevel(5)).toBe(4);
-        expect(migratedLevel(20)).toBe(10);
+    it('starting premise count: old v5.0 level, old v4.1 training unit, or the family minimum', () => {
+        expect(initialPremises([2, 8])).toBe(2);
+        expect(initialPremises([2, 8], null, 5)).toBe(5);
+        expect(initialPremises([2, 5], null, 20)).toBe(5);
+        expect(initialPremises([2, 8], 12)).toBe(4);
+        expect(initialPremises([3, 8], 1)).toBe(3);
     });
 
     it('adaptive timer', () => {

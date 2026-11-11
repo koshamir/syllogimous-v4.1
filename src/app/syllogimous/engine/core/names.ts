@@ -1,6 +1,6 @@
-// Entity names (spec §4.7). Default pool: Cyrillic CVC pseudo-words (a rule, not a familiar word).
+// Entity names. Default pool (v5.1): meaningless three-letter Latin strings; Cyrillic pseudo-words stay as an option.
 
-import { NOUNS, getEmojis, getStrings } from '../../constants/question.constants';
+import { NOUNS, getEmojis } from '../../constants/question.constants';
 import { NAME_BLOCKED_SUBSTRINGS, NAME_BLOCKLIST } from './names.blocklist';
 import { Rng } from './rng';
 import { NameMode, NamePool } from './types';
@@ -33,9 +33,44 @@ export function getCyrillicPool(): readonly string[] {
     return cyrillicPool;
 }
 
+const LATIN_CONSONANTS = 'BCDFGHJKLMNPQRSTVWXZ';
+const LATIN_VOWELS = 'AEIOU';
+/** Real words and well-known abbreviations among the generated trigrams. */
+const LATIN_BLOCKED = new Set([
+    'THE', 'SHE', 'SPA', 'SKA', 'SKI', 'FLU', 'GNU', 'PRO', 'TWO', 'WHO', 'BRA', 'CHI', 'PHI', 'PSI', 'FRO', 'TWA', 'STU',
+    'PLO', 'KGB', 'FBI', 'CIA', 'BMW', 'DVD', 'TNT', 'CNN', 'SMS', 'GPS', 'PDF', 'WTF', 'LSD', 'XXL', 'BBC', 'NBA', 'NFL',
+    'USB', 'SQL', 'CSS', 'XML', 'PNG', 'JPG', 'GMT', 'CEO', 'CFO', 'CTO', 'SOS', 'DNS', 'FTP', 'RSS', 'SSH', 'VPN', 'KKK',
+    'NSF', 'PMS', 'STD', 'HIV', 'DNA', 'RNA', 'MVP', 'LCD', 'LED', 'CPU', 'GPU', 'RPG', 'FPS', 'MMS', 'GTA', 'FSB', 'MVD',
+]);
+
+let latinPool: string[] | null = null;
+
+/**
+ * Default pool: meaningless three-letter Latin strings — two consonants and a vowel (WCA, BWA, KLO) or three
+ * consonants (ZKP), all letters different. Consonant–vowel–consonant strings are left out: too many are words.
+ */
+export function getLatinPool(): readonly string[] {
+    if (!latinPool) {
+        const out: string[] = [];
+        for (const c1 of LATIN_CONSONANTS) for (const c2 of LATIN_CONSONANTS) {
+            if (c1 === c2) continue;
+            for (const v of LATIN_VOWELS) { const w = c1 + c2 + v; if (!LATIN_BLOCKED.has(w)) out.push(w); }
+        }
+        // the same number of all-consonant strings, taken evenly from the 6840 possible ones
+        let i = 0;
+        for (const c1 of LATIN_CONSONANTS) for (const c2 of LATIN_CONSONANTS) for (const c3 of LATIN_CONSONANTS) {
+            if (c1 === c2 || c2 === c3 || c1 === c3) continue;
+            const w = c1 + c2 + c3;
+            if (i++ % 4 === 0 && !LATIN_BLOCKED.has(w)) out.push(w);
+        }
+        latinPool = out;
+    }
+    return latinPool;
+}
+
 export function poolFor(pool: NamePool): readonly string[] {
     switch (pool) {
-        case 'latin': return getStrings();
+        case 'latin': return getLatinPool();
         case 'words': return NOUNS;
         case 'emoji': return getEmojis();
         default: return getCyrillicPool();
@@ -76,7 +111,8 @@ const firstLetter = (w: string) => w[0];
  */
 export function pickNames(rng: Rng, req: NameRequest): NameResult {
     const pool = poolFor(req.pool);
-    const cyr = req.pool === 'cyrillic';
+    // distinct first letters keep the names of one item easy to tell apart
+    const cyr = req.pool === 'cyrillic' || req.pool === 'latin';
     const byLevel = req.mode === 'byLevel';
     const names: string[] = [];
     const used = new Set<string>(req.exclude ?? []);

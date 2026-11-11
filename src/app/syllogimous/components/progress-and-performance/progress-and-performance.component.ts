@@ -23,8 +23,18 @@ export class DailyProgressComponent {
         this.weeklyProgressPercentage = progressAndPerformanceService.calcWeeklyProgress(today);
     }
 
-    get familyLevel(): number | null {
+    get familyPremises(): number | null {
         const f = this.game.question.family;
-        return f ? Math.floor(this.game.familyLevel(f) * 10) / 10 : null;
+        return f ? Math.floor(this.game.familyLevel(f)) : null;
+    }
+
+    /** Correct answers in a row still needed for one more premise (null at the family's maximum). */
+    get toNext(): number | null {
+        const f = this.game.question.family;
+        return f ? this.game.correctToNext(f) : null;
+    }
+
+    get auto(): boolean {
+        return this.game.autoAdjust;
     }
 }

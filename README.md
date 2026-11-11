@@ -1,33 +1,37 @@
 # Syllogimous v5
 
-A relational-integration (RI) trainer in Russian: every item requires holding and integrating several relations at
-once, and any path to the answer that skips this integration (counting words, a prior over wording, reading the
-order from the instructions, a local heuristic) is audited down to chance level.
+A relational-integration (RI) trainer in Russian. Every item has exactly as many premises as its difficulty says,
+and **every premise is necessary**: without any one of them the answer cannot be derived. Solving an item means
+integrating the whole chain, not picking two or three relevant lines out of eight.
 
 Maintained by [koshamir](https://github.com/koshamir), based on [Syllogimous v4 by 4skinSkywalker](https://github.com/4skinSkywalker/Syllogimous-v4).
 See [MODIFICATIONS.md](MODIFICATIONS.md) for the changes and attribution. Play it on
 [GitHub Pages](https://koshamir.github.io/syllogimous-v4.1/) in a desktop or mobile browser.
 
-> **Honest caveat.** The trainer level is not IQ and not a measure of intelligence. Training transfers best to
-> similar tasks; growth of fluid intelligence is not promised. The «Контроль переноса» section exists to check
+> **Honest caveat.** The result in the trainer is not IQ and not a measure of intelligence. Training transfers best
+> to similar tasks; growth of fluid intelligence is not promised. The «Контроль переноса» section exists to check
 > near transfer on formats that are never trained.
 
-## What v5 is
+## What v5.1 is
 
-- **Three answers** — «Следует / Неизвестно / Противоречит»: "Unknown" requires checking every model, guessing
-  chance drops to 33 %. A two-answer format is available in the settings.
+- **Difficulty = number of premises.** The staircase adds a premise after correct answers and removes one after
+  errors (≈ 75 % correct); the count can also be set by hand for every task type, and the free mode fixes it.
+- **No spare premises.** No distractors and no filler: the exact solver checks that removing any premise leaves
+  the conclusion open. "Unknown" items have the same shape with one link turned, weakened or missing.
+- **Everything else that loads integration is always on**, even with two premises: three-place relations, exact
+  steps, two dimensions in one premise, meta-relations, scattered premise order, mixed wording, red (inverted)
+  words.
+- **Short wording**: «WCA позже BWA», «KLO левее ZKP», «Все WCA — это BWA». Names are meaningless three-letter
+  Latin strings by default.
+- **Three answers** — «Следует / Неизвестно / Противоречит» (two answers are available in the settings).
 - **One deterministic engine** (`src/app/syllogimous/engine/`, pure TypeScript): an item is fully defined by
-  (engine version, family, level, parameters, seed). Every answer is computed by an exact solver and cross-checked
-  by independent brute force in the tests.
-- **Generation pipeline**: target answer and bot opinions are drawn first from independent bags, premises are built
-  constructively around them, then the solver verifies class, minimal support σ, non-locality and the lure.
-- **16 families**: same/opposite, three groups, number and time order, linear and circular order, 2D/3D directions,
-  space-time, syllogisms, graph comparison, analogies, logical connectives, conditions, hierarchy, perspective.
-- **Adaptive staircase** per family (≈ 75 % correct with three answers), interleaved families, a fingerprint window
-  against repeats, explanations after errors (decisive premises, one or two models, the lure, a strategy card).
-- **Modes**: regular game, free mode (fixed levels), «Конструктор» (build the model), «Отображение структур»
-  (role correspondence between systems), «Беглость» (speed of basic inferences), «Контроль переноса»
-  (untrained probes) and «Тренировка дня» (a planned session: 50 / 25 / 15 / 10 % of the minutes).
+  (engine version, family, premise count, parameters, seed). Every answer is computed by an exact solver and
+  cross-checked by independent brute force in the tests.
+- **16 task types**: same/opposite, three groups, number and time order, linear and circular order, 2D/3D
+  directions, space-time, syllogisms, graph comparison, analogies, logical connectives, conditions, hierarchy,
+  perspective.
+- **Modes**: regular game, free mode, «Конструктор» (build the model from clues, all of them needed),
+  «Отображение структур», «Беглость», «Контроль переноса» and «Тренировка дня».
 
 Scientific rationale: [Scientific_Basis_Gf_RI_Transfer_EN.md](Scientific_Basis_Gf_RI_Transfer_EN.md).
 Implementation notes, deviations from the specification and audit results: [docs/V5_NOTES.md](docs/V5_NOTES.md),
@@ -39,7 +43,8 @@ Implementation notes, deviations from the specification and audit results: [docs
 npm ci
 npm start                    # dev server
 npm run test:engine          # engine tests (Vitest, Node)
-npm run audit                # cue audit with gates (AUDIT_N=1500 by default; AUDIT_N=300 for a quick run)
+npm run audit                # audit with gates (AUDIT_N=1500 by default; AUDIT_N=300 for a quick run)
+npx vitest run --config vitest.stats.config.ts   # generation statistics and sample items per premise count
 npm test                     # Angular unit tests (Karma, Chrome)
 npm run build:verify         # production build into dist-validation/
 npm run prep-deploy:prod     # production build into docs/ for GitHub Pages

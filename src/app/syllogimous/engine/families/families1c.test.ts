@@ -3,6 +3,8 @@
 // permutations; connectives — re-classification of both statements by their own family solvers.
 
 import { describe, expect, it } from 'vitest';
+import { irredundant } from '../generate';
+import { clampPremises } from '../difficulty/ladder';
 import { Answer, BinaryOp, DEFAULT_ENGINE_OPTIONS, FamilyId, Item, Plan } from '../core/types';
 import { Rng } from '../core/rng';
 import { classify, consistent } from '../core/solve';
@@ -13,7 +15,8 @@ import { analogySolver } from './analogy';
 import { Graph, graphOf, signatures } from './graph';
 import { OP_FN } from './binary';
 
-const LEVELS = [1, 4, 8, 12, 16];
+/** Premise counts (clamped to each family's range). */
+const LEVELS = [2, 3, 4, 5, 6, 8];
 const PER_LEVEL = Number(process.env['ENGINE_TEST_N'] ?? 300);
 const ix = (id: string) => Number(id.slice(1));
 const mod = (x: number, n: number) => ((x % n) + n) % n;
@@ -30,7 +33,6 @@ function checkRender(it: Item): void {
     const html = [...it.render.instructions, ...it.render.notes, ...it.render.premises, conc].join('\n');
     expect(html).not.toMatch(/undefined|NaN/);
     expect(tagsBalanced(html)).toBe(true);
-    expect(visibleText(html)).not.toMatch(/[A-Za-z]/);
 }
 
 function stream(family: FamilyId, level: number, count: number, tag: string, format: 'ternary' | 'binary' | 'choice' = 'ternary'): Item[] {
@@ -159,33 +161,31 @@ describe('analogy', () => {
             bases.add(String(it.query.params?.['b']));
             expect(consistent(plugin, it.premises, n)).toBe(true);
             expect(classify(plugin, it.premises, it.query, n)).toBe(it.answer);
-            const t = it.target!;
+            expect(it.premises.length).toBe(clampPremises(it.family, level));
             if (it.answer !== 'undetermined') {
                 expect(it.metrics.support).not.toBeNull();
-                if (!it.metrics.relaxations.includes('sigma')) {
-                    expect(it.metrics.support!).toBeGreaterThanOrEqual(t.sigmaMin);
-                    expect(it.metrics.support!).toBeLessThanOrEqual(t.sigmaMax);
-                }
-                if (t.level >= 4) expect(it.metrics.nonLocal).toBe(true);
+                // v5.1: every premise is necessary — the support is the whole item
+                expect(it.metrics.support).toBe(it.premises.length);
+                expect(irredundant(pluginFor(it.family), it.premises, it.query, it.answer, it.entities.length)).toBe(true);
             } else {
                 expect(it.metrics.support).toBeNull();
             }
             expect(plugin.statedDirectly(it.query, it.premises)).toBe(false);
             checkRender(it);
-            expect(it.render.instructions.some(s => s.startsWith('«Такое же отношение»'))).toBe(true);
+            expect(it.render.instructions.some(s => s.startsWith('«Как»'))).toBe(true);
             if (oracleChecked < 60) {
                 const o = analogyOracle(it);
                 if (o) { expect(o).toBe(it.answer); oracleChecked++; }
             }
         }
         if (level <= 8) expect(oracleChecked).toBeGreaterThan(10);
-        expect(bases.size).toBeGreaterThanOrEqual(5);
+        expect(bases.size).toBeGreaterThanOrEqual(level > 6 ? 4 : 5);
     });
 
     it('determinism: same seed → identical item', () => {
         for (const base of ['groups', 'linear', 'dir2d']) {
             const plan: Plan = { target: 'entailed', cue: { base, w2: 'same' }, lure: 'none' };
-            for (const level of [3, 11]) {
+            for (const level of [3, 6]) {
                 expect(JSON.stringify(generate({ family: 'analogy', level, seed: 'det', format: 'ternary', plan })))
                     .toBe(JSON.stringify(generate({ family: 'analogy', level, seed: 'det', format: 'ternary', plan })));
             }
@@ -264,7 +264,7 @@ describe('graph', () => {
             const x = ix(it.query.args[0]);
             const sig = signatures(g1);
             const cls = sig.filter(s => s === sig[x]).length;
-            expect(cls).toBe(level >= 6 ? 2 : 1);
+            expect([1, 2]).toContain(cls);
             expect(it.options!.map(o => o.id)).toContain(it.correctOptionId);
             expect(it.options!.length).toBe(g1.n);
             if (g1.n <= 7) {

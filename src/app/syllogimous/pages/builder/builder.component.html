@@ -15,7 +15,7 @@
 <app-card>
     <div body class="builder py-2 px-md-3">
         <app-plan-banner segment="builder"></app-plan-banner>
-        <div class="small text-muted mb-2">«Конструктор» · уровень {{ level | number:'1.0-1' }}</div>
+        <div class="small text-muted mb-2">«Конструктор» · уровень {{ level | number:'1.0-0' }} · подсказок: {{ p.clues.length }}, нужна каждая</div>
 
         <div class="instructions mb-2">
             <div *ngFor="let s of p.instructions" class="small" [innerHTML]="s"></div>
@@ -27,7 +27,7 @@
 
         <!-- build: the board -->
         <ng-container *ngIf="p.variant === 'build'">
-            <div class="small text-muted mb-1">Нажмите на имя, затем на место. Повторное нажатие на поставленное имя убирает его.</div>
+            <div class="small text-muted mb-1">Нажми на имя, затем на место. Повторное нажатие на поставленное имя убирает его.</div>
 
             <div *ngIf="p.kind === 'line' || p.kind === 'lineAttr'" class="board-line">
                 <div *ngFor="let s of slots" class="slot" (click)="tapSlot(s.v)">

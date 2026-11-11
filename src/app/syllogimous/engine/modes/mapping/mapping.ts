@@ -228,7 +228,7 @@ export function mappingParams(level: number, rng: Rng): MappingParams {
         pIndirect: clamp((L - 3) / 10, 0, 0.8),
         pReverse: L >= 4 ? 0.5 : 0.1,
         pPermute: L >= 12 ? 0.5 : 0,
-        confusable: L >= 10 ? 0.4 : 0,
+        confusable: 0,
     };
 }
 
@@ -322,7 +322,7 @@ export function generateMapping(level: number, seed: string, opts: { kind?: Mapp
 }
 
 function finish(rng: Rng, seed: string, level: number, kind: MappingKind, p: MappingParams, graphs: TGraph[], syms: boolean[][],
-    target: number, pi: number[], tm: number[], permuted: boolean, indirect: boolean, namePool: NamePool = 'cyrillic'): MappingPuzzle {
+    target: number, pi: number[], tm: number[], permuted: boolean, indirect: boolean, namePool: NamePool = 'latin'): MappingPuzzle {
     const names: string[][] = [];
     const used: string[] = [];
     for (const g of graphs) {

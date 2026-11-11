@@ -12,7 +12,7 @@ import {
     Answer, BINARY_OPS, BinaryOp, DEFAULT_ENGINE_OPTIONS, EngineOptions, ENGINE_VERSION, FamilyId, GenerateSpec, Item, ItemPart,
     LureType, Plan, Premise,
 } from '../core/types';
-import { planningParams } from '../difficulty/ladder';
+import { PREMISE_RANGE, clampPremises, planningParams } from '../difficulty/ladder';
 import { lureBagContents } from '../difficulty/scheduler';
 import { discontinuity } from '../core/presentation';
 import { BINARY_OP_NOTES, binaryConclusion } from '../render/ru/binary';
@@ -67,10 +67,15 @@ export function generateBinary(spec: GenerateSpec, seed: string, oIn: EngineOpti
     const result = spec.plan.target === 'entailed';
     const combo = rng.pick(combosFor(op, result));
     const fams = binaryPartFamilies(o, available);
-    const f1 = rng.pick(fams);
-    const rest = fams.filter(f => f !== f1);
-    const f2 = rest.length ? rng.pick(rest) : f1;
-    const subLevel = Math.max(1, spec.level - 3);
+    // v5.1: the level is the total number of premises; the two statements share them
+    const total = Math.max(4, Math.floor(spec.level));
+    const subLevels = [Math.floor(total / 2), total - Math.floor(total / 2)];
+    // a statement's family must be able to build exactly its share of the premises
+    const fits = (f: FamilyId, P: number) => PREMISE_RANGE[f][0] <= P && P <= PREMISE_RANGE[f][1];
+    const pool1 = fams.filter(f => fits(f, subLevels[0]));
+    const f1 = rng.pick(pool1.length ? pool1 : fams);
+    const pool2 = fams.filter(f => f !== f1 && fits(f, subLevels[1]));
+    const f2 = pool2.length ? rng.pick(pool2) : f1;
     const parts: Item[] = [];
     for (const [i, f] of [f1, f2].entries()) {
         const plugin = pluginOf(f);
@@ -79,8 +84,8 @@ export function generateBinary(spec: GenerateSpec, seed: string, oIn: EngineOpti
         let part: Item | null = null;
         for (let t = 0; t < 3 && (!part || part.metrics.relaxations.length); t++) {
             part = gen({
-                family: f, level: subLevel, seed: `${seed}:p${i + 1}${t ? ':' + t : ''}`, format: 'binary',
-                plan: subPlan(plugin, subLevel, target, rng.fork(`plan${i}:${t}`), o),
+                family: f, level: subLevels[i], seed: `${seed}:p${i + 1}${t ? ':' + t : ''}`, format: 'binary',
+                plan: subPlan(plugin, clampPremises(f, subLevels[i]), target, rng.fork(`plan${i}:${t}`), o),
                 prevNames: spec.prevNames, excludeNames: [...(spec.excludeNames ?? []), ...(parts[0]?.entities.map(e => e.name) ?? [])], options: o,
             });
         }

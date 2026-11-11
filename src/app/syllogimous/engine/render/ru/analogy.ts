@@ -8,12 +8,12 @@ import { subj } from './common';
 export type AnaBaseId = 'groups' | 'orderNum' | 'orderTime' | 'linear' | 'circular' | 'dir2d';
 
 export const ANALOGY_DEFINITION: Record<AnaBaseId, string> = {
-    groups: '«Такое же отношение» — обе пары на одной стороне или обе пары на разных сторонах.',
-    orderNum: '«Такое же отношение» — в обеих парах первый больше второго или в обеих меньше.',
-    orderTime: '«Такое же отношение» — в обеих парах первое событие позже второго или в обеих раньше.',
-    linear: '«Такое же отношение» — первый стоит с той же стороны от второго и на том же расстоянии.',
-    circular: '«Такое же отношение» — от второго до первого по часовой стрелке одинаковое число шагов.',
-    dir2d: '«Такое же отношение» — первый смещён относительно второго одинаково: в ту же сторону и на столько же шагов.',
+    groups: '«Как» — обе пары равны или обе противоположны.',
+    orderNum: '«Как» — в обеих парах первый больше или в обеих меньше.',
+    orderTime: '«Как» — в обеих парах первое позже или в обеих раньше.',
+    linear: '«Как» — с той же стороны и на том же расстоянии.',
+    circular: '«Как» — столько же мест по часовой стрелке.',
+    dir2d: '«Как» — в ту же сторону и на столько же шагов.',
 };
 
 export function analogySentence(q: Query, names: readonly string[]): string {
@@ -21,8 +21,7 @@ export function analogySentence(q: Query, names: readonly string[]): string {
     const swap = Number(q.params?.['w'] ?? 0) === 1;
     const [p1, p2] = swap ? [[2, 3], [0, 1]] : [[0, 1], [2, 3]];
     const same = q.params?.['w2'] !== 'diff';
-    const middle = same ? 'такое же, как отношение' : 'отличается от отношения';
-    return `Отношение ${N(p1[0])} к ${N(p1[1])} ${middle} ${N(p2[0])} к ${N(p2[1])}`;
+    return `${N(p1[0])} к ${N(p1[1])} — ${same ? 'как' : 'не как'} ${N(p2[0])} к ${N(p2[1])}`;
 }
 
 /** Base render (premises, instructions, notes) + definition + conclusion. */

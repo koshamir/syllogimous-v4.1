@@ -1,9 +1,48 @@
 <app-card>
     <div body class="d-grid py-3 px-md-3" style="gap: 2rem;">
         <div class="card shadow-sm">
-            <div class="card-header py-2 small">Настройки игры</div>
+            <div class="card-header py-2 small">Сложность — число посылок</div>
             <div class="card-body">
-                <app-game-mode-choose></app-game-mode-choose>
+                <div class="d-grid" style="gap: 0.75rem;">
+                    <p class="small text-muted mb-0">В задаче ровно столько посылок, сколько указано, и каждая нужна для ответа. Больше посылок — длиннее цепочка рассуждения.</p>
+                    <app-input type="checkbox" name="auto" label="Автоподстройка: число посылок растёт после верных ответов и падает после ошибок" [ngControl]="auto"></app-input>
+                    <div class="prem-list">
+                        <div *ngFor="let f of families" class="prem-row">
+                            <div class="prem-name">{{ label(f) }}<span *ngIf="f === 'graph'" class="small text-muted"> — связей в сети</span></div>
+                            <div class="prem-ctl">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="bump(f, -1)" [disabled]="premises(f) <= range(f)[0]" [attr.aria-label]="'Меньше посылок: ' + label(f)">−</button>
+                                <span class="prem-val" [title]="'от ' + range(f)[0] + ' до ' + range(f)[1]">{{ premises(f) }}</span>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="bump(f, 1)" [disabled]="premises(f) >= range(f)[1]" [attr.aria-label]="'Больше посылок: ' + label(f)">+</button>
+                            </div>
+                            <div class="prem-bar" *ngIf="auto.value" [title]="'До следующей посылки: ' + progress(f) + '%'"><div [style.width.%]="progress(f)"></div></div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button type="button" class="btn btn-sm btn-outline-primary" (click)="bumpAll(-1)">Всем −1</button>
+                        <button type="button" class="btn btn-sm btn-outline-primary" (click)="bumpAll(1)">Всем +1</button>
+                    </div>
+                    <ng-container *ngIf="auto.value">
+                        <app-input type="select" name="step" label="Скорость автоподстройки" placeholder="Скорость" [ngControl]="step" [options]="stepChoices" />
+                        <app-input
+                            type="range" min="70" max="85" step="5" name="targetAccuracy"
+                            [label]="'Целевая доля верных ответов: ' + targetAccuracy.value + '%'"
+                            [ngControl]="targetAccuracy" [noParenthesisValue]="true"
+                        ></app-input>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header py-2 small">Задания</div>
+            <div class="card-body">
+                <div class="d-grid" style="gap: 1rem;">
+                    <app-input type="select" name="format" label="Варианты ответа" placeholder="Варианты ответа" [ngControl]="format" [options]="formatChoices" />
+                    <app-input type="select" name="namePool" label="Имена" placeholder="Имена" [ngControl]="namePool" [options]="poolChoices" />
+                    <app-input type="checkbox" name="negations" label="Красные слова (читать наоборот)" [ngControl]="negations"></app-input>
+                    <app-input type="checkbox" name="metas" label="Мета-отношения («A к B — как C к D»)" [ngControl]="metas"></app-input>
+                    <app-input type="select" name="explanation" label="Разбор после ответа" placeholder="Разбор" [ngControl]="explanation" [options]="explanationChoices" />
+                </div>
             </div>
         </div>
 
@@ -15,19 +54,9 @@
         </div>
 
         <div class="card shadow-sm">
-            <div class="card-header py-2 small">Доступность</div>
+            <div class="card-header py-2 small">Режим игры</div>
             <div class="card-body">
-                <div class="d-grid" style="gap: 0.75rem;">
-                    <app-input
-                        type="select"
-                        name="colorBlindnessMode"
-                        label="Режим цветового восприятия"
-                        placeholder="Режим цветового восприятия"
-                        [ngControl]="colorBlindnessMode"
-                        [options]="colorBlindnessChoices"
-                    />
-                    <p class="text-muted small">Меняет цвет <span class="is-negated">инверсии</span></p>
-                </div>
+                <app-game-mode-choose></app-game-mode-choose>
             </div>
         </div>
 
@@ -35,27 +64,10 @@
             <div class="card-header py-2 small">Цели по времени</div>
             <div class="card-body">
                 <div class="d-grid" style="gap: 0.75rem;">
-                    <app-input
-                        type="range"
-                        min="15"
-                        max="60"
-                        step="5"
-                        name="dailyProgressMinutes"
-                        [label]="'Цель на день: ' + dailyProgressMinutes.value + ' мин'"
-                        [ngControl]="dailyProgressMinutes"
-                        [noParenthesisValue]="true"
-                    ></app-input>
-            
-                    <app-input
-                        type="range"
-                        min="60"
-                        max="240"
-                        step="5"
-                        name="weeklyProgressMinutes"
-                        [label]="'Цель на неделю: ' + weeklyProgressMinutes.value + ' мин'"
-                        [ngControl]="weeklyProgressMinutes"
-                        [noParenthesisValue]="true"
-                    ></app-input>
+                    <app-input type="range" min="15" max="60" step="5" name="dailyProgressMinutes"
+                        [label]="'Цель на день: ' + dailyProgressMinutes.value + ' мин'" [ngControl]="dailyProgressMinutes" [noParenthesisValue]="true"></app-input>
+                    <app-input type="range" min="60" max="240" step="5" name="weeklyProgressMinutes"
+                        [label]="'Цель на неделю: ' + weeklyProgressMinutes.value + ' мин'" [ngControl]="weeklyProgressMinutes" [noParenthesisValue]="true"></app-input>
                 </div>
             </div>
         </div>
@@ -68,29 +80,15 @@
                         [label]="'Длительность: ' + planMinutes.value + ' мин'" [ngControl]="planMinutes" [noParenthesisValue]="true"></app-input>
                     <app-input *ngFor="let k of PLAN_SEGMENTS" type="range" min="0" max="100" step="5" [name]="'plan-' + k"
                         [label]="PLAN_LABELS[k] + ': ' + planShares[k].value + '%'" [ngControl]="planShares[k]" [noParenthesisValue]="true"></app-input>
-                    <p class="text-muted small mb-0">Доли пересчитываются пропорционально; по умолчанию 50 / 25 / 15 / 10.</p>
                 </div>
             </div>
         </div>
 
         <div class="card shadow-sm">
-            <div class="card-header py-2 small">Тренировка</div>
+            <div class="card-header py-2 small">Цвет красных слов</div>
             <div class="card-body">
-                <div class="d-grid" style="gap: 1rem;">
-                    <app-input type="select" name="format" label="Формат ответа" placeholder="Формат ответа" [ngControl]="format" [options]="formatChoices" />
-                    <app-input
-                        type="range" min="70" max="85" step="5" name="targetAccuracy"
-                        [label]="'Целевая точность: ' + targetAccuracy.value + '%'"
-                        helper="Сложность подстраивается так, чтобы доля верных ответов держалась около этого значения (для двух вариантов +5%, для выбора из списка −5%)"
-                        [ngControl]="targetAccuracy" [noParenthesisValue]="true"
-                    ></app-input>
-                    <app-input type="select" name="step" label="Шаг уровня после первых 15 заданий" placeholder="Шаг" [ngControl]="step" [options]="stepChoices" />
-                    <app-input type="select" name="explanation" label="Разбор после ответа" placeholder="Разбор" [ngControl]="explanation" [options]="explanationChoices" />
-                    <app-input type="select" name="namePool" label="Имена участников" placeholder="Имена" [ngControl]="namePool" [options]="poolChoices" />
-                    <app-input type="select" name="nameMode" label="Подбор имён" placeholder="Подбор имён" [ngControl]="nameMode" [options]="nameModeChoices" />
-                    <app-input type="checkbox" name="negations" label="Инверсии (красные слова)" [ngControl]="negations"></app-input>
-                    <app-input type="checkbox" name="metas" label="Мета-отношения" [ngControl]="metas"></app-input>
-                </div>
+                <app-input type="select" name="colorBlindnessMode" label="Режим цветового восприятия" placeholder="Режим цветового восприятия"
+                    [ngControl]="colorBlindnessMode" [options]="colorBlindnessChoices" />
             </div>
         </div>
     </div>

@@ -94,7 +94,7 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf="step.kind === 'graph'">
-                    <div class="mb-2">Схемы устроены одинаково. Нажмите на кружок второй схемы, который соответствует выделенному в первой.</div>
+                    <div class="mb-2">Схемы устроены одинаково. Нажми на кружок второй схемы, который соответствует выделенному в первой.</div>
                     <div class="graphs">
                         <ng-container *ngTemplateOutlet="graphTpl; context: { g: session!.graph[step.i].g1, pts: session!.graph[step.i].layout1, target: session!.graph[step.i].target, clickable: false }"></ng-container>
                         <ng-container *ngTemplateOutlet="graphTpl; context: { g: session!.graph[step.i].g2, pts: session!.graph[step.i].layout2, target: -1, clickable: true }"></ng-container>

@@ -55,16 +55,16 @@ export class V5StatsComponent {
         const fams = [...new Set(this.dates.flatMap(d => Object.keys(hist[d])))] as FamilyId[];
         const played = new Set(qs.map(q => q.family));
         const X = (i: number) => (this.dates.length <= 1 ? this.width / 2 : 24 + (i * (this.width - 32)) / (this.dates.length - 1));
-        const Y = (L: number) => 8 + ((20 - L) * (this.height - 24)) / 19;
+        const Y = (L: number) => this.y(L);
         this.lines = fams.filter(f => played.has(f)).map((f, k) => {
             const dots = this.dates.map((d, i) => (hist[d][f] !== undefined ? { x: X(i), y: Y(hist[d][f]!) } : null)).filter((p): p is { x: number; y: number } => !!p);
             const pts = dots.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`);
             const lastDate = [...this.dates].reverse().find(d => hist[d][f] !== undefined)!;
-            return { family: f, label: questionTypeLabel(FAMILY_TYPE[f]), color: COLORS[k % COLORS.length], points: pts.join(' '), dots, last: Math.floor(hist[lastDate][f]! * 10) / 10 };
+            return { family: f, label: questionTypeLabel(FAMILY_TYPE[f]), color: COLORS[k % COLORS.length], points: pts.join(' '), dots, last: Math.floor(hist[lastDate][f]!) };
         });
     }
 
     y(L: number) {
-        return 8 + ((20 - L) * (this.height - 24)) / 19;
+        return 8 + ((14 - Math.min(14, Math.max(2, L))) * (this.height - 24)) / 12;
     }
 }

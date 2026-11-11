@@ -16,6 +16,7 @@ interface ModesState {
 @Injectable({ providedIn: "root" })
 export class ModesService {
     static readonly TARGET = 0.7;
+    static readonly RANGE: [number, number] = [1, 19];
     private readonly sessionSeed = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
     private counter = 0;
 
@@ -49,7 +50,7 @@ export class ModesService {
     submit(mode: ModeId, outcome: 'ok' | 'err' | 'same', ms: number): number {
         const s = this.state;
         const cur = s.levels[mode] ?? newFamilyLevel(1);
-        const next = outcome === 'same' ? { ...cur, count: cur.count + 1 } : updateLevel(cur, outcome, ModesService.TARGET);
+        const next = outcome === 'same' ? { ...cur, count: cur.count + 1 } : updateLevel(cur, outcome, ModesService.TARGET, 0.5, ModesService.RANGE);
         s.levels[mode] = next;
         const res = s.results[mode] ?? [];
         res.push({ date: new Date().toISOString().slice(0, 10), level: Math.round(cur.level * 100) / 100, outcome, ms });

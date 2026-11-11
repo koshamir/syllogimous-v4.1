@@ -55,69 +55,40 @@ export const hierarchyKit = kit;
 
 type Rel3 = 'true' | 'false' | 'unknown';
 
+/**
+ * Construction (v5.1): ONE chain c0 – c1 – … – cP of «часть» / «непосредственно входит» facts, each pointing up
+ * or down, and a conclusion about its two ends — nothing else. Straight chains settle the conclusion; a chain
+ * that turns usually leaves it open, but «непосредственно входит» can close a turn (a part has one immediate
+ * whole, so two wholes of one part are nested): the exact solver decides, and the pipeline keeps the item only
+ * if the class is the planned one and every premise is necessary.
+ */
 function construct(rng: Rng, p: LevelParams, plan: Plan): Construction<null> | null {
     const qkind = plan.cue['qkind'] ?? 'part';
     const rel: Rel3 = plan.target === 'undetermined' ? 'unknown' : (plan.target === 'entailed') === (qkind === 'part') ? 'true' : 'false';
-    const n = MAX;
-    const k = Math.min(3, Math.max(2, p.sigmaMin + rng.int(p.sigmaMax - p.sigmaMin + 1)));
-    const ents = rng.shuffle(Array.from({ length: n }, (_, i) => i));
-    const c = ents.slice(0, k + 1);
-    const extra = ents.slice(k + 1);
-    const par = new Array(n).fill(n);
-    const links: [number, number][] = [];               // [part, whole]
-    if (rel === 'true') { for (let i = 0; i < k; i++) { links.push([c[i], c[i + 1]]); par[c[i]] = c[i + 1]; } }
-    else if (rel === 'false') { for (let i = 0; i < k; i++) { links.push([c[i + 1], c[i]]); par[c[i + 1]] = c[i]; } }
-    else if (k === 2) {
-        if (rng.chance(0.5)) {                            // c0 ⊂ c1 ⊃ c2: both ends are parts
-            links.push([c[0], c[1]], [c[2], c[1]]); par[c[0]] = c[1]; par[c[2]] = c[1];
-        } else {                                          // c1 ⊂ c0, c1 ⊂ c2: both ends are wholes (and nested)
-            links.push([c[1], c[0]], [c[1], c[2]]);
-            const [lo, hi] = rng.chance(0.5) ? [c[0], c[2]] : [c[2], c[0]];
-            par[c[1]] = lo; par[lo] = hi;
-        }
-    } else if (rng.chance(0.5)) {                         // c0 ⊂ c1 ⊃ c2 ⊂ c3: ends part / whole
-        links.push([c[0], c[1]], [c[2], c[1]], [c[2], c[3]]);
-        par[c[0]] = c[1];
-        if (rng.chance(0.5)) { par[c[2]] = c[1]; par[c[1]] = c[3]; } else { par[c[2]] = c[3]; par[c[3]] = c[1]; }
-    } else {                                              // c0 ⊃ c1 ⊂ c2 ⊃ c3: ends whole / part
-        links.push([c[1], c[0]], [c[1], c[2]], [c[3], c[2]]);
-        par[c[3]] = c[2];
-        if (rng.chance(0.5)) { par[c[1]] = c[0]; par[c[0]] = c[2]; } else { par[c[1]] = c[2]; par[c[2]] = c[0]; }
-    }
-    const premises: Premise[] = links.map(([x, y]) => ({ kind: 'part', args: [eid(x), eid(y)] }));
-    const [qa, qb] = rel === 'unknown' && rng.chance(0.5) ? [c[k], c[0]] : [c[0], c[k]];
-    // role-free conclusion ends: every end is a part as often as a whole (one pendant each)
-    const role = (x: number) => premises.filter(r => r.args[0] === eid(x)).length - premises.filter(r => r.args[1] === eid(x)).length;
-    const rootOf = (x: number) => { let r = x; for (let s = 0; s <= n && par[r] !== n; s++) r = par[r]; return r; };
-    const pend = extra.slice();
-    for (const end of [qa, qb]) {
-        const e = pend.shift();
-        if (e === undefined) return null;
-        if (role(end) > 0) {                              // a part: give it a part of its own
-            par[e] = end;
-            premises.push(p.level >= 4 && rng.chance(0.4) ? { kind: 'direct', args: [eid(e), eid(end)] } : { kind: 'part', args: [eid(e), eid(end)] });
-        } else if (role(end) < 0) {                       // a whole: put it inside a new top whole
-            par[rootOf(end)] = e;
-            premises.push({ kind: 'part', args: [eid(end), eid(e)] });
-        } else {
-            par[e] = end;
-            premises.push({ kind: 'part', args: [eid(e), eid(end)] });
+    const k = p.premises;
+    const n = k + 1;
+    if (n > MAX) return null;
+    const c = rng.shuffle(Array.from({ length: n }, (_, i) => i));
+    let up: boolean[] = Array.from({ length: k }, () => rng.chance(0.5));
+    if (rng.chance(0.5)) {
+        if (rel === 'true') up = up.map(() => true);
+        else if (rel === 'false') up = up.map(() => false);
+        else if (k >= 2) {
+            const j = 1 + rng.int(k - 1);
+            const first = rng.chance(0.5);
+            up = up.map((_, i) => (i < j ? first : !first));
         }
     }
-    // a remaining entity: a distractor below a chain member
-    for (const e of pend) {
-        const host = rng.pick(c.filter(x => x !== qa && x !== qb).concat(c.slice(1, k)));
-        if (host === undefined) return null;
-        par[e] = host;
-        const opts: Premise[] = [{ kind: 'part', args: [eid(e), eid(host)] }];
-        if (p.level >= 4) opts.push({ kind: 'direct', args: [eid(e), eid(host)] });
-        const not = ents.find(x => x !== e && x !== host && !ancestor(par, n, e, x) && x !== qa && x !== qb);
-        if (not !== undefined && p.level >= 3) opts.push({ kind: 'notPart', args: [eid(e), eid(not)] });
-        premises.push(rng.pick(opts));
-    }
-    if (!premises.every(r => evalHier(r, par, n))) return null;
-    const query: Query = { kind: qkind, args: [eid(qa), eid(qb)] };
-    return { world: null, premises: rng.shuffle(premises), queries: [query], n };
+    const premises: Premise[] = up.map((u, i) => {
+        const [x, y] = u ? [c[i], c[i + 1]] : [c[i + 1], c[i]];
+        return { kind: rng.chance(0.35) ? 'direct' : 'part', args: [eid(x), eid(y)] };
+    });
+    const ends = rng.chance(0.5) ? [c[0], c[k]] : [c[k], c[0]];
+    const queries: Query[] = [
+        { kind: qkind, args: [eid(ends[0]), eid(ends[1])] },
+        { kind: qkind, args: [eid(ends[1]), eid(ends[0])] },
+    ];
+    return { world: null, premises: rng.shuffle(premises), queries, n };
 }
 
 // ---------------------------------------------------------------- Russian texts
@@ -143,8 +114,8 @@ function sentence(r: Rel & { inverted?: boolean }, names: readonly string[]): st
             const isPart = (r.kind === 'part') !== I;
             return `${N(0)} — ${inv(isPart ? 'часть' : 'не часть', I)} ${N(1)}`;
         }
-        case 'direct': return `${N(0)} непосредственно входит в ${N(1)}`;
-        case 'sibling': return sw ? `${N(1)} и ${N(0)} непосредственно входят в одно и то же целое` : `${N(0)} и ${N(1)} непосредственно входят в одно и то же целое`;
+        case 'direct': return `${N(0)} — прямая часть ${N(1)}`;
+        case 'sibling': return sw ? `${N(1)} и ${N(0)} — прямые части одного целого` : `${N(0)} и ${N(1)} — прямые части одного целого`;
         case 'root': return `${N(0)} ни во что не входит`;
         default: throw new Error('No Russian template for ' + r.kind);
     }
@@ -155,7 +126,7 @@ function render(d: DraftItem): ItemRender {
     const notes: string[] = [];
     if (d.premises.some(r => r.inverted) || d.query.params?.['inv']) notes.push(NOTE_INVERSION);
     return {
-        instructions: ['Каждая часть непосредственно входит не больше чем в одно целое. «Часть» — на любой глубине: если А — часть Б, а Б — часть В, то А — часть В.'],
+        instructions: ['«Часть» — на любой глубине (часть части — тоже часть). «Прямая часть» — без промежуточных; прямое целое у каждого одно.'],
         notes,
         premises: d.displayOrder.map(i => sentence(d.premises[i], names)),
         conclusion: sentence(d.query, names),
@@ -212,21 +183,13 @@ function lure(ctx: LureContext): LureType {
 export const hierarchyPlugin: FamilyPlugin<null> = {
     id: 'hierarchy',
     formats: ['ternary', 'binary'],
-    limits: { minEntities: 6, maxEntities: MAX },
+    limits: { minEntities: 3, maxEntities: MAX },
     supportDomain: 'full',
     custom: kit.custom,
     domain: () => ({ size: 0, allDiff: false }),
     compile: (rel, vars) => v => kit.holdsIn({ ...rel, args: vars.map(eid) }, v, v.length),
     adjust(p: LevelParams, _o: EngineOptions, _plan: Plan): LevelParams {
         const q = { ...p };
-        // six entities: a chain of ≤ 3 links plus a pendant at each end (role-free ends), see V5_NOTES
-        q.sigmaMax = Math.min(q.sigmaMax, 3);
-        q.sigmaMin = Math.max(2, Math.min(q.sigmaMin, q.sigmaMax));
-        // the key inference (two wholes of one part are nested) has no class-symmetric "Contradicts" form here:
-        // every false conclusion it yields is also refuted by a two-premise shortcut (see V5_NOTES)
-        q.pConvergent = 0;
-        q.requireConvergent = false;
-        q.n = MAX;
         return q;
     },
     cueSpace: (_p: LevelParams, _f: AnswerFormat) => ({ qkind: ['part', 'notPart'] }),

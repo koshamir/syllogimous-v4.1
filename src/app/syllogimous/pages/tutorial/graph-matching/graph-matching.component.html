@@ -1,15 +1,13 @@
 <h2>Сравнение графов</h2>
-
-<p>Две сети: первая — в посылках, вторая — ниже. «A передаёт сигнал B» — то же, что «B получает сигнал от A».</p>
+<p>Две сети. Стрелка — связь от одного участника к другому, ↔ — в обе стороны. «<span class="subject">WCA</span> → <span class="subject">BWA</span>» и «<span class="subject">BWA</span> ← <span class="subject">WCA</span>» — одно и то же.</p>
 <ul>
-    <li><span class="subject">ВОЛ</span> передаёт сигнал <span class="subject">ДЕК</span></li>
-    <li><span class="subject">ДЕК</span> передаёт сигнал <span class="subject">ЗУМ</span></li>
+    <li><span class="subject">WCA</span> → <span class="subject">BWA</span></li>
+    <li><span class="subject">BWA</span> → <span class="subject">KLO</span></li>
 </ul>
 <p>Вторая сеть:</p>
 <ul>
-    <li><span class="subject">КИР</span> получает сигнал от <span class="subject">ТОМ</span></li>
-    <li><span class="subject">ЛАП</span> получает сигнал от <span class="subject">КИР</span></li>
+    <li><span class="subject">ZKP</span> ← <span class="subject">DFU</span></li>
+    <li><span class="subject">GHA</span> ← <span class="subject">ZKP</span></li>
 </ul>
-<p>Обе сети — цепочки из трёх участников: устроены одинаково (ВОЛ ↔ ТОМ, ДЕК ↔ КИР, ЗУМ ↔ ЛАП). Ответ — <strong>Верно</strong>.</p>
-<p>Одинаковое число связей у всех участников ещё не значит одинаковое устройство: важно, <em>кто с кем</em> связан.</p>
-<p>Во втором виде заданий нужно найти во второй сети участника с той же ролью, что указанный в первой.</p>
+<p>Обе — цепочки из трёх: WCA ↔ DFU, BWA ↔ ZKP, KLO ↔ GHA. Устроены одинаково — <strong>Верно</strong>.</p>
+<p>Одинаковое число стрелок у участников ещё не значит одинаковое устройство: важно, кто с кем связан. Во втором виде заданий нужно найти, кто во второй сети соответствует указанному участнику первой.</p>

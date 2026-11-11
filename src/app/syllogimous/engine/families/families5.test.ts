@@ -3,6 +3,8 @@
 // n!·2ⁿ rows with facings.
 
 import { describe, expect, it } from 'vitest';
+import { irredundant } from '../generate';
+import { clampPremises } from '../difficulty/ladder';
 import { Answer, DEFAULT_ENGINE_OPTIONS, FamilyId, Item, Plan } from '../core/types';
 import { Rng } from '../core/rng';
 import { classify, consistent } from '../core/solve';
@@ -11,7 +13,8 @@ import { planningParams } from '../difficulty/ladder';
 import { emptySchedulerState, nextPlan } from '../difficulty/scheduler';
 
 const FAMILIES: FamilyId[] = ['groups3', 'conditional', 'hierarchy', 'perspective'];
-const LEVELS = [1, 4, 8, 12, 16];
+/** Premise counts (clamped to each family's range). */
+const LEVELS = [2, 3, 4, 5, 6, 8];
 const PER_LEVEL = Number(process.env['ENGINE_TEST_N'] ?? 300);
 const ix = (id: string) => Number(id.slice(1));
 
@@ -134,21 +137,18 @@ describe.each(FAMILIES)('%s', family => {
             expect(consistent(plugin, it.premises, n)).toBe(true);
             expect(classify(plugin, it.premises, it.query, n)).toBe(it.answer);
             if (checked < (family === 'perspective' ? 15 : 60)) { expect(oracle(it)).toBe(it.answer); checked++; }
-            const t = it.target!;
+            expect(it.premises.length).toBe(clampPremises(it.family, level));
             if (it.answer !== 'undetermined') {
-                if (!it.metrics.relaxations.includes('sigma')) {
-                    expect(it.metrics.support!).toBeGreaterThanOrEqual(t.sigmaMin);
-                    expect(it.metrics.support!).toBeLessThanOrEqual(t.sigmaMax);
-                }
-                if (t.level >= 4) expect(it.metrics.nonLocal).toBe(true);
+                // v5.1: every premise is necessary — the support is the whole item
+                expect(it.metrics.support).toBe(it.premises.length);
+                expect(irredundant(pluginFor(it.family), it.premises, it.query, it.answer, it.entities.length)).toBe(true);
             }
             expect(plugin.statedDirectly(it.query, it.premises)).toBe(false);
             const html = [...it.render.instructions, ...it.render.notes, ...it.render.premises, String(it.render.conclusion)].join('\n');
             expect(html).not.toMatch(/undefined|NaN/);
             expect(spansBalanced(html)).toBe(true);
-            expect(visibleText(html)).not.toMatch(/[A-Za-z]/);
             const mentioned = new Set([...it.premises.flatMap(r => r.args), ...it.query.args]);
-            for (const e of it.entities) expect(mentioned.has(e.id)).toBe(true);
+            if (!pluginFor(it.family).fixedWorld) for (const e of it.entities) expect(mentioned.has(e.id)).toBe(true);
         }
     });
 

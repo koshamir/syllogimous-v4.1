@@ -33,6 +33,8 @@ export class StartComponent {
     timePlayedToday = 0;
     timePlayedThisWeek = 0;
     probeDue = false;
+    /** «2–4» — premise counts of the families open at the current rank; «(авто)» when the staircase is on. */
+    premiseSummary = '';
 
     constructor(
         public game: GameService,
@@ -52,6 +54,11 @@ export class StartComponent {
     }
 
     ngOnInit() {
+        const ps = this.game.enabledFamilies().map(f => Math.floor(this.game.familyLevel(f)));
+        if (ps.length) {
+            const [lo, hi] = [Math.min(...ps), Math.max(...ps)];
+            this.premiseSummary = (lo === hi ? `${lo}` : `${lo}–${hi}`) + (this.game.autoAdjust ? ' (авто)' : ' (вручную)');
+        }
         const sessions = loadProbes().sessions;
         const last = sessions[sessions.length - 1];
         this.probeDue = (!last || (Date.now() - Date.parse(last.date)) / 86400000 >= 14) && this.game.questions.length >= 30;
